@@ -1,0 +1,394 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+html,
+body {
+  height: 100%;
+}
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+@font-face {
+  font-family: 'zcoolkangyuyang_w01';
+  src: url('/fonts/站酷仓耳渔阳体-W01.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'square';
+  src: url('/fonts/Square.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'stcaiyun';
+  src: url('/fonts/STCAIYUN.TTF') format('truetype');
+}
+.flex-vertical-01 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-vertical-02 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-horizontal-01 {
+  display: flex;
+  flex-direction: column;
+}
+@keyframes animate01 {
+  0%,
+  100% {
+    clip: rect(0, 26vh, 1px, 0);
+  }
+  25% {
+    clip: rect(0, 1px, 8vh, 0);
+  }
+  50% {
+    clip: rect(7.9vh, 26vh, 8vh, 0);
+  }
+  75% {
+    clip: rect(0, 26vh, 8vh, 25.9vh);
+  }
+}
+.main-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.main-wrapper .main-inner {
+  width: 100%;
+  height: 100%;
+}
+.main-wrapper .main-inner.main-inner-absolute {
+  position: absolute;
+  z-index: 99;
+  left: 0;
+  top: 0;
+}
+.main-wrapper .main-inner .main-content {
+  width: 100%;
+  height: 100%;
+}
+.main-wrapper .main-inner .main-content .main-prizes-cards {
+  margin: 1vh;
+  display: flex;
+  flex-direction: column;
+}
+.main-wrapper .main-inner .main-content .main-prizes-cards .card {
+  padding: 1vh;
+  width: 24vh;
+  height: 6vh;
+  background-color: #333;
+  color: #ffffff;
+  margin-bottom: 1vh;
+  border-radius: 8px;
+  transition: transform 1s ease-in;
+  transform: scale(1);
+}
+.main-wrapper .main-inner .main-content .main-prizes-cards .card.active {
+  box-shadow: 0 0 15px 0 rgba(255, 68, 68, 0.75);
+  transform: scale(1.15);
+  transform-origin: left center;
+  margin: 1vh 0 2vh 0;
+  position: relative;
+}
+.main-wrapper .main-inner .main-content .main-prizes-cards .card.active::before,
+.main-wrapper .main-inner .main-content .main-prizes-cards .card.active::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  content: '';
+  z-index: 1;
+  box-shadow: inset 0 0 0 1px;
+  border-radius: 4px;
+  animation: animate01 8s linear infinite;
+}
+.main-wrapper .main-inner .main-content .main-prizes-cards .card.active::before {
+  animation-delay: -4s;
+}
+.main-wrapper .main-inner .main-content .main-prizes-cards .card .card-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.main-wrapper .main-inner .main-content .main-prizes-cards .card .card-inner .card-box {
+  width: calc(100% - 10vh);
+}
+.main-wrapper .main-inner .main-content .main-prizes-cards .card .card-inner .card-box.card-cover {
+  width: 6vh;
+  height: 6vh;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.main-wrapper .main-inner .main-content .main-prizes-cards .card .card-inner .card-box.card-cover > img {
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+}
+.main-wrapper .main-inner .main-content .main-prizes-cards .card .card-inner .card-box .card-title {
+  font-size: 1.5vh;
+}
+.main-wrapper .main-inner .main-content .main-prizes-cards .card .card-inner .card-box .card-content {
+  font-size: 1.5vh;
+}
+.main-wrapper .main-inner .main-content .core {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-wrapper .main-inner .main-content .core .render {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-wrapper .main-inner .main-content .main-btns {
+  width: 100%;
+  height: 6vh;
+  position: fixed;
+  left: 0;
+  bottom: 4vh;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-wrapper .main-inner .main-content .main-btns .btn {
+  color: #ffffff;
+  background: transparent;
+  outline: 1px solid rgba(19, 194, 194, 0.75);
+  border: none;
+  padding: 1.6vh 4vh;
+  font-size: 2.5vh;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 10vh;
+  border-radius: 12px;
+  font-family: "zcoolkangyuyang_w01";
+}
+.main-wrapper .main-inner .main-content .main-btns .btn:last-child {
+  margin-right: 0;
+}
+.main-wrapper .main-inner .main-content .main-btns .btn:hover {
+  background-color: rgba(19, 194, 194, 0.5);
+}
+.main-wrapper .main-inner #starry-sky {
+  width: 100%;
+  height: 100%;
+  background-image: url(../../public/images/bg_10_tiny.jpg);
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.prize-card {
+  width: 16vh;
+  height: 20vh;
+  cursor: default;
+}
+.prize-card .prize-card-inner {
+  width: 100%;
+  height: 100%;
+}
+.prize-card .prize-card-inner .prize-card-front-side,
+.prize-card .prize-card-inner .prize-card-back-side {
+  width: 100%;
+  height: 0;
+  opacity: 0;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+.prize-card .prize-card-inner .prize-card-front-side:hover,
+.prize-card .prize-card-inner .prize-card-back-side:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+.prize-card .prize-card-inner .prize-card-front-side.active,
+.prize-card .prize-card-inner .prize-card-back-side.active {
+  height: 100%;
+  opacity: 1;
+}
+.prize-card .prize-card-inner .prize-card-front-side {
+  background-color: rgba(255, 68, 68, 0.85);
+  box-shadow: 0 0 12px rgba(255, 68, 68, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.prize-card .prize-card-inner .prize-card-front-side:hover {
+  background-color: #ff4444;
+  box-shadow: 0 0 12px #ff4444;
+}
+.prize-card .prize-card-inner .prize-card-front-side > img {
+  width: 60%;
+  max-width: 60%;
+}
+.prize-card .prize-card-inner .prize-card-back-side {
+  background-color: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.75);
+  display: flex;
+  flex-direction: column;
+}
+.prize-card .prize-card-inner .prize-card-back-side .top,
+.prize-card .prize-card-inner .prize-card-back-side .bottom {
+  width: 100%;
+  height: 5vh;
+  position: relative;
+}
+.prize-card .prize-card-inner .prize-card-back-side .top > img,
+.prize-card .prize-card-inner .prize-card-back-side .bottom > img {
+  width: 3vh;
+  max-width: 3vh;
+  position: absolute;
+  top: 1vh;
+  z-index: 1;
+}
+.prize-card .prize-card-inner .prize-card-back-side .top > img {
+  left: 1vh;
+}
+.prize-card .prize-card-inner .prize-card-back-side .bottom > img {
+  right: 1vh;
+}
+.prize-card .prize-card-inner .prize-card-back-side .center {
+  width: 100%;
+  height: calc(100% - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.prize-card .prize-card-inner .prize-card-back-side .center .number {
+  font-size: 6vh;
+  font-weight: bold;
+  color: #000000;
+  font-family: "square";
+}

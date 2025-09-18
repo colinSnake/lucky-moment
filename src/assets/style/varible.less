@@ -1,0 +1,73 @@
+@cr-white-a75: rgba(255, 255, 255, 0.75);
+@cr-white: rgba(255, 255, 255, 1);
+
+@cr-black: rgba(0, 0, 0, 1);
+@cr-cyan-a50: rgba(19, 194, 194, 0.50);
+@cr-cyan-a75: rgba(19, 194, 194, 0.75);
+@cr-cyan: rgba(19, 194, 194, 1);
+
+@cr-orange-a25: rgba(253, 105, 0, 0.25);
+@cr-orange-a65: rgba(253, 105, 0, 0.65);
+@cr-orange-a95: rgba(253, 105, 0, 0.95);
+
+@cr-red-a50: rgba(255, 68, 68, 0.50);
+@cr-red-a75: rgba(255, 68, 68, 0.75); 
+@cr-red-a85: rgba(255, 68, 68, 0.85); 
+@cr-red: rgba(255, 68, 68, 1);
+
+@img-bg-01: url(/public/images/love.png);
+
+@zx01: 1;
+@zx05: 5;
+@zx99: 99;
+
+@font-face {
+    font-family: 'zcoolkangyuyang_w01';
+    src: url('/fonts/站酷仓耳渔阳体-W01.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'square';
+    src: url('/fonts/Square.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'stcaiyun';
+    src: url('/fonts/STCAIYUN.TTF') format('truetype');
+}
+
+.flex-vertical-01 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-vertical-02 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-horizontal-01 {
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes animate01 {
+    0%,
+    100% {
+        clip: rect(0, 26vh, 1px, 0);
+    }
+
+    25% {
+        clip: rect(0, 1px, 8vh, 0);
+    }
+
+    50% {
+        clip: rect(7.9vh, 26vh, 8vh, 0);
+    }
+
+    75% {
+        clip: rect(0, 26vh, 8vh, 25.9vh);
+    }
+}

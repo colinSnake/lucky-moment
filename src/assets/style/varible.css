@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'zcoolkangyuyang_w01';
+  src: url('/fonts/站酷仓耳渔阳体-W01.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'square';
+  src: url('/fonts/Square.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'stcaiyun';
+  src: url('/fonts/STCAIYUN.TTF') format('truetype');
+}
+.flex-vertical-01 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-vertical-02 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-horizontal-01 {
+  display: flex;
+  flex-direction: column;
+}
+@keyframes animate01 {
+  0%,
+  100% {
+    clip: rect(0, 26vh, 1px, 0);
+  }
+  25% {
+    clip: rect(0, 1px, 8vh, 0);
+  }
+  50% {
+    clip: rect(7.9vh, 26vh, 8vh, 0);
+  }
+  75% {
+    clip: rect(0, 26vh, 8vh, 25.9vh);
+  }
+}
