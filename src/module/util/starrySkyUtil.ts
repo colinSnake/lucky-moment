@@ -2,7 +2,9 @@ import { StarInterface } from "@/module/interface/index";
 
 export default class StarrySkyUtil {
     canvas: HTMLCanvasElement|null = null;
-    drawOffscreenWorker: Worker|null = null;
+    ctx: CanvasRenderingContext2D|null = null;
+    offscreenCanvas: OffscreenCanvas|null = null;
+    offscreenCtx: OffscreenCanvasRenderingContext2D|null = null;
     img: HTMLImageElement = new Image();
     instanceObj: StarrySkyUtil|null = null;
     constant = {
@@ -24,29 +26,25 @@ export default class StarrySkyUtil {
     }
 
     initialize(){
+        const { offscreenWidth, offscreenHeight } = this.constant;
         this.canvas = document.querySelector("#starry-sky")!;
+        this.ctx = this.canvas.getContext("2d");
+        this.offscreenCanvas = new OffscreenCanvas(offscreenWidth, offscreenHeight);
+        this.offscreenCtx = this.offscreenCanvas.getContext('2d');
         this.updateCanvasSize(this.canvas);
-        this.drawOffscreenWorker = new Worker(new URL('./worker/drawOffscreen.worker.ts', import.meta.url));
-        const offscreen = this.canvas.transferControlToOffscreen();
-        this.drawOffscreenWorker.postMessage({
-            type: 'init',
-            canvas: offscreen,
-            ext: JSON.stringify({
-                constant: this.constant,
-                stars: this.stars
-            })
-        }, [offscreen]);
         this.render();
     }
 
     render(){
-        this.drawStars();
-        // window.requestAnimationFrame(this.render.bind(this));
-        this.timer = setTimeout(() => {
-            clearTimeout(this.timer);
-            this.timer = null;
-            this.render();
-        }, 100);
+        // this.drawStars();
+        this.drawStarsSec();
+        this.updateStars();
+        window.requestAnimationFrame(this.render.bind(this));
+        // this.timer = setTimeout(() => {
+        //     clearTimeout(this.timer);
+        //     this.timer = null;
+        //     this.render();
+        // }, 1000 / 40);
     }
 
     updateCanvasSize(canvas: HTMLCanvasElement){
@@ -92,7 +90,88 @@ export default class StarrySkyUtil {
     }
 
     drawStars(){
-        this.drawOffscreenWorker?.postMessage({type: 'render'});
+        const canvas = this.canvas!,
+            ctx = this.ctx!,
+            { focalLength, centerX, centerY, font } = this.constant;
+            ctx.font = font;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // ctx.fillRect(0, 0, canvas.width, canvas.height);
+        for(let i = 0; i < this.stars.length; i++){
+            const star = this.stars[i],
+                { x, y, z, word, color } = star;
+
+            let px = (x - centerX) * (focalLength / z);
+            px += centerX;
+            let py = (y - centerY) * (focalLength / z);
+            py += centerY;
+            ctx.fillStyle = color;
+            ctx.fillText(word, px, py);
+        }
+    }
+
+    drawStarsSec(){
+        const canvas = this.canvas!,
+            ctx = this.ctx!,
+            { focalLength, centerX, centerY, offscreenWidth, offscreenHeight } = this.constant;
+
+        // 1. 清除整个画布
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // 2. 遍历并绘制每一个单字
+        for (let i = 0; i < this.stars.length; i++) {
+            const char = this.stars[i],
+                { x, y, z, word, color, angle, speed } = char;
+
+            // 设置颜色并绘制文本（离屏渲染）
+            this.drawWord(word, color);
+
+            let px = (x - centerX) * (focalLength / z);
+            px += centerX;
+            let py = (y - centerY) * (focalLength / z);
+            py += centerY;
+            
+            // 保存当前画布状态
+            ctx.save(); 
+
+            // 移动到当前单字的中心点
+            ctx.translate(px, py);
+
+            // 旋转画布
+            ctx.rotate(angle);
+
+            // 绘制图像时，需偏移使得图像中心与旋转中心重合
+            ctx.drawImage(this.offscreenCanvas!, -offscreenWidth / 2, -offscreenHeight / 2);
+
+            // 恢复画布状态，避免影响下一个单字的绘制
+            ctx.restore();
+
+            // 更新旋转角度以供下一帧使用
+            char.angle += speed;
+        }
+    }
+
+    /**
+     * @description 在离屏Canvas上绘制静态文本
+     */
+    drawWord(word: string, color: string){
+        const { offscreenWidth, offscreenHeight, font } = this.constant,
+            offScreenCtx = this.offscreenCtx!;
+        offScreenCtx.font = font;
+        offScreenCtx.textAlign = 'center';
+        offScreenCtx.textBaseline = 'middle';
+        offScreenCtx.fillStyle = color;
+        offScreenCtx.clearRect(0, 0, offscreenWidth, offscreenHeight);
+        offScreenCtx.fillText(word, offscreenWidth / 2, offscreenHeight / 2);
+    }
+
+    updateStars(){
+        for(let i = 0; i < this.stars.length; i++){
+            const star = this.stars[i];
+            star.z -= 3;
+            if(star.z <= 0){
+                star.z = this.canvas!.width;
+            }
+        }
     }
 
     getRandomNum(value: number){

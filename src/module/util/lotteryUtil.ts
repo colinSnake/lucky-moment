@@ -226,14 +226,19 @@ export default class LotteryUtil {
             .onComplete(() => {
                 this.isLottery = false;
                 this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
-                this.filpCard(true);
                 this.alert();
                 this.setLotteryData(lotteryId, this.lotteryData);
+                let timer: any = setTimeout(() => {
+                    this.flipCard(true);
+                    clearTimeout(timer);
+                    timer = null;
+                }, 1000);
             });
     }   
 
     resetCards(){
         const { resetDuration } = this.config;
+        this.flipCard(false);
         if(this.select3dCardIndexs?.length > 0){
             this.select3dCardIndexs.forEach((id: number) => {
                 const object = this._3dCards[id - 1],
@@ -262,7 +267,6 @@ export default class LotteryUtil {
                 .onUpdate(this.render.bind(this))
                 .start()
                 .onComplete(() => {
-                    this.filpCard(false);
                     resolve(true);
                 });
         });
@@ -415,7 +419,7 @@ export default class LotteryUtil {
             if(!this.isShowTable) {
                 targets = this.sphere;
             }
-
+            this.flipCard(false);
             for(let i = 0; i < this._3dCards.length; i++) {
                 const object = this._3dCards[i];
                 const target = targets[i];
@@ -442,7 +446,6 @@ export default class LotteryUtil {
                 .onUpdate(this.render.bind(this))
                 .start()
                 .onComplete(() => {
-                    this.filpCard(false);
                     resolve(true);
                 });
         });
@@ -527,7 +530,7 @@ export default class LotteryUtil {
         });
     }
 
-    filpCard(status: boolean){
+    flipCard(status: boolean){
         this.select3dCardIndexs.forEach(id => {
             const object = this._3dCards[id - 1];
             if(status){
