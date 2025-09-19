@@ -1,14 +1,12 @@
 @font-face {
   font-family: 'zcoolkangyuyang_w01';
-  src: url('/fonts/站酷仓耳渔阳体-W01.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'square';
-  src: url('/fonts/Square.ttf') format('truetype');
+  src: url('/fonts/TsangerYuYangT-W01.woff2') format('truetype');
+  font-display: swap;
 }
 @font-face {
   font-family: 'stcaiyun';
-  src: url('/fonts/STCAIYUN.TTF') format('truetype');
+  src: url('/fonts/subset-STCaiyun.woff2') format('truetype');
+  font-display: swap;
 }
 .flex-vertical-01 {
   display: flex;
