@@ -2,8 +2,8 @@ import { PrizeType } from "../enum";
 import { LotteryDataInterface, PrizeInterface } from "../interface";
 export const lotteryId = "cb85ae949eda1fb233816fca52bbd974";
 export const imgs = {
-    dh_font_white_icon: "../../../images/double_happiness_font_white.png",
-    dh_small_icon: "../../../images/double_happiness_small.png",
+    iconXi: "../../../images/double_happiness_font_white.png",
+    iconXiSmall: "../../../images/double_happiness_small.png",
 }
 export const config =  {
     row: 6, // 卡片行数
@@ -74,7 +74,7 @@ const getUsers = () => {
             isInPrize: false,
             index: i,
             name: `用户${i}`,
-            gift: "",
+            gift: PrizeType.none,
         });
     }
     return users;

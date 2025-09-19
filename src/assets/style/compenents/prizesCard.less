@@ -1,6 +1,6 @@
 @import "../reset.less";
 @import "../varible.less";
-.prize-card {
+.prize-card-wrapper {
     width: 16vh;
     height: 20vh;
     cursor: default;
@@ -18,12 +18,10 @@
                 cursor: pointer;
                 transform: scale(1.05);
             }
-            &.active{
-                height: 100%;
-                opacity: 1;
-            }
         }
         .prize-card-front-side{
+            height: 100%;
+            opacity: 1;
             background-color: @cr-red-a85;
             box-shadow: 0 0 12px @cr-red-a85;
             .flex-vertical-01;
@@ -72,6 +70,18 @@
                     color: @cr-black;
                     font-family: "stcaiyun";
                 }
+            }
+        }
+    }
+    &.flip{
+        .prize-card-inner{
+            .prize-card-front-side{
+                height: 0;
+                opacity: 0;
+            }
+            .prize-card-back-side{
+                height: 100%;
+                opacity: 1;
             }
         }
     }

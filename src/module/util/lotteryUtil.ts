@@ -2,17 +2,18 @@ import * as THREE from "three";
 import * as TWEEN from "@tweenjs/tween.js";
 import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
 import { TrackballControls } from "three/addons/controls/TrackballControls.js";
+import * as XLSX from 'xlsx';
 import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
 import Util from "./";
 import EventsUtil from "./eventsUtil";
 import StarrySkyUtil, { create_StarrySkyUtil } from "./starrySkyUtil";
-import { EventType, ObjectStoreIndexType, StepType } from "../enum";
+import { EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
-import { imgs, config, lotteryId, mockData } from "../mockData";
+import { imgs, config, lotteryId, mockData } from "../mockData"; 
+import Locale from "../locale";
 
 export default class LotteryUtil {
     containerId: string = "lottery-core-container";
-    prizeGifts: PrizeInterface[] = [];
     table: any[] = [];
     sphere: any[] = [];
     config: any = config;
@@ -33,6 +34,7 @@ export default class LotteryUtil {
     };
     lotteryDB: LotteryDB = create_LotteryDB();
     starrySkyUtil: StarrySkyUtil = create_StarrySkyUtil();
+    msg: string = "";
     static instanceObj: LotteryUtil|null = null;
     static instance() {
         if (!this.instanceObj) {
@@ -100,27 +102,25 @@ export default class LotteryUtil {
         });
     }
 
-    createCard(params: any){
-        const { index, user } = params,
-            cardEle = document.createElement('div'),
-            { dh_font_white_icon, dh_small_icon } = imgs;
-        cardEle.className = "prize-card";
-        cardEle.setAttribute("id", `card-${index}`)
-        cardEle.classList.add('card');
+    createCard(user: UserInterface){
+        const cardEle = document.createElement('div'),
+            { iconXi, iconXiSmall } = imgs;
+        cardEle.className = "prize-card-wrapper";
+        cardEle.setAttribute("id", `card-${user.id}`)
         cardEle.innerHTML = `
             <div class="prize-card-inner">
                 <div class="prize-card-front-side">
-                    <img src=${dh_font_white_icon} alt="cover" />
+                    <img src=${iconXi} alt="cover" />
                 </div>
                 <div class="prize-card-back-side active">
                     <div class="top">
-                        <img src=${dh_small_icon} alt="cover" />
+                        <img src=${iconXiSmall} alt="cover" />
                     </div>
                     <div class="center">
                         <span class="number">${user.id}</span>
                     </div>
                     <div class="bottom">
-                        <img src=${dh_small_icon} alt="cover" />
+                        <img src=${iconXiSmall} alt="cover" />
                     </div>
                 </div>
             </div>
@@ -128,15 +128,8 @@ export default class LotteryUtil {
         return cardEle;
     }
 
-    updateCard(user: UserInterface){
-        const prizeCardEle = document.querySelector(`#card-${user.id}`);
-        if(prizeCardEle) {
-
-        }
-    }
-
     initCards(){
-        const { row, col, resolution, width, height, step } = this.config,
+        const { row, col, resolution, width, height } = this.config,
             { users } = this.lotteryData;
         let index = 0;
 
@@ -148,10 +141,8 @@ export default class LotteryUtil {
 
         for(let i = 0; i < row; i++) {
             for(let j = 0; j < col; j++) {
-                const element = this.createCard({
-                    index,
-                    user: users[index % users.length],
-                });
+                const user = users[index % users.length],
+                    element = this.createCard(user);
                 // 创建 3D 对象
                 const object = new CSS3DObject(element);
                 object.position.x = this.getRandomPos();
@@ -200,18 +191,11 @@ export default class LotteryUtil {
     }
 
     selectedCards(){
-        const { resolution, width, selectDuration } = this.config,
-            msg = this.currentLuckyUsers.map((user: UserInterface) => user.name || user.id).join('、');  
-
-        // TODO: alert msg
+        const { resolution, width, selectDuration } = this.config; 
         let tag = -(this.currentLuckyUsers.length - 1) / 2,
             percent = 0.85;
 
-        console.log(this.select3dCardIndexs, "----------");
-
         this.select3dCardIndexs.forEach((id: number) => {
-            const user = this.currentLuckyUsers.find((it: UserInterface) => it.id === id)!;
-            this.updateCard(user);
             const object = this._3dCards[id - 1];
             new TWEEN.Tween(object.position)
                 .to({
@@ -242,6 +226,9 @@ export default class LotteryUtil {
             .onComplete(() => {
                 this.isLottery = false;
                 this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
+                this.filpCard(true);
+                this.alert();
+                this.setLotteryData(lotteryId, this.lotteryData);
             });
     }   
 
@@ -275,10 +262,7 @@ export default class LotteryUtil {
                 .onUpdate(this.render.bind(this))
                 .start()
                 .onComplete(() => {
-                    this.select3dCardIndexs.forEach((id: number) => {
-                        const object = this._3dCards[id - 1];
-                        object.element && object.element.classList.contains("prize") && object.element.classList.remove("prize");
-                    });
+                    this.filpCard(false);
                     resolve(true);
                 });
         });
@@ -293,7 +277,6 @@ export default class LotteryUtil {
                     case StepType.welcome:
                         {
                             this.isShowTable = false;
-                            this.setLotteryData(lotteryId, this.lotteryData);
                             EventsUtil.emit(EventType.updateBtns, this.isShowTable);
                             await this.setTransform();
                         }
@@ -302,7 +285,6 @@ export default class LotteryUtil {
                         {
                             const { prizeIndex } = this.lotteryData;
                             if(prizeIndex > -1){
-                                this.setLotteryData(lotteryId, this.lotteryData);
                                 this.updatePrizes();
                                 await this.resetCards();
                                 this.start();
@@ -313,6 +295,13 @@ export default class LotteryUtil {
                         {
                             const { prizeIndex } = this.lotteryData;
                             if(prizeIndex > -1){
+                                // 重置上一次抽奖结果
+                                this.lotteryData.users.forEach((it: UserInterface) => {
+                                    if(this.select3dCardIndexs.includes(it.id)){
+                                        it.isWin = false;
+                                        it.gift = PrizeType.none;
+                                    }
+                                });
                                 await this.resetCards();
                                 this.start();
                             }
@@ -346,6 +335,7 @@ export default class LotteryUtil {
                 count = prizesCount[prizeIndex];
                 
             this.select3dCardIndexs = [];
+            this.msg = "";
             for(let i = 0; i < count; i++) {
                 const randomIndex = this.getRandomValue(this.unLuckyUsers.length),
                     user = this.unLuckyUsers[randomIndex];
@@ -355,10 +345,16 @@ export default class LotteryUtil {
                             it.isWin = true;
                             it.isInPrize = true;
                             this.select3dCardIndexs.push(it.id);
+                            it.gift = prizes[prizeIndex].type;
                         }
                     });
+                    this.msg += i > 0 ? `、${user.id}` : user.id;
+                    if(i === count - 1){
+                        this.msg = Locale.Common.Congratulations(this.msg, this.getPrizeName(prizes[prizeIndex].type));
+                    }
                 }
             }
+            // 抽取到最后一个奖品
             if(prizeIndex === 0 && prizes[prizeIndex].total === 1){
                 this.updatePrizes();
             }
@@ -368,6 +364,25 @@ export default class LotteryUtil {
 
     exportExcel(){
         return new Promise((resolve, reject) => {
+            const { prizes } = this.lotteryData;
+            let jsonData: any = this.luckyUsers.map((it: UserInterface) => { 
+                const curPrize = prizes.find((p: PrizeInterface) => p.type === it.gift);
+                return {
+                    [Locale.Common.Number]: it.id,
+                    [Locale.Common.Name]: it.name,
+                    [Locale.Common.Prize]: this.getPrizeName(it.gift as PrizeType),
+                    [Locale.Common.Gift]: curPrize ? curPrize.name : ""
+                };
+            });
+            // 1. 将 JSON 数据转换为工作表
+            const worksheet = XLSX.utils.json_to_sheet(jsonData);
+
+            // 2. 创建新工作簿并附加工作表
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, Locale.Common.PrizeForm); 
+
+            // 3. 导出并下载 Excel 文件
+            XLSX.writeFile(workbook, `${Locale.Common.PrizeForm}.xlsx`);           
             resolve(true);
         });
     }
@@ -391,10 +406,6 @@ export default class LotteryUtil {
 
     render(){
         this.renderer!.render(this.scene!, this.camera!);
-    }
-
-    setShine(index: number){
-
     }
 
     setTransform(){
@@ -431,6 +442,7 @@ export default class LotteryUtil {
                 .onUpdate(this.render.bind(this))
                 .start()
                 .onComplete(() => {
+                    this.filpCard(false);
                     resolve(true);
                 });
         });
@@ -513,6 +525,39 @@ export default class LotteryUtil {
         window.addEventListener("resize", (e: any) => {
             this.updateRenderSize();
         });
+    }
+
+    filpCard(status: boolean){
+        this.select3dCardIndexs.forEach(id => {
+            const object = this._3dCards[id - 1];
+            if(status){
+                object.element && !object.element.classList.contains("flip") && object.element.classList.add("flip");
+            }else{
+                object.element && object.element.classList.contains("flip") && object.element.classList.remove("flip");
+                object.element && object.element.classList.contains("prize") && object.element.classList.remove("prize");
+            }
+        });
+    }
+
+    alert(){
+        
+    }
+
+    getPrizeName(type: PrizeType){
+        switch(type){
+            case PrizeType.specialPrize:
+                return Locale.Common.SpecialPrize;
+            case PrizeType.firstPrize:
+                return Locale.Common.FirstPrize;
+            case PrizeType.secondPrize:
+                return Locale.Common.SecondPrize;
+            case PrizeType.thirdPrize:
+                return Locale.Common.ThirdPrize;
+            case PrizeType.normalPrize:
+                return Locale.Common.NormalPrize;
+            default:
+                return Locale.Common.None;
+        }
     }
 }
 

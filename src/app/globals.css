@@ -308,17 +308,17 @@ table {
   background-position: center;
   background-repeat: no-repeat;
 }
-.prize-card {
+.prize-card-wrapper {
   width: 16vh;
   height: 20vh;
   cursor: default;
 }
-.prize-card .prize-card-inner {
+.prize-card-wrapper .prize-card-inner {
   width: 100%;
   height: 100%;
 }
-.prize-card .prize-card-inner .prize-card-front-side,
-.prize-card .prize-card-inner .prize-card-back-side {
+.prize-card-wrapper .prize-card-inner .prize-card-front-side,
+.prize-card-wrapper .prize-card-inner .prize-card-back-side {
   width: 100%;
   height: 0;
   opacity: 0;
@@ -326,67 +326,72 @@ table {
   transition: all 0.3s ease;
   transform: scale(1);
 }
-.prize-card .prize-card-inner .prize-card-front-side:hover,
-.prize-card .prize-card-inner .prize-card-back-side:hover {
+.prize-card-wrapper .prize-card-inner .prize-card-front-side:hover,
+.prize-card-wrapper .prize-card-inner .prize-card-back-side:hover {
   cursor: pointer;
   transform: scale(1.05);
 }
-.prize-card .prize-card-inner .prize-card-front-side.active,
-.prize-card .prize-card-inner .prize-card-back-side.active {
+.prize-card-wrapper .prize-card-inner .prize-card-front-side {
   height: 100%;
   opacity: 1;
-}
-.prize-card .prize-card-inner .prize-card-front-side {
   background-color: rgba(255, 68, 68, 0.85);
   box-shadow: 0 0 12px rgba(255, 68, 68, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.prize-card .prize-card-inner .prize-card-front-side:hover {
+.prize-card-wrapper .prize-card-inner .prize-card-front-side:hover {
   background-color: #ff4444;
   box-shadow: 0 0 12px #ff4444;
 }
-.prize-card .prize-card-inner .prize-card-front-side > img {
+.prize-card-wrapper .prize-card-inner .prize-card-front-side > img {
   width: 60%;
   max-width: 60%;
 }
-.prize-card .prize-card-inner .prize-card-back-side {
+.prize-card-wrapper .prize-card-inner .prize-card-back-side {
   background-color: rgba(255, 255, 255, 0.75);
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.75);
   display: flex;
   flex-direction: column;
 }
-.prize-card .prize-card-inner .prize-card-back-side .top,
-.prize-card .prize-card-inner .prize-card-back-side .bottom {
+.prize-card-wrapper .prize-card-inner .prize-card-back-side .top,
+.prize-card-wrapper .prize-card-inner .prize-card-back-side .bottom {
   width: 100%;
   height: 5vh;
   position: relative;
 }
-.prize-card .prize-card-inner .prize-card-back-side .top > img,
-.prize-card .prize-card-inner .prize-card-back-side .bottom > img {
+.prize-card-wrapper .prize-card-inner .prize-card-back-side .top > img,
+.prize-card-wrapper .prize-card-inner .prize-card-back-side .bottom > img {
   width: 3vh;
   max-width: 3vh;
   position: absolute;
   top: 1vh;
   z-index: 1;
 }
-.prize-card .prize-card-inner .prize-card-back-side .top > img {
+.prize-card-wrapper .prize-card-inner .prize-card-back-side .top > img {
   left: 1vh;
 }
-.prize-card .prize-card-inner .prize-card-back-side .bottom > img {
+.prize-card-wrapper .prize-card-inner .prize-card-back-side .bottom > img {
   right: 1vh;
 }
-.prize-card .prize-card-inner .prize-card-back-side .center {
+.prize-card-wrapper .prize-card-inner .prize-card-back-side .center {
   width: 100%;
   height: calc(100% - 60px);
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.prize-card .prize-card-inner .prize-card-back-side .center .number {
+.prize-card-wrapper .prize-card-inner .prize-card-back-side .center .number {
   font-size: 6vh;
   font-weight: bold;
   color: #000000;
   font-family: "stcaiyun";
+}
+.prize-card-wrapper.flip .prize-card-inner .prize-card-front-side {
+  height: 0;
+  opacity: 0;
+}
+.prize-card-wrapper.flip .prize-card-inner .prize-card-back-side {
+  height: 100%;
+  opacity: 1;
 }

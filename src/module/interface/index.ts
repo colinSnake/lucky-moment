@@ -36,5 +36,5 @@ export interface UserInterface {
     isWin: boolean; // 是否中奖过 
     isInPrize: boolean; // 是否中奖
     name?: string; // 用户姓名
-    gift?: string; // 中奖奖品名称
+    gift?: PrizeType; // 中奖 level
 }

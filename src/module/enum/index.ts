@@ -28,11 +28,12 @@ export enum ObjectStoreIndexType {
 }
 
 export enum PrizeType {
-    specialPrize, // 特等奖
-    firstPrize, // 一等奖
-    secondPrize, // 二等奖
-    thirdPrize, // 三等奖
-    normalPrize, // 阳光普照奖
+    none = -1, // 未中奖
+    specialPrize = 0, // 特等奖
+    firstPrize = 1, // 一等奖
+    secondPrize = 2, // 二等奖
+    thirdPrize = 3, // 三等奖
+    normalPrize = 4, // 阳光普照奖
 }
 
 export enum StepType {
