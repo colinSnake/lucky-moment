@@ -12,10 +12,13 @@ export const config =  {
     resetDuration: 500, // 重置卡片动画时间
     selectDuration: 600, // 选择卡片动画时间
     transformDuration: 2000, // 卡片平面和3D切换状态动画时间
-    rotateDuration: 3000, // 旋转 sphere 动画时间
+    rotateDuration: 5000, // 旋转 sphere 动画时间
+    lineRotateDuration: 5000, // 匀速旋转 sphere 动画时间
     width: 210, // 卡片宽度
     height: 240, // 卡片高度
     step: 20, // 卡片间距
+    isAuto: true, // 抽奖是否自动停止
+    times: 0, // 旋转次数
 };
 export const prizes: PrizeInterface[] = [
     {

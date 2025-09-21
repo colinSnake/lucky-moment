@@ -1,6 +1,6 @@
 export enum EventType {
     updatePrizes = 'UPDATE_PRIZES',
-    updateBtns = 'UPDATE_BTNS',
+    updateBtnGroup = 'UPDATE_BTN_GROUP',
 }
 
 export enum IndexedDBQueryType {

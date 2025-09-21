@@ -146,6 +146,16 @@ table {
   align-items: center;
   justify-content: space-between;
 }
+.flex-vertical-03 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.flex-vertical-04 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
 .flex-horizontal-01 {
   display: flex;
   flex-direction: column;
@@ -304,13 +314,13 @@ table {
   width: 100%;
   height: 100%;
   background-image: url(../../public/images/bg_10_tiny.jpg);
-  background-size: 100%;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 .prize-card-wrapper {
-  width: 16vh;
-  height: 20vh;
+  width: 14vh;
+  height: 16vh;
   cursor: default;
 }
 .prize-card-wrapper .prize-card-inner {
@@ -345,8 +355,8 @@ table {
   box-shadow: 0 0 12px #ff4444;
 }
 .prize-card-wrapper .prize-card-inner .prize-card-front-side > img {
-  width: 60%;
-  max-width: 60%;
+  width: 50%;
+  max-width: 50%;
 }
 .prize-card-wrapper .prize-card-inner .prize-card-back-side {
   background-color: rgba(255, 255, 255, 0.75);
@@ -357,26 +367,26 @@ table {
 .prize-card-wrapper .prize-card-inner .prize-card-back-side .top,
 .prize-card-wrapper .prize-card-inner .prize-card-back-side .bottom {
   width: 100%;
-  height: 5vh;
-  position: relative;
+  height: 3vh;
 }
 .prize-card-wrapper .prize-card-inner .prize-card-back-side .top > img,
 .prize-card-wrapper .prize-card-inner .prize-card-back-side .bottom > img {
   width: 3vh;
   max-width: 3vh;
-  position: absolute;
-  top: 1vh;
-  z-index: 1;
 }
-.prize-card-wrapper .prize-card-inner .prize-card-back-side .top > img {
-  left: 1vh;
+.prize-card-wrapper .prize-card-inner .prize-card-back-side .top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
-.prize-card-wrapper .prize-card-inner .prize-card-back-side .bottom > img {
-  right: 1vh;
+.prize-card-wrapper .prize-card-inner .prize-card-back-side .bottom {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 .prize-card-wrapper .prize-card-inner .prize-card-back-side .center {
   width: 100%;
-  height: calc(100% - 60px);
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;

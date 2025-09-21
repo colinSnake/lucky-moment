@@ -6,7 +6,7 @@ import * as XLSX from 'xlsx';
 import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
 import Util from "./";
 import EventsUtil from "./eventsUtil";
-import StarrySkyUtil, { create_StarrySkyUtil } from "./starrySkyUtil";
+import StarrySkyUtil, { create_StarrySkyUtil } from "./starrySkyUtilSec";
 import { EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
 import { imgs, config, lotteryId, mockData } from "../mockData"; 
@@ -21,7 +21,7 @@ export default class LotteryUtil {
     scene: THREE.Scene|null = null;
     renderer: CSS3DRenderer|null = null;
     controls: TrackballControls|null = null;
-    select3dCardIndexs: any[] = [];
+    select3dCardIds: any[] = [];
     _3dCards: any[] = [];
     lotteryData: LotteryDataInterface = {
         lotteryId: "",
@@ -95,9 +95,9 @@ export default class LotteryUtil {
             this.initCards();
             this.animate();
             this.registerEvent();
+            this.handleUpdateBtnGroup();
+            this.handleUpdateLotteryData();
             await this.setTransform();
-            EventsUtil.emit(EventType.updatePrizes, this.lotteryData);
-            EventsUtil.emit(EventType.updateBtns, this.isShowTable);
             console.log(this);
         });
     }
@@ -192,16 +192,15 @@ export default class LotteryUtil {
 
     selectedCards(){
         const { resolution, width, selectDuration } = this.config; 
-        let tag = -(this.currentLuckyUsers.length - 1) / 2,
-            percent = 0.85;
+        let tag = -(this.currentLuckyUsers.length - 1) / 2;
 
-        this.select3dCardIndexs.forEach((id: number) => {
+        this.select3dCardIds.forEach((id: number) => {
             const object = this._3dCards[id - 1];
             new TWEEN.Tween(object.position)
                 .to({
-                    x: tag * width * resolution * percent,
+                    x: tag * width * resolution * 1,
                     y: 50 * resolution,
-                    z: 2200,
+                    z: 1800,
                 }, this.getRandomDuration(selectDuration))
                 .easing(TWEEN.Easing.Exponential.InOut)
                 .start();
@@ -239,8 +238,8 @@ export default class LotteryUtil {
     resetCards(){
         const { resetDuration } = this.config;
         this.flipCard(false);
-        if(this.select3dCardIndexs?.length > 0){
-            this.select3dCardIndexs.forEach((id: number) => {
+        if(this.select3dCardIds?.length > 0){
+            this.select3dCardIds.forEach((id: number) => {
                 const object = this._3dCards[id - 1],
                     target = this.sphere[id - 1];
                 new TWEEN.Tween(object.position)
@@ -272,36 +271,55 @@ export default class LotteryUtil {
         });
     }
 
-    main(step: StepType){
+    main(params: any){
+        const { type, text } = params,
+            { isAuto }= this.config;
+
         return new Promise(async(resolve, reject) => {
-            if(this.isLottery) {
-                resolve(true);
-            }else{
-                switch(step){
-                    case StepType.welcome:
-                        {
-                            this.isShowTable = false;
-                            EventsUtil.emit(EventType.updateBtns, this.isShowTable);
-                            await this.setTransform();
-                        }
-                        break;
-                    case StepType.lottery:
-                        {
+            if(isAuto) {
+                if(this.isLottery){
+                    resolve(true);
+                    return;
+                }
+            }
+            switch(type){
+                case StepType.welcome:
+                    {
+                        this.isShowTable = false;
+                        this.handleUpdateBtnGroup();
+                        await this.setTransform();
+                    }
+                    break;
+                case StepType.lottery:
+                    {
+
+                        if(text === Locale.Page.Pause){
+                            this.config.times = 0;
+                            this.handleUpdateBtnGroup(type);
+                        }else{
                             const { prizeIndex } = this.lotteryData;
+                            this.config.times = Infinity;
+                            this.handleUpdateBtnGroup(type);
                             if(prizeIndex > -1){
                                 this.updatePrizes();
                                 await this.resetCards();
                                 this.start();
                             }
                         }
-                        break;
-                    case StepType.reLottery:
-                        {
+                    }
+                    break;
+                case StepType.reLottery:
+                    {
+                        if(text === Locale.Page.Pause){
+                            this.config.times = 0;
+                            this.handleUpdateBtnGroup(type);
+                        }else{
                             const { prizeIndex } = this.lotteryData;
-                            if(prizeIndex > -1){
-                                // 重置上一次抽奖结果
+                            this.config.times = Infinity;
+                            this.handleUpdateBtnGroup(type);
+                            if(prizeIndex > -1){ // 重置上一次抽奖结果
                                 this.lotteryData.users.forEach((it: UserInterface) => {
-                                    if(this.select3dCardIndexs.includes(it.id)){
+                                    if(this.select3dCardIds.includes(it.id)){
                                         it.isWin = false;
                                         it.gift = PrizeType.none;
                                     }
@@ -310,22 +328,22 @@ export default class LotteryUtil {
                                 this.start();
                             }
                         }
-                        break;
-                    case StepType.export:
-                        {
-                            await this.exportExcel();
-                        }
-                        break;
-                    case StepType.reset:
-                        {
+                    }
+                    break;
+                case StepType.export:
+                    {
+                        await this.exportExcel();
+                    }
+                    break;
+                case StepType.reset:
+                    {
                         await this.reset();
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                resolve(true);
+                    }
+                    break;
+                default:
+                    break;
             }
+            resolve(true);
         });
     }
 
@@ -338,7 +356,7 @@ export default class LotteryUtil {
             const { prizesCount, prizes, prizeIndex, users } = this.lotteryData,
                 count = prizesCount[prizeIndex];
                 
-            this.select3dCardIndexs = [];
+            this.select3dCardIds = [];
             this.msg = "";
             for(let i = 0; i < count; i++) {
                 const randomIndex = this.getRandomValue(this.unLuckyUsers.length),
@@ -348,7 +366,7 @@ export default class LotteryUtil {
                         if(user.id === it.id){
                             it.isWin = true;
                             it.isInPrize = true;
-                            this.select3dCardIndexs.push(it.id);
+                            this.select3dCardIds.push(it.id);
                             it.gift = prizes[prizeIndex].type;
                         }
                     });
@@ -395,8 +413,8 @@ export default class LotteryUtil {
         return new Promise(async(resolve, reject) => {
             this.lotteryData = Util.deepCopy(mockData);
             this.setLotteryData(lotteryId, this.lotteryData);
-            EventsUtil.emit(EventType.updatePrizes, this.lotteryData);
-            EventsUtil.emit(EventType.updateBtns, this.isShowTable);
+            this.handleUpdateBtnGroup();
+            this.handleUpdateLotteryData();
             await this.setTransform();
             resolve(true);
         });
@@ -453,17 +471,60 @@ export default class LotteryUtil {
 
     setRotate(){
         return new Promise((resolve, reject) => {
-            const { rotateDuration } = this.config,
+            const { rotateDuration, lineRotateDuration, isAuto } = this.config,
                 scene = this.scene!;
             scene.rotation.y = 0;
-            new TWEEN.Tween(scene.rotation)
-                .to({ y: Math.PI * 8}, rotateDuration)
-                .onUpdate(this.render.bind(this))
-                .easing(TWEEN.Easing.Exponential.InOut)
-                .start()
-                .onComplete(() => {
-                    resolve(true);
-                });
+
+            let rotationTween: any = null;
+
+            if(isAuto){
+                new TWEEN.Tween(scene.rotation)
+                    .to({ y: Math.PI * 8}, rotateDuration)
+                    .onUpdate(this.render.bind(this))
+                    .easing(TWEEN.Easing.Exponential.InOut)
+                    .start()
+                    .onComplete(() => {
+                        resolve(true);
+                    });
+            }else{
+                const initRotation = () => {
+                    // 清除旧动画
+                    if (rotationTween) {
+                        TWEEN.remove(rotationTween);
+                    }
+                    
+                    // 创建新的旋转动画
+                    rotationTween = new TWEEN.Tween(scene.rotation)
+                        .to({ y: Math.PI * 8 * 10}, lineRotateDuration)
+                        .onUpdate(this.render.bind(this))
+                        .easing(TWEEN.Easing.Linear.None)
+                        .onComplete(() => {
+                            if(this.config.times === 0){
+                                rotationTween.stop();
+                                // TWEEN.remove(rotationTween);
+                                resolve(true);
+                            }else{
+                               initRotation().start();
+                            }
+                        });
+                        return rotationTween;
+                }
+                initRotation().start();
+                // rotationTween.to({ y: Math.PI * 8}, lineRotateDuration)
+                //     .onUpdate(this.render.bind(this))
+                //     .easing(TWEEN.Easing.Linear.None)
+                //     .start()
+                //     .onComplete(() => {
+                //         if(this.config.times === 0){
+                //             rotationTween.stop();
+                //             // TWEEN.remove(rotationTween);
+                //             resolve(true);
+                //         }else{
+                //             rotationTween.stop();
+                //             rotationTween.start();
+                //         }
+                //     });
+            }
         });
     }
 
@@ -488,7 +549,7 @@ export default class LotteryUtil {
         if(prizes[prizeIndex].count === prizes[prizeIndex].total){
             this.lotteryData.prizeIndex = prizeIndex - 1;
         }
-        EventsUtil.emit(EventType.updatePrizes, this.lotteryData);
+        this.handleUpdateLotteryData();
     }
 
     /**
@@ -521,7 +582,7 @@ export default class LotteryUtil {
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
         this.render();
-        this.starrySkyUtil.updateCanvasSize(this.starrySkyUtil.canvas!);
+        this.starrySkyUtil.updateCanvasSize();
     }
 
     registerEvent(){
@@ -531,7 +592,7 @@ export default class LotteryUtil {
     }
 
     flipCard(status: boolean){
-        this.select3dCardIndexs.forEach(id => {
+        this.select3dCardIds.forEach(id => {
             const object = this._3dCards[id - 1];
             if(status){
                 object.element && !object.element.classList.contains("flip") && object.element.classList.add("flip");
@@ -561,6 +622,19 @@ export default class LotteryUtil {
             default:
                 return Locale.Common.None;
         }
+    }
+
+    handleUpdateLotteryData(){
+        EventsUtil.emit(EventType.updatePrizes, this.lotteryData);
+    }
+
+    handleUpdateBtnGroup(type?: StepType){
+        const { isAuto, times } = this.config;
+        EventsUtil.emit(EventType.updateBtnGroup, {
+            isShowTable: this.isShowTable,
+            isShowPause: isAuto ? false : times === Infinity,
+            type
+        });
     }
 }
 

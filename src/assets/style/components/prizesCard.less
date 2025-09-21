@@ -1,8 +1,8 @@
 @import "../reset.less";
-@import "../varible.less";
+@import "../variable.less";
 .prize-card-wrapper {
-    width: 16vh;
-    height: 20vh;
+    width: 14vh;
+    height: 16vh;
     cursor: default;
     .prize-card-inner {
         width: 100%;
@@ -30,8 +30,8 @@
                 box-shadow: 0 0 12px @cr-red;
             }
             >img{
-                width: 60%;
-                max-width: 60%;
+                width: 50%;
+                max-width: 50%;
             }
         }
         .prize-card-back-side{
@@ -40,29 +40,21 @@
             .flex-horizontal-01;
             .top, .bottom{
                 width: 100%;
-                height: 5vh;
-                position: relative;
+                height: 3vh;
                 >img{
                     width: 3vh;
                     max-width: 3vh;
-                    position: absolute;
-                    top: 1vh;
-                    z-index: @zx01
                 }
             }
             .top{
-                >img{
-                    left: 1vh;
-                }
+               .flex-vertical-03;
             }
             .bottom{
-                >img{
-                    right: 1vh;
-                }
+               .flex-vertical-04;
             }
             .center{
                 width: 100%;
-                height: calc(100% - 60px);
+                flex: 1;
                 .flex-vertical-01;
                 .number{
                     font-size: 6vh;

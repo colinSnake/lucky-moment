@@ -1,10 +1,10 @@
-import Btns from "./btn";
+import BtnGroup from "./btnGroup";
 import Core from "./core";
 import PrizeCards from "./card";
 
 
 export {
-    Btns,
+    BtnGroup,
     Core,
     PrizeCards,
 }

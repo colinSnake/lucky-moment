@@ -1,5 +1,5 @@
 
-import { Btns, Core, PrizeCards } from "@/components";
+import { BtnGroup, Core, PrizeCards } from "@/components";
 
 const Home = () => {
     return (
@@ -8,7 +8,7 @@ const Home = () => {
                 <div className="main-content">
                     <PrizeCards />
                     <Core />
-                    <Btns />
+                    <BtnGroup />
                 </div>
             </div>
             <div className="main-inner">

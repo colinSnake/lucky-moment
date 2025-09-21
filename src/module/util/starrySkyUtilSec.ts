@@ -6,7 +6,7 @@ export default class StarrySkyUtil {
     img: HTMLImageElement = new Image();
     instanceObj: StarrySkyUtil|null = null;
     constant = {
-        starNums: 120,
+        starNumber: 120,
         focalLength: 0, // 焦距
         centerX: 0,
         centerY: 0,
@@ -25,7 +25,7 @@ export default class StarrySkyUtil {
 
     initialize(){
         this.canvas = document.querySelector("#starry-sky")!;
-        this.updateCanvasSize(this.canvas);
+        this.updateCanvasSize(true);
         this.drawOffscreenWorker = new Worker(new URL('./worker/drawOffscreen.worker.ts', import.meta.url));
         const offscreen = this.canvas.transferControlToOffscreen();
         this.drawOffscreenWorker.postMessage({
@@ -49,18 +49,27 @@ export default class StarrySkyUtil {
         }, 100);
     }
 
-    updateCanvasSize(canvas: HTMLCanvasElement){
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        this.constant.focalLength = canvas.width / 2;
-        this.constant.centerX = canvas.width / 2;
-        this.constant.centerY = canvas.height / 2;
-        this.produceStars();
+    updateCanvasSize(isUpdate?: boolean){
+        if(isUpdate){
+            const canvas = this.canvas!
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const [width, height] = [window.innerWidth, window.innerHeight];
+            this.drawOffscreenWorker?.postMessage({
+                type: 'resize',
+                width,
+                height,
+            });
+            this.constant.focalLength = width / 2;
+            this.constant.centerX = width / 2;
+            this.constant.centerY = height / 2;
+            this.produceStars();
+        }
     }
 
     produceStars(){
         const canvas = this.canvas!,
-            { starNums } = this.constant;
+            { starNumber } = this.constant;
         const textArr = [
             "2025", "我们结婚啦", 
             "LM & MRX",
@@ -76,7 +85,7 @@ export default class StarrySkyUtil {
             "既许一人以偏爱", "愿尽余生之慷慨","年年岁岁不相负", "落日与晚风", "朝朝又暮暮",
             "愿我们始于初见", "止于终老", "以爱之名", "以余生为期", "喜悦有分享", "同量天地宽", "相随日月长",
         ];
-        for(let i = 0; i < starNums; i++){
+        for(let i = 0; i < starNumber; i++){
             const star = {
                 x: this.getRandomNum(canvas.width),
                 y: this.getRandomNum(canvas.height),

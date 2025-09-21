@@ -1,6 +1,6 @@
 let drawOffscreenWorker: any = null; 
 
-class DrawOffscrrenWorker {
+class DrawOffscreenWorker {
     constant: any = null;
     stars: any[] = [];
     canvas: OffscreenCanvas|null = null;
@@ -75,16 +75,26 @@ class DrawOffscrrenWorker {
         offscreenCtx.clearRect(0, 0, offscreenWidth, offscreenHeight);
         offscreenCtx.fillText(word, offscreenWidth / 2, offscreenHeight / 2);
     }
+
+    resize(params: any){
+        const { width, height } = params;
+        this.canvas!.width = width;
+        this.canvas!.height = height;
+        this.render();
+    }
 }
 
 self.onmessage = (e) => {
     const { type, canvas, ext } = e.data;
     switch(type){
         case "init":
-            drawOffscreenWorker = new DrawOffscrrenWorker(canvas, JSON.parse(ext));
+            drawOffscreenWorker = new DrawOffscreenWorker(canvas, JSON.parse(ext));
             break;
         case 'render':
             drawOffscreenWorker.render();
+            break;
+        case 'resize':
+            drawOffscreenWorker.resize(ext);
             break;
         default:
             break;

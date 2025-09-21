@@ -5,6 +5,7 @@ export const en = {
         ReDraw: 'Re-Draw',
         ExportExcel: 'Export Excel',
         Reset: 'Reset',
+        Pause: 'Pause',
     },
     Common: {
         SpecialPrize: 'Special Prize',

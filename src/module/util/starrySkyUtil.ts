@@ -8,7 +8,7 @@ export default class StarrySkyUtil {
     img: HTMLImageElement = new Image();
     instanceObj: StarrySkyUtil|null = null;
     constant = {
-        starNums: 120,
+        starNumber: 120,
         focalLength: 0, // 焦距
         centerX: 0,
         centerY: 0,
@@ -31,7 +31,7 @@ export default class StarrySkyUtil {
         this.ctx = this.canvas.getContext("2d");
         this.offscreenCanvas = new OffscreenCanvas(offscreenWidth, offscreenHeight);
         this.offscreenCtx = this.offscreenCanvas.getContext('2d');
-        this.updateCanvasSize(this.canvas);
+        this.updateCanvasSize();
         this.render();
     }
 
@@ -47,7 +47,8 @@ export default class StarrySkyUtil {
         // }, 1000 / 40);
     }
 
-    updateCanvasSize(canvas: HTMLCanvasElement){
+    updateCanvasSize(){
+        const canvas = this.canvas!;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         this.constant.focalLength = canvas.width / 2;
@@ -58,7 +59,7 @@ export default class StarrySkyUtil {
 
     produceStars(){
         const canvas = this.canvas!,
-            { starNums } = this.constant;
+            { starNumber } = this.constant;
         const textArr = [
             "2025", "我们结婚啦", 
             "LM & MRX",
@@ -74,7 +75,7 @@ export default class StarrySkyUtil {
             "既许一人以偏爱", "愿尽余生之慷慨","年年岁岁不相负", "落日与晚风", "朝朝又暮暮",
             "愿我们始于初见", "止于终老", "以爱之名", "以余生为期", "喜悦有分享", "同量天地宽", "相随日月长",
         ];
-        for(let i = 0; i < starNums; i++){
+        for(let i = 0; i < starNumber; i++){
             const star = {
                 x: this.getRandomNum(canvas.width),
                 y: this.getRandomNum(canvas.height),

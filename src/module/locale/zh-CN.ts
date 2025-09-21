@@ -5,6 +5,7 @@ export const zh = {
         ReDraw: '重新抽奖',
         ExportExcel: '导出 Excel',
         Reset: '重置',
+        Pause: '暂停',
     },
     Common: {
         SpecialPrize: '特等奖',
