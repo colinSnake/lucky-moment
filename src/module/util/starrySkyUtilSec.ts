@@ -12,7 +12,7 @@ export default class StarrySkyUtil {
         centerY: 0,
         offscreenWidth: 120,
         offscreenHeight: 30,
-        font: '13px zcoolkangyuyang_w01',
+        font: '20px baotuxiaobaiti',
     }
     stars: StarInterface[] = [];
     timer: any = null;
@@ -85,6 +85,7 @@ export default class StarrySkyUtil {
             "既许一人以偏爱", "愿尽余生之慷慨","年年岁岁不相负", "落日与晚风", "朝朝又暮暮",
             "愿我们始于初见", "止于终老", "以爱之名", "以余生为期", "喜悦有分享", "同量天地宽", "相随日月长",
         ];
+        this.stars = [];
         for(let i = 0; i < starNumber; i++){
             const star = {
                 x: this.getRandomNum(canvas.width),

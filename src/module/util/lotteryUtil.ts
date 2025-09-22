@@ -6,7 +6,7 @@ import * as XLSX from 'xlsx';
 import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
 import Util from "./";
 import EventsUtil from "./eventsUtil";
-import StarrySkyUtil, { create_StarrySkyUtil } from "./starrySkyUtilSec";
+import StarrySkyUtil, { create_StarrySkyUtil } from "./starrySkyUtil";
 import { EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
 import { imgs, config, lotteryId, mockData } from "../mockData"; 
