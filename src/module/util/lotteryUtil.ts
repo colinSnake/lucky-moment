@@ -224,12 +224,12 @@ export default class LotteryUtil {
             .onUpdate(this.render.bind(this))
             .start()
             .onComplete(() => {
-                this.isLottery = false;
-                this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
-                this.alert();
-                this.setLotteryData(lotteryId, this.lotteryData);
                 let timer: any = setTimeout(() => {
                     this.flipCard(true);
+                    this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
+                    this.alert();
+                    this.setLotteryData(lotteryId, this.lotteryData);
+                    this.isLottery = false;
                     clearTimeout(timer);
                     timer = null;
                 }, 1000);
@@ -376,10 +376,6 @@ export default class LotteryUtil {
                         this.msg = Locale.Common.Congratulations(this.msg, this.getPrizeName(prizes[prizeIndex].type));
                     }
                 }
-            }
-            // 抽取到最后一个奖品
-            if(prizeIndex === 0 && prizes[prizeIndex].total === 1){
-                this.updatePrizes();
             }
             this.selectedCards();
         });
@@ -545,11 +541,12 @@ export default class LotteryUtil {
      * @description: 更新 lottery data 
      **/ 
     updatePrizes(){
-        const { prizes, prizesCount, prizeIndex } = this.lotteryData;
-        prizes[prizeIndex].count += prizesCount[prizeIndex];
+        let { prizes, prizesCount, prizeIndex } = this.lotteryData;
         if(prizes[prizeIndex].count === prizes[prizeIndex].total){
-            this.lotteryData.prizeIndex = prizeIndex - 1;
+            prizeIndex -= 1;
+            this.lotteryData.prizeIndex = prizeIndex;
         }
+        prizes[prizeIndex].count += prizesCount[prizeIndex];
         this.handleUpdateLotteryData();
     }
 

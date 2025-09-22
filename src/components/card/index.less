@@ -6,15 +6,15 @@
         padding: 1vh;
         width: 24vh;
         height: 6vh;
-        background-color: #333;
-        // border: 1px solid @cr-red-a50;
-        color: @cr-white;
+        background-color: @cr-cyan-a10;
+        border: none;
+        color: @cr-cyan;
         margin-bottom: 1vh;
         border-radius: 8px;
         transition: transform 1s ease-in;
         transform: scale(1);
         &.active{
-            box-shadow: 0 0 15px 0 @cr-red-a75;
+            box-shadow: 0 0 15px 0 @cr-cyan-a75;
             transform: scale(1.15);
             transform-origin: left center;
             margin: 1vh 0 2vh 0;
@@ -31,6 +31,7 @@
                 box-shadow: inset 0 0 0 1px;
                 border-radius: 4px;
                 animation: animate01 8s linear infinite;
+                fill: @cr-cyan;
             }
             &::before{
                 animation-delay: -4s;
@@ -55,9 +56,15 @@
                 }
                 .card-title{
                     font-size: 1.5vh;
+                    font-weight: bold;
+                    font-family: "zcoolkangyuyang_w01";
+                    color: @cr-white;
                 }
                 .card-content{
-                    font-size: 1.5vh;
+                    font-size: 1.2vh;
+                    font-family: "zcoolkangyuyang_w01";
+                    margin-top: 1vh;
+                    color: @cr-white;
                 }
             }
         }
