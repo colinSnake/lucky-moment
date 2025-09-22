@@ -4,6 +4,7 @@ import { EventType, StepType } from "@/module/enum";
 import { create_LotteryUtil } from "@/module/util/lotteryUtil";
 import EventsUtil from "@/module/util/eventsUtil";
 import Locale from "@/module/locale";
+import "./index.css";
 
 const Btn = (props: any) => {
     const { type, text } = props;

@@ -1,5 +1,4 @@
-@import "../assets/style/reset.less";
-@import "../assets/style/variable.less";
+@import "./variable.less";
 
 .main-wrapper{
     position: relative;
@@ -18,9 +17,6 @@
         .main-content{
             width: 100%;
             height: 100%;
-            @import "../assets/style/components/card.less";
-            @import "../assets/style/components/core.less";
-            @import "../assets/style/components/btn.less";
         }
         #starry-sky{
             width: 100%;
@@ -34,7 +30,87 @@
         }
     }
 }
-@import url("../assets/style/components/prizesCard.less");
+
+.prize-card-wrapper {
+    width: 14vh;
+    height: 16vh;
+    cursor: default;
+    .prize-card-inner {
+        width: 100%;
+        height: 100%;
+        .prize-card-front-side, .prize-card-back-side{
+            width: 100%;
+            height: 0;
+            opacity: 0;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            transform: scale(1);
+            &:hover{
+                cursor: pointer;
+                transform: scale(1.05);
+            }
+        }
+        .prize-card-front-side{
+            height: 100%;
+            opacity: 1;
+            background-color: @cr-red-a85;
+            box-shadow: 0 0 12px @cr-red-a85;
+            .flex-horizontal-01;
+            &:hover {
+                background-color: @cr-red;
+                box-shadow: 0 0 12px @cr-red;
+            }
+            >img{
+                width: 50%;
+                max-width: 50%;
+            }
+        }
+        .prize-card-back-side{
+            background-color: @cr-white-a75;
+            box-shadow: 0 0 12px @cr-white-a75;
+            .flex-horizontal-01;
+            .top, .bottom{
+                width: 100%;
+                height: 3vh;
+                >img{
+                    width: 3vh;
+                    max-width: 3vh;
+                }
+            }
+            .top{
+               .flex-horizontal-03;
+            }
+            .bottom{
+               .flex-horizontal-04;
+            }
+            .center{
+                width: 100%;
+                flex: 1;
+                .flex-horizontal-01;
+                .number{
+                    font-size: 6vh;
+                    font-weight: bold;
+                    color: @cr-black;
+                    font-family: "stcaiyun";
+                }
+            }
+        }
+    }
+    &.flip{
+        .prize-card-inner{
+            .prize-card-front-side{
+                height: 0;
+                opacity: 0;
+            }
+            .prize-card-back-side{
+                height: 100%;
+                opacity: 1;
+            }
+        }
+    }
+}
+
+
 
 
 

@@ -136,27 +136,27 @@ table {
   src: url('/fonts/subset-STCaiyun.woff2') format('truetype');
   font-display: swap;
 }
-.flex-vertical-01 {
+.flex-horizontal-01 {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.flex-vertical-02 {
+.flex-horizontal-02 {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.flex-vertical-03 {
+.flex-horizontal-03 {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
-.flex-vertical-04 {
+.flex-horizontal-04 {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.flex-horizontal-01 {
+.flex-vertical-01 {
   display: flex;
   flex-direction: column;
 }
@@ -194,121 +194,6 @@ table {
 .main-wrapper .main-inner .main-content {
   width: 100%;
   height: 100%;
-}
-.main-wrapper .main-inner .main-content .main-prizes-cards {
-  margin: 1vh;
-  display: flex;
-  flex-direction: column;
-}
-.main-wrapper .main-inner .main-content .main-prizes-cards .card {
-  padding: 1vh;
-  width: 24vh;
-  height: 6vh;
-  background-color: #333;
-  color: #ffffff;
-  margin-bottom: 1vh;
-  border-radius: 8px;
-  transition: transform 1s ease-in;
-  transform: scale(1);
-}
-.main-wrapper .main-inner .main-content .main-prizes-cards .card.active {
-  box-shadow: 0 0 15px 0 rgba(255, 68, 68, 0.75);
-  transform: scale(1.15);
-  transform-origin: left center;
-  margin: 1vh 0 2vh 0;
-  position: relative;
-}
-.main-wrapper .main-inner .main-content .main-prizes-cards .card.active::before,
-.main-wrapper .main-inner .main-content .main-prizes-cards .card.active::after {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  box-sizing: border-box;
-  content: '';
-  z-index: 1;
-  box-shadow: inset 0 0 0 1px;
-  border-radius: 4px;
-  animation: animate01 8s linear infinite;
-}
-.main-wrapper .main-inner .main-content .main-prizes-cards .card.active::before {
-  animation-delay: -4s;
-}
-.main-wrapper .main-inner .main-content .main-prizes-cards .card .card-inner {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.main-wrapper .main-inner .main-content .main-prizes-cards .card .card-inner .card-box {
-  width: calc(100% - 10vh);
-}
-.main-wrapper .main-inner .main-content .main-prizes-cards .card .card-inner .card-box.card-cover {
-  width: 6vh;
-  height: 6vh;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.main-wrapper .main-inner .main-content .main-prizes-cards .card .card-inner .card-box.card-cover > img {
-  max-width: 100%;
-  width: 100%;
-  height: 100%;
-}
-.main-wrapper .main-inner .main-content .main-prizes-cards .card .card-inner .card-box .card-title {
-  font-size: 1.5vh;
-}
-.main-wrapper .main-inner .main-content .main-prizes-cards .card .card-inner .card-box .card-content {
-  font-size: 1.5vh;
-}
-.main-wrapper .main-inner .main-content .core {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.main-wrapper .main-inner .main-content .core .render {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.main-wrapper .main-inner .main-content .main-btns {
-  width: 100%;
-  height: 6vh;
-  position: fixed;
-  left: 0;
-  bottom: 4vh;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.main-wrapper .main-inner .main-content .main-btns .btn {
-  color: #ffffff;
-  background: transparent;
-  outline: 1px solid rgba(19, 194, 194, 0.75);
-  border: none;
-  padding: 1.6vh 4vh;
-  font-size: 2.5vh;
-  font-weight: bold;
-  cursor: pointer;
-  margin-right: 10vh;
-  border-radius: 12px;
-  font-family: "zcoolkangyuyang_w01";
-}
-.main-wrapper .main-inner .main-content .main-btns .btn:last-child {
-  margin-right: 0;
-}
-.main-wrapper .main-inner .main-content .main-btns .btn:hover {
-  background-color: rgba(19, 194, 194, 0.5);
 }
 .main-wrapper .main-inner #starry-sky {
   width: 100%;
@@ -362,7 +247,8 @@ table {
   background-color: rgba(255, 255, 255, 0.75);
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.75);
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .prize-card-wrapper .prize-card-inner .prize-card-back-side .top,
 .prize-card-wrapper .prize-card-inner .prize-card-back-side .bottom {

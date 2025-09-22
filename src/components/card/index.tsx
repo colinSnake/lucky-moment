@@ -4,6 +4,7 @@ import EventsUtil from "@/module/util/eventsUtil";
 import { create_LotteryUtil } from "@/module/util/lotteryUtil";
 import { LotteryDataInterface, PrizeInterface } from "@/module/interface";
 import { EventType, PrizeType } from "@/module/enum";
+import "./index.css";
 
 const Card = (props: PrizeInterface) => {
     const { name, count, cover, total, type, isActive } = props;

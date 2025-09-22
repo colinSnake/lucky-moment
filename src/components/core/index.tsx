@@ -2,6 +2,7 @@
 'use client';
 import { useEffect } from "react";
 import { create_LotteryUtil } from "@/module/util/lotteryUtil";
+import "./index.css";
 let isCreated = false;
 
 const Core = () => {

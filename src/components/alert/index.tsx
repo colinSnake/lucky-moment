@@ -1,5 +1,6 @@
 'use client';
 import { useEffect } from "react";
+import "./index.css";
 
 const Alert = (props: any) => {
     const { type, title, message } = props;

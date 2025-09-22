@@ -1,7 +1,12 @@
+@import "./reset.less";
+
 @cr-white-a75: rgba(255, 255, 255, 0.75);
 @cr-white: rgba(255, 255, 255, 1);
 
 @cr-black: rgba(0, 0, 0, 1);
+@cr-black-a30: rgba(0, 0, 0, 0.3);
+
+
 @cr-cyan-a50: rgba(19, 194, 194, 0.50);
 @cr-cyan-a75: rgba(19, 194, 194, 0.75);
 @cr-cyan: rgba(19, 194, 194, 1);
@@ -11,11 +16,16 @@
 @cr-red-a85: rgba(255, 68, 68, 0.85); 
 @cr-red: rgba(255, 68, 68, 1);
 
+@cr-dark-v1: #282828;
+@cr-dark-v2: #1B1B1B;
+@cr-gray-a30: #BBBBBB30;
+
 @img-bg-01: url(/public/images/love.png);
 
 @zx01: 1;
 @zx05: 5;
 @zx99: 99;
+@zxMax: 999;
 
 @font-face {
     font-family: 'zcoolkangyuyang_w01';
@@ -29,32 +39,32 @@
     font-display: swap;
 }
 
-.flex-vertical-01 {
+.flex-horizontal-01 {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.flex-vertical-02 {
+.flex-horizontal-02 {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.flex-vertical-03{
+.flex-horizontal-03{
     display: flex;
     align-items: center;
     justify-content: flex-start;
 }
 
-.flex-vertical-04{
+.flex-horizontal-04{
     display: flex;
     align-items: center;
     justify-content: flex-end;
 }
 
 
-.flex-horizontal-01 {
+.flex-vertical-01 {
     display: flex;
     flex-direction: column;
 }
