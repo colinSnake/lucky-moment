@@ -9,7 +9,7 @@ import EventsUtil from "./eventsUtil";
 import StarrySkyUtil, { create_StarrySkyUtil } from "./starrySkyUtil";
 import { EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
-import { imgs, config, lotteryId, mockData } from "../mockData"; 
+import { imgs, config, lotteryId, mockData, words } from "../mockData"; 
 import Locale from "../locale";
 
 export default class LotteryUtil {
@@ -110,7 +110,8 @@ export default class LotteryUtil {
         cardEle.innerHTML = `
             <div class="prize-card-inner">
                 <div class="prize-card-front-side">
-                    <img src=${iconXi} alt="cover" />
+                    <!--<img src=${iconXi} alt="cover" />-->
+                    <span class="word">${words[user.id - 1]}</span>
                 </div>
                 <div class="prize-card-back-side active">
                     <div class="top">

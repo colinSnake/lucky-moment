@@ -1,4 +1,5 @@
 import { PrizeType } from "../enum";
+import { words } from "./words";
 import { LotteryDataInterface, PrizeInterface } from "../interface";
 export const lotteryId = "cb85ae949eda1fb233816fca52bbd974";
 export const imgs = {
@@ -91,3 +92,7 @@ export const mockData: LotteryDataInterface = {
     isShowTable: true,
     isLottery: false,
 };
+
+export {
+    words
+}

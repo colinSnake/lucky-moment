@@ -208,10 +208,12 @@ table {
 .main-wrapper .main-inner #starry-sky {
   width: 100%;
   height: 100%;
-  background-image: url(../../public/alternative/bg_06.jpg);
+  background-image: url(../../public/images/bg_10_tiny.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-blend-mode: darken;
+  background-color: rgba(1, 1, 1, 0.5);
 }
 .prize-card-wrapper {
   width: 14vh;
@@ -252,6 +254,13 @@ table {
 .prize-card-wrapper .prize-card-inner .prize-card-front-side > img {
   width: 50%;
   max-width: 50%;
+}
+.prize-card-wrapper .prize-card-inner .prize-card-front-side .word {
+  font-size: 5vh;
+  font-weight: bold;
+  color: #ffffff;
+  font-family: "baotuxiaobaiti";
+  text-align: center;
 }
 .prize-card-wrapper .prize-card-inner .prize-card-back-side {
   background-color: rgba(255, 255, 255, 0.75);

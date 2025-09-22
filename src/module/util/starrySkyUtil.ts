@@ -61,8 +61,7 @@ export default class StarrySkyUtil {
         const canvas = this.canvas!,
             { starNumber } = this.constant;
         const textArr = [
-            "2025", "我们结婚啦", 
-            "LM & MRX",
+            "2025", "LM & MRX", "我们结婚啦", 
             "囍结良缘", "♡", "♥", 
             "佳偶天成", "百年好合", 
             "白头偕老", "琴瑟和鸣",
