@@ -58,15 +58,15 @@ export const prizes: PrizeInterface[] = [
         total: 10,   
         type: PrizeType.thirdPrize
     },
-    // {
-    //     id: 4, 
-    //     name: "手机挂件",
-    //     amount: 20,
-    //     count: 0,
-    //     cover: "/images/mbp.jpg",
-    //     total: 20,  
-    //     type: PrizeType.normalPrize
-    // },
+    {
+        id: 4, 
+        name: "手机挂件",
+        amount: 20,
+        count: 0,
+        cover: "/images/mbp.jpg",
+        total: 20,  
+        type: PrizeType.normalPrize
+    },
 ];
 const getUsers = () => {
     const users = [],
