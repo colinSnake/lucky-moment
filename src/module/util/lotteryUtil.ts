@@ -387,21 +387,50 @@ export default class LotteryUtil {
             let jsonData: any = this.luckyUsers.map((it: UserInterface) => { 
                 const curPrize = prizes.find((p: PrizeInterface) => p.type === it.gift);
                 return {
-                    [Locale.Common.Number]: it.id,
+                    [Locale.Common.Number]: `${it.id}`, // 必须要是字符串
                     [Locale.Common.Name]: it.name,
                     [Locale.Common.Prize]: this.getPrizeName(it.gift as PrizeType),
                     [Locale.Common.Gift]: curPrize ? curPrize.name : ""
                 };
             });
             // 1. 将 JSON 数据转换为工作表
-            const worksheet = XLSX.utils.json_to_sheet(jsonData);
-
+            const worksheet: any = XLSX.utils.json_to_sheet(jsonData);
+            
             // 2. 创建新工作簿并附加工作表
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, Locale.Common.PrizeForm); 
-
+            
+            // 🔧 设置列宽（单位：字符宽度）
+            worksheet['!cols'] = [
+                { wch: 10 },
+                { wch: 10 }, 
+                { wch: 10 },
+                { wch: 20 },
+            ];
+            
+            // 获取工作表的范围
+            const range = XLSX.utils.decode_range(worksheet['!ref']);
+            
+            // 为所有单元格设置左对齐样式（包括标题行和数据行）
+            for(let row = range.s.r; row <= range.e.r; row++) {
+                for(let col = range.s.c; col <= range.e.c; col++) {
+                    const address = XLSX.utils.encode_cell({r: row, c: col});
+                    if(worksheet[address]) {
+                        worksheet[address].s = worksheet[address].s || {};
+                        worksheet[address].s.alignment = {
+                            horizontal: "left",
+                            vertical: "center"
+                        };
+                    }
+                }
+            }
+            
             // 3. 导出并下载 Excel 文件
-            XLSX.writeFile(workbook, `${Locale.Common.PrizeForm}.xlsx`);           
+            // 使用正确的选项确保样式被保留
+            XLSX.writeFile(workbook, `${Locale.Common.PrizeForm}.xlsx`, {
+                cellStyles: true,
+                bookType: 'xlsx'
+            });
             resolve(true);
         });
     }
@@ -468,59 +497,58 @@ export default class LotteryUtil {
 
     setRotate(){
         return new Promise((resolve, reject) => {
-            const { rotateDuration, lineRotateDuration, isAuto } = this.config,
+            const { rotateDuration, isAuto, times } = this.config,
                 scene = this.scene!;
             scene.rotation.y = 0;
 
             let rotationTween: any = null;
 
-            if(isAuto){
+            const sport = (params: any) => {
+                const { pos, duration, easeType = TWEEN.Easing.Exponential.InOut } = params;
                 new TWEEN.Tween(scene.rotation)
-                    .to({ y: Math.PI * 8}, rotateDuration)
+                    .to(pos, duration)
                     .onUpdate(this.render.bind(this))
-                    .easing(TWEEN.Easing.Exponential.InOut)
+                    .easing(easeType)
                     .start()
                     .onComplete(() => {
                         resolve(true);
                     });
+            }
+            let index = 0;
+            if(isAuto){
+                sport({ 
+                    pos: {y: Math.PI * 8}, 
+                    duration: rotateDuration 
+                });
             }else{
                 const initRotation = () => {
-                    // 清除旧动画
-                    if (rotationTween) {
+                    if (rotationTween) { // 清除旧动画
                         TWEEN.remove(rotationTween);
                     }
-                    
+                    const pos = { y: Math.PI * 2},
+                        duration = rotateDuration / 3;
                     // 创建新的旋转动画
                     rotationTween = new TWEEN.Tween(scene.rotation)
-                        .to({ y: Math.PI * 8 * 10}, lineRotateDuration)
+                        .to(pos, duration)
                         .onUpdate(this.render.bind(this))
                         .easing(TWEEN.Easing.Linear.None)
-                        .onComplete(() => {
+                        .repeat(times)
+                        .onRepeat(() => {
+                            index++;
+                            console.log('**旋转次数**', index);
                             if(this.config.times === 0){
+                                console.log('**准备停止**', index);
                                 rotationTween.stop();
-                                // TWEEN.remove(rotationTween);
-                                resolve(true);
-                            }else{
-                               initRotation().start();
+                                sport({ 
+                                    pos, 
+                                    duration, 
+                                    easeType: TWEEN.Easing.Exponential.Out
+                                });
                             }
                         });
                         return rotationTween;
                 }
                 initRotation().start();
-                // rotationTween.to({ y: Math.PI * 8}, lineRotateDuration)
-                //     .onUpdate(this.render.bind(this))
-                //     .easing(TWEEN.Easing.Linear.None)
-                //     .start()
-                //     .onComplete(() => {
-                //         if(this.config.times === 0){
-                //             rotationTween.stop();
-                //             // TWEEN.remove(rotationTween);
-                //             resolve(true);
-                //         }else{
-                //             rotationTween.stop();
-                //             rotationTween.start();
-                //         }
-                //     });
             }
         });
     }
