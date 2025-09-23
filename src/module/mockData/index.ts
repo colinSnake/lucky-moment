@@ -17,7 +17,7 @@ export const config =  {
     width: 210, // 卡片宽度
     height: 240, // 卡片高度
     step: 20, // 卡片间距
-    isAuto: false, // 抽奖是否自动停止
+    isAuto: true, // 抽奖是否自动停止
     times: 0, // 旋转次数
 };
 export const prizes: PrizeInterface[] = [
@@ -75,7 +75,7 @@ const getUsers = () => {
             id: i+1,
             isWin: false,
             isInPrize: false,
-            index: i,
+            order: i,
             name: `用户${i+1}`,
             gift: PrizeType.none,
         });

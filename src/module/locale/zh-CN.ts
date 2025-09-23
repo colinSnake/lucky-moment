@@ -19,6 +19,7 @@ export const zh = {
         Congratulations: (ids: string, prize: string) => {
             return `恭喜编号为${ids}的幸运儿, 获得了${prize}`;
         },
+        LotteryCompleted: "当前活动奖品已抽完，感谢参与",
         Number: "编号",
         Name: "姓名",
         Prize: "等级",

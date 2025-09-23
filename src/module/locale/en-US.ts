@@ -19,6 +19,7 @@ export const en = {
         Congratulations: (ids: string, prize: string) => {
             return `Congratulations to the lucky ones with the numbers ${ids}, You have won the ${prize}`;
         },
+        LotteryCompleted: "All the prizes for the current event have been drawn. Thank you for your participation",
         Number: "Number",
         Name: "Name",
         Prize: "Prize",
