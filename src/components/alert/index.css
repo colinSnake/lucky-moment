@@ -187,7 +187,7 @@ table {
 }
 .main-alert-wrapper {
   position: fixed;
-  z-index: 5;
+  z-index: 10;
   transition: all 0.5s ease-in;
   opacity: 0;
 }

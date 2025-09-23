@@ -197,7 +197,7 @@ table {
 }
 .main-wrapper .main-inner.main-inner-absolute {
   position: absolute;
-  z-index: 99;
+  z-index: 9;
   left: 0;
   top: 0;
 }

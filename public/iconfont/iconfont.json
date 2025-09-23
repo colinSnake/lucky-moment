@@ -21,15 +21,15 @@
     },
     {
       "icon_id": "20856207",
-      "name": "icSettting",
-      "font_class": "icSettting",
+      "name": "setting",
+      "font_class": "setting",
       "unicode": "e633",
       "unicode_decimal": 58931
     },
     {
       "icon_id": "38297863",
-      "name": "linear-ele-other-prize-trophy",
-      "font_class": "linear-ele-other-prize-trophy",
+      "name": "prize",
+      "font_class": "prize",
       "unicode": "e717",
       "unicode_decimal": 59159
     }

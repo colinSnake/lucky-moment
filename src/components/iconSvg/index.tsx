@@ -5,7 +5,7 @@ import "./index.css";
 type PropsType = {
     config: {
         name: string,
-        size?: number,
+        size?: string,
         title?: string,
         callback?: Function,
         className?: string,
@@ -14,7 +14,7 @@ type PropsType = {
 }
 
 const IconSvg = (props: PropsType) => {
-    const { name, size = 20, title = '', callback, className, isPropagation } = props.config;
+    const { name, size = '20px', title = '', callback, className, isPropagation } = props.config;
 
     useEffect(() => {
         if(typeof window !== undefined){
@@ -33,10 +33,10 @@ const IconSvg = (props: PropsType) => {
     
     return <div 
             className={ className ? `iconBox-${className} iconBox` : 'iconBox'} 
-            style={{width: `${size}px`, height: `${size}px`}} title={title} 
+            style={{width: `${size}`, height: `${size}`}} title={title} 
             onClick={handleCallback}
         >
-        <svg className='icon-svg' aria-hidden="true" style={{width: `${size}px`, height: `${size}px`}}>
+        <svg className='icon-svg' aria-hidden="true" style={{width: `${size}`, height: `${size}`}}>
             <use xlinkHref={`#${name}`}></use>
         </svg>
     </div>   

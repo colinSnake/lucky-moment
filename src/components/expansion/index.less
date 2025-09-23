@@ -1,0 +1,21 @@
+@import "../../app/variable.less";
+.main-expansion-wrapper{
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    z-index: @zx10;
+    .main-expansion-inner{
+        .flex-vertical-01;
+        .expansion-btn{
+            width: 5vh;
+            height: 5vh;
+            border-radius: 8px;
+            background-color: @cr-black-a30;
+            .flex-horizontal-01;
+            margin-bottom: 0.5vh;
+            &:last-child{
+                margin-bottom: 0;
+            }
+        }
+    }
+}
