@@ -196,15 +196,19 @@ table {
   flex-direction: column;
 }
 .main-expansion-wrapper .main-expansion-inner .expansion-btn {
-  width: 5vh;
-  height: 5vh;
+  width: 4vh;
+  height: 4vh;
   border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(19, 194, 194, 0.1);
+  border: 1px solid rgba(19, 194, 194, 0.75);
+  margin-bottom: 0.5vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.5vh;
 }
-.main-expansion-wrapper .main-expansion-inner .expansion-btn:last-child {
+.main-expansion-wrapper .main-expansion-inner .expansion-btn:hover {
+  background-color: rgba(19, 194, 194, 0.3);
+}
+.main-expansion-wrapper .main-expansion-inner .expansion-btn.nmb {
   margin-bottom: 0;
 }

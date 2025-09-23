@@ -5,17 +5,17 @@ import { IconSvg } from "..";
 import "./index.css";
 
 const Btn = (props: any) => {
-    const { name, size = "2.4vh", callback } = props;
-    return <div className="expansion-btn">
-        <IconSvg config={{name, size, callback}} />
+    const { name, size = "2.4vh", isLast } = props;
+    return <div className={`expansion-btn ${isLast ? "nmb" : ""}`}>
+        <IconSvg config={{name, size}} />
     </div>
 }
 
 const Expansion = () => {
     const expansionOption = [
-        {name: "icon-gift", callback: () => {}, href: '/gift'},
-        {name: "icon-prize", callback: () => {}, href: '/win-list'},
-        {name: "icon-setting", callback: () => {}, href: '/setting'}
+        {name: "icon-gift", href: '/gift'},
+        {name: "icon-prize", href: '/win-list'},
+        {name: "icon-setting", href: '/setting', isLast: true}
     ];
 
     useEffect(() => {

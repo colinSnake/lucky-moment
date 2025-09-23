@@ -17,7 +17,7 @@ export const zh = {
         NormalPrize: '阳光普照奖',
         None: '无',
         Congratulations: (ids: string, prize: string) => {
-            return `恭喜编号为${ids}的幸运儿, 你们获得了${prize}`;
+            return `恭喜编号为${ids}的幸运儿, 获得了${prize}`;
         },
         Number: "编号",
         Name: "姓名",

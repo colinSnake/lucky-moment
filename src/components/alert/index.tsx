@@ -21,14 +21,15 @@ const Alert = () => {
     useEffect(() => {
         EventsUtil.subscribe(EventType.showAlert, (data: AlertInfoInterface) => {
             setAlertInfo({...alertInfo, ...data});
-            handleAutoClose();
+            handleAutoClose(data);
         }, create_LotteryUtil());
     }, []);
 
-    const handleAutoClose = () => {
+
+    const handleAutoClose = (data: AlertInfoInterface) => {
         if (alertInfo.isAutoClose) {
             let timer: any = setTimeout(() => {
-                setAlertInfo({...alertInfo, isShow: false});
+                setAlertInfo({...alertInfo, ...data, isShow: false});
                 clearTimeout(timer);
                 timer = null;
             }, alertInfo.duration);

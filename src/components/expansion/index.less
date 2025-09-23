@@ -7,13 +7,17 @@
     .main-expansion-inner{
         .flex-vertical-01;
         .expansion-btn{
-            width: 5vh;
-            height: 5vh;
+            width: 4vh;
+            height: 4vh;
             border-radius: 8px;
-            background-color: @cr-black-a30;
-            .flex-horizontal-01;
+            background-color: @cr-cyan-a10;
+            border: 1px solid @cr-cyan-a75;
             margin-bottom: 0.5vh;
-            &:last-child{
+            .flex-horizontal-01;
+            &:hover{
+                background-color: @cr-cyan-a30;
+            }
+            &.nmb{
                 margin-bottom: 0;
             }
         }
