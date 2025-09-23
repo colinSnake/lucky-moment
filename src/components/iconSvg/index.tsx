@@ -1,4 +1,6 @@
-"use client";   
+"use client";  
+import { useEffect } from "react";
+import "./index.css";
 
 type PropsType = {
     config: {
@@ -13,6 +15,12 @@ type PropsType = {
 
 const IconSvg = (props: PropsType) => {
     const { name, size = 20, title = '', callback, className, isPropagation } = props.config;
+
+    useEffect(() => {
+        if(typeof window !== undefined){
+            require('../../../public/iconfont/iconfont.js');
+        }
+    }, []);
 
     const handleCallback = (e: any) => {
         if(callback){

@@ -1,4 +1,12 @@
+export enum AlertType{
+    info = 'info',
+    success = 'success',
+    warning = 'warning',
+    error = 'error',
+}
+
 export enum EventType {
+    showAlert = 'SHOW_ALERT',
     updatePrizes = 'UPDATE_PRIZES',
     updateBtnGroup = 'UPDATE_BTN_GROUP',
 }

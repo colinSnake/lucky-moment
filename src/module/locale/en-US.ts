@@ -6,6 +6,8 @@ export const en = {
         ExportExcel: 'Export Excel',
         Reset: 'Reset',
         Pause: 'Pause',
+        AlertTitle: "Tips",
+        AlertContent: "This is a test text",
     },
     Common: {
         SpecialPrize: 'Special Prize',

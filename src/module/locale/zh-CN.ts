@@ -6,6 +6,8 @@ export const zh = {
         ExportExcel: '导出 Excel',
         Reset: '重置',
         Pause: '暂停',
+        AlertTitle: "提示",
+        AlertContent: "这是一段测试文本",
     },
     Common: {
         SpecialPrize: '特等奖',

@@ -1,4 +1,13 @@
-import { PrizeType } from "../enum";
+import { AlertType, PrizeType } from "../enum";
+
+export interface AlertInfoInterface {
+    type?: AlertType,
+    title?: string,
+    message: string,
+    isShow: boolean,
+    isAutoClose?: boolean,
+    duration?: number,
+}
 
 export interface LotteryDataInterface {
     lotteryId: string; // 抽奖编号

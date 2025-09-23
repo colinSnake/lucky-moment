@@ -1,0 +1,256 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+html,
+body {
+  height: 100%;
+}
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+@font-face {
+  font-family: 'zcoolkangyuyang_w01';
+  src: url('/fonts/TsangerYuYangT-W01.woff2') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'stcaiyun';
+  src: url('/fonts/subset-STCaiyun.woff2') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'baotuxiaobaiti';
+  src: url('/fonts/baotuxiaobaiti.woff2') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'wenxin';
+  src: url('/fonts/WenxinXileFont.woff2') format('truetype');
+  font-display: swap;
+}
+.flex-horizontal-01 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-horizontal-02 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-horizontal-03 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.flex-horizontal-04 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.flex-vertical-01 {
+  display: flex;
+  flex-direction: column;
+}
+@keyframes animate01 {
+  0%,
+  100% {
+    clip: rect(0, 26vh, 1px, 0);
+  }
+  25% {
+    clip: rect(0, 1px, 8vh, 0);
+  }
+  50% {
+    clip: rect(7.9vh, 26vh, 8vh, 0);
+  }
+  75% {
+    clip: rect(0, 26vh, 8vh, 25.9vh);
+  }
+}
+.main-alert-wrapper {
+  position: fixed;
+  z-index: 5;
+  transition: all 0.5s ease-in;
+  opacity: 0;
+}
+.main-alert-wrapper.right {
+  right: 0;
+  top: 100px;
+  transform: translateX(100%);
+}
+.main-alert-wrapper.top {
+  top: 0;
+  left: calc(50% - 10vh);
+  transform: translateY(-100%);
+}
+.main-alert-wrapper.active {
+  opacity: 1;
+}
+.main-alert-wrapper.active.right {
+  transform: translateX(-20px);
+}
+.main-alert-wrapper.active.top {
+  transform: translateY(20px);
+}
+.main-alert-wrapper .main-alert-inner {
+  padding: 1vh 2vh;
+  min-width: 12vh;
+  max-width: 32vh;
+  border-radius: 12px;
+  position: relative;
+  border: 1px solid transparent;
+}
+.main-alert-wrapper .main-alert-inner.info {
+  background-color: rgba(22, 119, 255, 0.5);
+  border-color: #1677ff;
+}
+.main-alert-wrapper .main-alert-inner.success {
+  background-color: rgba(82, 196, 26, 0.5);
+  border-color: #52c41a;
+}
+.main-alert-wrapper .main-alert-inner.warning {
+  background-color: rgba(250, 173, 20, 0.5);
+  border-color: #faad14;
+}
+.main-alert-wrapper .main-alert-inner.error {
+  background-color: rgba(255, 77, 79, 0.5);
+  border-color: #ff4d4f;
+}
+.main-alert-wrapper .main-alert-inner .alert-title,
+.main-alert-wrapper .main-alert-inner .alert-info {
+  color: rgba(255, 255, 255, 0.75);
+  font-family: "zcoolkangyuyang_w01";
+}
+.main-alert-wrapper .main-alert-inner .alert-title {
+  font-size: 2vh;
+  font-weight: bold;
+}
+.main-alert-wrapper .main-alert-inner .alert-info {
+  font-size: 1.5vh;
+  margin-top: 0.5vh;
+  white-space: wrap;
+}
+.main-alert-wrapper .main-alert-inner .iconBox {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 1;
+}

@@ -1,0 +1,37 @@
+{
+  "id": "5026767",
+  "name": "lottery",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "44063063",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e9bf",
+      "unicode_decimal": 59839
+    },
+    {
+      "icon_id": "16618686",
+      "name": "gift",
+      "font_class": "gift",
+      "unicode": "e6ba",
+      "unicode_decimal": 59066
+    },
+    {
+      "icon_id": "20856207",
+      "name": "icSettting",
+      "font_class": "icSettting",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "38297863",
+      "name": "linear-ele-other-prize-trophy",
+      "font_class": "linear-ele-other-prize-trophy",
+      "unicode": "e717",
+      "unicode_decimal": 59159
+    }
+  ]
+}

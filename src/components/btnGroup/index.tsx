@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import { EventType, StepType } from "@/module/enum";
 import { create_LotteryUtil } from "@/module/util/lotteryUtil";

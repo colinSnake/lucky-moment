@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import EventsUtil from "@/module/util/eventsUtil";
 import { create_LotteryUtil } from "@/module/util/lotteryUtil";

@@ -1,0 +1,69 @@
+@import "../../app/variable.less";
+.main-alert-wrapper{
+    position: fixed;
+    z-index: @zx05;
+    transition: all 0.5s ease-in;
+    opacity: 0;
+    &.right{
+        right: 0;
+        top: 100px;
+        transform: translateX(100%);
+    }
+    &.top{
+        top: 0;
+        left: calc(50% - 10vh);
+        transform: translateY(-100%);
+    }
+    &.active{
+        opacity: 1;
+        &.right{
+            transform: translateX(-20px);
+        }
+        &.top{
+            transform: translateY(20px);
+        }
+    }
+    .main-alert-inner{
+        padding: 1vh 2vh;
+        min-width: 12vh;
+        max-width: 32vh;
+        border-radius: 12px;
+        position: relative;
+        border: 1px solid transparent;
+        &.info{
+            background-color: @cr-info-a50;
+            border-color: @cr-info;
+        }
+        &.success{
+            background-color: @cr-success-a50;
+            border-color: @cr-success;
+        }
+        &.warning{
+            background-color: @cr-warning-a50;
+            border-color: @cr-warning;
+        }
+        &.error{
+            background-color: @cr-error-a50;
+            border-color: @cr-error;
+        }
+        .alert-title, .alert-info{
+            color: @cr-white-a75;
+            font-family: "zcoolkangyuyang_w01";
+        }
+        .alert-title{
+            font-size: 2vh;
+            font-weight: bold;
+        }
+        .alert-info{
+            font-size: 1.5vh;
+            margin-top: 0.5vh;
+            white-space: wrap;
+        }
+        .iconBox{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            z-index: @zx01;
+        }
+    }
+}

@@ -7,7 +7,7 @@ import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
 import Util from "./";
 import EventsUtil from "./eventsUtil";
 import StarrySkyUtil, { create_StarrySkyUtil } from "./starrySkyUtil";
-import { EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
+import { AlertType, EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
 import { imgs, config, lotteryId, mockData, words } from "../mockData"; 
 import Locale from "../locale";
@@ -34,7 +34,7 @@ export default class LotteryUtil {
     };
     lotteryDB: LotteryDB = create_LotteryDB();
     starrySkyUtil: StarrySkyUtil = create_StarrySkyUtil();
-    msg: string = "";
+    alertMsg: string = "";
     static instanceObj: LotteryUtil|null = null;
     static instance() {
         if (!this.instanceObj) {
@@ -358,7 +358,7 @@ export default class LotteryUtil {
                 count = prizesCount[prizeIndex];
                 
             this.select3dCardIds = [];
-            this.msg = "";
+            this.alertMsg = "";
             for(let i = 0; i < count; i++) {
                 const randomIndex = this.getRandomValue(this.unLuckyUsers.length),
                     user = this.unLuckyUsers[randomIndex];
@@ -371,9 +371,9 @@ export default class LotteryUtil {
                             it.gift = prizes[prizeIndex].type;
                         }
                     });
-                    this.msg += i > 0 ? `、${user.id}` : user.id;
+                    this.alertMsg += i > 0 ? `、${user.id}` : user.id;
                     if(i === count - 1){
-                        this.msg = Locale.Common.Congratulations(this.msg, this.getPrizeName(prizes[prizeIndex].type));
+                        this.alertMsg = Locale.Common.Congratulations(this.alertMsg, this.getPrizeName(prizes[prizeIndex].type));
                     }
                 }
             }
@@ -602,7 +602,11 @@ export default class LotteryUtil {
     }
 
     alert(){
-        
+        EventsUtil.emit(EventType.showAlert, { 
+            type: AlertType.success,
+            message: this.alertMsg,
+            isShow: true,
+        });
     }
 
     getPrizeName(type: PrizeType){
