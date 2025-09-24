@@ -64,6 +64,7 @@ export interface UserInterface {
     id: number; // 用户编号
     isWin: boolean; // 是否中奖过 
     isInPrize: boolean; // 是否中奖
-    name?: string; // 用户姓名
-    gift?: PrizeType; // 中奖 level
+    order: number; // 中奖顺序
+    name: string; // 用户姓名
+    gift: PrizeType; // 奖品 level
 }

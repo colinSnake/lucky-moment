@@ -1,3 +1,6 @@
+import { PrizeType } from '@/module/enum';
+import Locale from '@/module/locale';
+
 export default class Util {
     static deepCopy (obj: any, cache: any = []) {
 
@@ -25,5 +28,22 @@ export default class Util {
         });
 
         return copy;
+    }
+
+    static getPrizeName(type: PrizeType){
+        switch(type){
+            case PrizeType.specialPrize:
+                return Locale.Common.SpecialPrize;
+            case PrizeType.firstPrize:
+                return Locale.Common.FirstPrize;
+            case PrizeType.secondPrize:
+                return Locale.Common.SecondPrize;
+            case PrizeType.thirdPrize:
+                return Locale.Common.ThirdPrize;
+            case PrizeType.normalPrize:
+                return Locale.Common.NormalPrize;
+            default:
+                return Locale.Common.None;
+        }
     }
 }

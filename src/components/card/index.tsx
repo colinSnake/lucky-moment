@@ -1,44 +1,23 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import EventsUtil from "@/module/util/eventsUtil";
+import Util from "@/module/util";
 import { create_LotteryUtil } from "@/module/util/lotteryUtil";
 import { LotteryDataInterface, PrizeInterface } from "@/module/interface";
-import { EventType, PrizeType } from "@/module/enum";
+import { EventType } from "@/module/enum";
 import "./index.css";
 
 const Card = (props: PrizeInterface) => {
     const { name, count, cover, total, type, isActive } = props;
 
-    const getTitle = () => {
-        let level = '';
-        switch (type) {
-            case PrizeType.specialPrize:
-                level = '特等奖';
-                break;
-            case PrizeType.firstPrize:
-                level = '一等奖';
-                break;
-            case PrizeType.secondPrize:
-                level = '二等奖';
-                break;
-            case PrizeType.thirdPrize:
-                level = '三等奖';
-                break;
-            default:
-                level = '阳光普照奖';
-                break;
-        }
-        return `${level} ${name}`;
-    }
-
     return (
         <div className={`card ${isActive ? 'active' : ''}`}>
             <div className="card-inner">
                 <div className="card-box card-cover">
-                    {cover && <img src={cover} alt="奖品封面" />}
+                    {cover && <img src={cover} alt="cover" />}
                 </div>
                 <div className="card-box">
-                    <div className="card-title">{getTitle()}</div>
+                    <div className="card-title">{`${Util.getPrizeName(type)} ${name}`}</div>
                     <div className="card-content">
                         <span>{total-count}/{total}</span>
                     </div>

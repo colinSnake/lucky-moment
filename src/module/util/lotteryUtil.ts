@@ -8,7 +8,7 @@ import Util from "./";
 import EventsUtil from "./eventsUtil";
 import RenderTextUtil, { create_RenderTextUtil } from "./renderTextUtil";
 import { AlertType, EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
-import { LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
+import { AlertInfoInterface, LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
 import { imgs, config, lotteryId, mockData, words } from "../mockData"; 
 import Locale from "../locale";
 
@@ -227,7 +227,11 @@ export default class LotteryUtil {
                 let timer: any = setTimeout(() => {
                     this.flipCard(true);
                     this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
-                    this.alert();
+                    this.alert({ 
+                        type: AlertType.info,
+                        message: this.alertMsg,
+                        isShow: true,
+                    });
                     this.setLotteryData(lotteryId, this.lotteryData);
                     this.isLottery = false;
                     clearTimeout(timer);
@@ -274,11 +278,28 @@ export default class LotteryUtil {
 
     main(params: any){
         const { type, text } = params,
-            { isAuto }= this.config;
+            { isAuto }= this.config,
+            { prizeIndex } = this.lotteryData;
 
         return new Promise(async(resolve, reject) => {
+            // 判断当前抽奖活动已完成
+            if(type === StepType.lottery && prizeIndex === 0){
+                this.alertMsg = Locale.Common.LotteryCompleted;
+                this.alert({ 
+                    type: AlertType.warning,
+                    message: this.alertMsg,
+                    isShow: true,
+                });
+                return;
+            }
+            // 判断上次抽奖未执行完毕，不发起新的抽奖
             if(isAuto) {
                 if(this.isLottery){
+                    resolve(true);
+                    return;
+                }
+            }else{ 
+                if(text !== Locale.Page.Pause && this.isLottery){
                     resolve(true);
                     return;
                 }
@@ -356,6 +377,8 @@ export default class LotteryUtil {
         this.setRotate().then(() => {
             const { prizesCount, prizes, prizeIndex, users } = this.lotteryData,
                 count = prizesCount[prizeIndex];
+
+            let total = prizes.reduce((pre, cur) => pre + cur.count, 0);
                 
             this.select3dCardIds = [];
             this.alertMsg = "";
@@ -369,11 +392,12 @@ export default class LotteryUtil {
                             it.isInPrize = true;
                             this.select3dCardIds.push(it.id);
                             it.gift = prizes[prizeIndex].type;
+                            it.order = total + i;
                         }
                     });
                     this.alertMsg += i > 0 ? `、${user.id}` : user.id;
                     if(i === count - 1){
-                        this.alertMsg = Locale.Common.Congratulations(this.alertMsg, this.getPrizeName(prizes[prizeIndex].type));
+                        this.alertMsg = Locale.Common.Congratulations(this.alertMsg, Util.getPrizeName(prizes[prizeIndex].type));
                     }
                 }
             }
@@ -384,12 +408,12 @@ export default class LotteryUtil {
     exportExcel(){
         return new Promise((resolve, reject) => {
             const { prizes } = this.lotteryData;
-            let jsonData: any = this.luckyUsers.map((it: UserInterface) => { 
+            let jsonData: any = this.luckyUsers.sort((a: UserInterface, b: UserInterface) => b.order - a.order).map((it: UserInterface) => { 
                 const curPrize = prizes.find((p: PrizeInterface) => p.type === it.gift);
                 return {
                     [Locale.Common.Number]: `${it.id}`, // 必须要是字符串
                     [Locale.Common.Name]: it.name,
-                    [Locale.Common.Prize]: this.getPrizeName(it.gift as PrizeType),
+                    [Locale.Common.Prize]: Util.getPrizeName(it.gift as PrizeType),
                     [Locale.Common.Gift]: curPrize ? curPrize.name : ""
                 };
             });
@@ -404,7 +428,7 @@ export default class LotteryUtil {
             worksheet['!cols'] = [
                 { wch: 10 },
                 { wch: 10 }, 
-                { wch: 10 },
+                { wch: 20 },
                 { wch: 20 },
             ];
             
@@ -426,7 +450,6 @@ export default class LotteryUtil {
             }
             
             // 3. 导出并下载 Excel 文件
-            // 使用正确的选项确保样式被保留
             XLSX.writeFile(workbook, `${Locale.Common.PrizeForm}.xlsx`, {
                 cellStyles: true,
                 bookType: 'xlsx'
@@ -629,29 +652,8 @@ export default class LotteryUtil {
         });
     }
 
-    alert(){
-        EventsUtil.emit(EventType.showAlert, { 
-            type: AlertType.success,
-            message: this.alertMsg,
-            isShow: true,
-        });
-    }
-
-    getPrizeName(type: PrizeType){
-        switch(type){
-            case PrizeType.specialPrize:
-                return Locale.Common.SpecialPrize;
-            case PrizeType.firstPrize:
-                return Locale.Common.FirstPrize;
-            case PrizeType.secondPrize:
-                return Locale.Common.SecondPrize;
-            case PrizeType.thirdPrize:
-                return Locale.Common.ThirdPrize;
-            case PrizeType.normalPrize:
-                return Locale.Common.NormalPrize;
-            default:
-                return Locale.Common.None;
-        }
+    alert(data: AlertInfoInterface){
+        EventsUtil.emit(EventType.showAlert, data);
     }
 
     handleUpdateLotteryData(){
