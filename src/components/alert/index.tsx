@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { IconSvg } from "../";
 import EventsUtil from "@/module/util/eventsUtil";
-import { create_LotteryUtil } from "@/module/util/lotteryUtil";
+import { create_lotteryUtil } from "@/module/util/lotteryUtil";
 import { AlertType, EventType } from "@/module/enum";
 import { AlertInfoInterface } from "@/module/interface";
 import Locale from "@/module/locale";
@@ -28,7 +28,7 @@ const Alert = () => {
                     timer = null;
                 }, alertInfo.duration);
             }
-        }, create_LotteryUtil());
+        }, create_lotteryUtil());
     }, [alertInfo]);
 
     useEffect(() => {

@@ -46,4 +46,8 @@ export default class Util {
                 return Locale.Common.None;
         }
     }
+
+    static formatDate() {
+        return new Date().toLocaleString().replace(/\//g, "-");
+    }
 }

@@ -1,14 +1,14 @@
 
 "use client";
 import { useEffect } from "react";
-import { create_LotteryUtil } from "@/module/util/lotteryUtil";
+import { create_lotteryUtil } from "@/module/util/lotteryUtil";
 import "./index.css";
 let isCreated = false;
 
 const Core = () => {
     useEffect(() => {
         if (!isCreated) {
-            create_LotteryUtil().initialize();
+            create_lotteryUtil().initialize();
             isCreated = true;
         }
     }, []);

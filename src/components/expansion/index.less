@@ -13,12 +13,23 @@
             background-color: @cr-cyan-a10;
             border: 1px solid @cr-cyan-a75;
             margin-bottom: 0.5vh;
+            position: relative;
             .flex-horizontal-01;
             &:hover{
                 background-color: @cr-cyan-a30;
             }
             &.nmb{
                 margin-bottom: 0;
+            }
+            >input[type="file"]{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: @zx01;
+                opacity: 0;
+                cursor: pointer;
             }
         }
     }

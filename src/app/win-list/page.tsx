@@ -1,6 +1,8 @@
+"use client";
+
 const WinList = () => {
   return (
-    <div>WinList</div>
+    <div className="main-wrapper">WinList</div>
   );
 }
 export default WinList;

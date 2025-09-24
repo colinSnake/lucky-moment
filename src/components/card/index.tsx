@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import EventsUtil from "@/module/util/eventsUtil";
 import Util from "@/module/util";
-import { create_LotteryUtil } from "@/module/util/lotteryUtil";
+import { create_lotteryUtil } from "@/module/util/lotteryUtil";
 import { LotteryDataInterface, PrizeInterface } from "@/module/interface";
 import { EventType } from "@/module/enum";
 import "./index.css";
@@ -35,7 +35,7 @@ const PrizeCards = () => {
         EventsUtil.subscribe(EventType.updatePrizes, (lotteryData: LotteryDataInterface) => {
             setPrizeIndex(lotteryData.prizeIndex);
             setPrizes([...lotteryData.prizes]);
-        }, create_LotteryUtil());
+        }, create_lotteryUtil());
     }, [prizeIndex, prizes]);
 
     useEffect(() => {

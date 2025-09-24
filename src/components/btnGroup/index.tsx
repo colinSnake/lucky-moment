@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import { EventType, StepType } from "@/module/enum";
-import { create_LotteryUtil } from "@/module/util/lotteryUtil";
+import { create_lotteryUtil } from "@/module/util/lotteryUtil";
 import EventsUtil from "@/module/util/eventsUtil";
 import Locale from "@/module/locale";
 import "./index.css";
@@ -10,7 +10,7 @@ const Btn = (props: any) => {
     const { type, text } = props;
 
     const handleBtnClick = async() => {
-        await create_LotteryUtil().main({type, text});
+        await create_lotteryUtil().main({type, text});
     }
 
     return <button className="btn" onClick={handleBtnClick}>{text}</button>
@@ -38,7 +38,7 @@ const BtnGroup = () => {
                 return it;
             }).filter((it: any) => (isShowTable ? it.type === StepType.welcome : it.type !== StepType.welcome))
             setBtns(newBtnsOptions);
-        }, create_LotteryUtil());
+        }, create_lotteryUtil());
     }, [btnOptions]); 
 
     useEffect(() => {

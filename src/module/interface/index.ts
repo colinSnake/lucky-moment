@@ -3,8 +3,8 @@ import { AlertType, PrizeType } from "../enum";
 export interface AlertInfoInterface {
     type?: AlertType,
     title?: string,
-    message: string,
-    isShow: boolean,
+    message?: string,
+    isShow?: boolean,
     isAutoClose?: boolean,
     duration?: number,
 }

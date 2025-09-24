@@ -19,11 +19,15 @@ export const en = {
         Congratulations: (ids: string, prize: string) => {
             return `Congratulations to the lucky ones with the numbers ${ids}, You have won the ${prize}`;
         },
-        LotteryCompleted: "All the prizes for the current event have been drawn. Thank you for your participation",
+        LotteryCompleted: "The current lottery activity has ended. Thank you for your participation",
+        Lotterying: "The current lottery activity is in progress, and the user list cannot be updated",
+        UploadSuccess: "User list upload successful",
+        UploadFailed: "User list upload failed",
         Number: "Number",
         Name: "Name",
         Prize: "Prize",
         Gift: "Gift",
+        Date: "Date",
         PrizeForm: "Prize Form",
     }
 }

@@ -35,6 +35,7 @@ export default class LotteryUtil {
     lotteryDB: LotteryDB = create_LotteryDB();
     renderTextUtil: RenderTextUtil = create_RenderTextUtil();
     alertMsg: string = "";
+    _maxUserCount: number = 0;
     static instanceObj: LotteryUtil|null = null;
     static instance() {
         if (!this.instanceObj) {
@@ -85,6 +86,14 @@ export default class LotteryUtil {
     get unLuckyUsers() {
         const unLuckyUsers = this.lotteryData.users.filter((user: UserInterface) => !user.isWin);
         return unLuckyUsers;
+    }
+
+    get maxUserCount() {
+        return this._maxUserCount > 0 ? this._maxUserCount : this.totalCardsCount;
+    }
+
+    set maxUserCount(value: number){
+        this._maxUserCount = value;
     }
 
     initialize() {
@@ -227,12 +236,8 @@ export default class LotteryUtil {
                 let timer: any = setTimeout(() => {
                     this.flipCard(true);
                     this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
-                    this.alert({ 
-                        type: AlertType.info,
-                        message: this.alertMsg,
-                        isShow: true,
-                    });
-                    this.setLotteryData(lotteryId, this.lotteryData);
+                    this.alert({message: this.alertMsg});
+                    this.setLotteryData();
                     this.isLottery = false;
                     clearTimeout(timer);
                     timer = null;
@@ -283,13 +288,9 @@ export default class LotteryUtil {
 
         return new Promise(async(resolve, reject) => {
             // 判断当前抽奖活动已完成
+            this.alertMsg = "";
             if(type === StepType.lottery && prizeIndex === 0){
-                this.alertMsg = Locale.Common.LotteryCompleted;
-                this.alert({ 
-                    type: AlertType.warning,
-                    message: this.alertMsg,
-                    isShow: true,
-                });
+                this.alert({type: AlertType.warning, message: Locale.Common.LotteryCompleted});
                 return;
             }
             // 判断上次抽奖未执行完毕，不发起新的抽奖
@@ -386,8 +387,9 @@ export default class LotteryUtil {
                 const randomIndex = this.getRandomValue(this.unLuckyUsers.length),
                     user = this.unLuckyUsers[randomIndex];
                 if(user){
-                    users.forEach((it: UserInterface) => {
-                        if(user.id === it.id){
+                    users.forEach((it: UserInterface, idx: number) => {
+                        const available = idx <= this.maxUserCount - 1;
+                        if(user.id === it.id && available){
                             it.isWin = true;
                             it.isInPrize = true;
                             this.select3dCardIds.push(it.id);
@@ -405,6 +407,57 @@ export default class LotteryUtil {
         });
     }
 
+    importExcel(file: File){
+        return new Promise((resolve, reject) => {
+            if (!file) {
+                resolve(false);
+                return;
+            };
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    
+                    // 获取第一个工作表
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    
+                    // 转换为 JSON
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet);
+                    // 二维数组 const arrayData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+                    if(this.luckyUsers.length > 0){
+                        this.alert({type: AlertType.warning, message: Locale.Common.Lotterying});
+                    }else{
+                        if(jsonData.length > 0){
+                            const { users } = this.lotteryData;
+                            jsonData.forEach((obj: any) => {
+                                const id = Number(obj[Locale.Common.Number]),
+                                    name = obj[Locale.Common.Name];
+                                if(id && name && users[id-1]){
+                                    users[id-1].name = name;
+                                }
+                            });
+                            this.maxUserCount = jsonData.length;
+                            this.setLotteryData();
+                        }
+                        this.alert({message: Locale.Common.UploadSuccess});
+                    }
+                    
+                    console.log('Convert Excel data to JSON:', jsonData);
+                    // 这里可以处理转换后的 JSON 数据
+                    resolve(true);
+                } catch (err) {
+                    this.alert({type: AlertType.warning, message: Locale.Common.UploadFailed});
+                    console.error('Error occurred while processing the Excel file:', err);
+                    reject(err);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        });
+    }
+
     exportExcel(){
         return new Promise((resolve, reject) => {
             const { prizes } = this.lotteryData;
@@ -414,7 +467,8 @@ export default class LotteryUtil {
                     [Locale.Common.Number]: `${it.id}`, // 必须要是字符串
                     [Locale.Common.Name]: it.name,
                     [Locale.Common.Prize]: Util.getPrizeName(it.gift as PrizeType),
-                    [Locale.Common.Gift]: curPrize ? curPrize.name : ""
+                    [Locale.Common.Gift]: curPrize ? curPrize.name : "",
+                    [Locale.Common.Date]: Util.formatDate()
                 };
             });
             // 1. 将 JSON 数据转换为工作表
@@ -428,6 +482,7 @@ export default class LotteryUtil {
             worksheet['!cols'] = [
                 { wch: 10 },
                 { wch: 10 }, 
+                { wch: 20 },
                 { wch: 20 },
                 { wch: 20 },
             ];
@@ -461,7 +516,7 @@ export default class LotteryUtil {
     reset(){
         return new Promise(async(resolve, reject) => {
             this.lotteryData = Util.deepCopy(mockData);
-            this.setLotteryData(lotteryId, this.lotteryData);
+            this.setLotteryData();
             this.handleUpdateBtnGroup();
             this.handleUpdateLotteryData();
             await this.setTransform();
@@ -617,9 +672,9 @@ export default class LotteryUtil {
     /**
      * @description: 更新 indexedDB lottery data 
      **/ 
-    setLotteryData(key: string, value: LotteryDataInterface){
+    setLotteryData(){
         return new Promise(async(resolve, reject) => {
-            await this.lotteryDB.add({ index: ObjectStoreIndexType.lotteryId, keyRange: key, data: value });
+            await this.lotteryDB.add({ index: ObjectStoreIndexType.lotteryId, keyRange: lotteryId, data: this.lotteryData });
             resolve(true);
         });
     }
@@ -653,7 +708,11 @@ export default class LotteryUtil {
     }
 
     alert(data: AlertInfoInterface){
-        EventsUtil.emit(EventType.showAlert, data);
+        const alertInfo = {
+            type: AlertType.info,
+            isShow: true
+        };
+        EventsUtil.emit(EventType.showAlert, {...alertInfo, ...data});
     }
 
     handleUpdateLotteryData(){
@@ -670,6 +729,6 @@ export default class LotteryUtil {
     }
 }
 
-export function create_LotteryUtil(): LotteryUtil {
+export function create_lotteryUtil(): LotteryUtil {
     return LotteryUtil.instance();
 }

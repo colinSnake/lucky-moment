@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id 5026767 */
-  src: url('iconfont.woff2?t=1758598767423') format('woff2');
+  src: url('iconfont.woff2?t=1758703009109') format('woff2');
 }
 
 .iconfont {
@@ -9,6 +9,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-upload:before {
+  content: "\e658";
 }
 
 .icon-close:before {
