@@ -387,8 +387,8 @@ export default class LotteryUtil {
                 const randomIndex = this.getRandomValue(this.unLuckyUsers.length),
                     user = this.unLuckyUsers[randomIndex];
                 if(user){
-                    users.forEach((it: UserInterface, idx: number) => {
-                        const available = idx <= this.maxUserCount - 1;
+                    users.forEach((it: UserInterface) => {
+                        const available = it.id <= this.maxUserCount;
                         if(user.id === it.id && available){
                             it.isWin = true;
                             it.isInPrize = true;
