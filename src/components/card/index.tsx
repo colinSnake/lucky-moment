@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import EventsUtil from "@/module/util/eventsUtil";
 import { create_LotteryUtil } from "@/module/util/lotteryUtil";
 import { LotteryDataInterface, PrizeInterface } from "@/module/interface";
@@ -51,12 +51,17 @@ const Card = (props: PrizeInterface) => {
 const PrizeCards = () => {
     const [prizeIndex, setPrizeIndex] = useState(0);
     const [prizes, setPrizes] = useState<PrizeInterface[]>([]);
-    useEffect(() => {
+
+    const handleAction = useCallback(() => {
         EventsUtil.subscribe(EventType.updatePrizes, (lotteryData: LotteryDataInterface) => {
             setPrizeIndex(lotteryData.prizeIndex);
             setPrizes([...lotteryData.prizes]);
         }, create_LotteryUtil());
-    }, []);
+    }, [prizeIndex, prizes]);
+
+    useEffect(() => {
+        handleAction();
+    }, [handleAction]);
 
     return <div className="main-prizes-cards">
         {prizes.map((it, idx) => (<Card key={it.id} {...Object.assign(it, {isActive: prizeIndex === idx})} />))}

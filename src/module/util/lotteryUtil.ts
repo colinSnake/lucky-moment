@@ -6,7 +6,7 @@ import * as XLSX from 'xlsx';
 import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
 import Util from "./";
 import EventsUtil from "./eventsUtil";
-import StarrySkyUtil, { create_StarrySkyUtil } from "./starrySkyUtil";
+import RenderTextUtil, { create_RenderTextUtil } from "./renderTextUtil";
 import { AlertType, EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
 import { imgs, config, lotteryId, mockData, words } from "../mockData"; 
@@ -33,7 +33,7 @@ export default class LotteryUtil {
         isShowTable: true,
     };
     lotteryDB: LotteryDB = create_LotteryDB();
-    starrySkyUtil: StarrySkyUtil = create_StarrySkyUtil();
+    renderTextUtil: RenderTextUtil = create_RenderTextUtil();
     alertMsg: string = "";
     static instanceObj: LotteryUtil|null = null;
     static instance() {
@@ -91,7 +91,7 @@ export default class LotteryUtil {
         this.lotteryDB.initialize().then(async() => {
             const res = await this.getLotteryData(lotteryId);
             this.lotteryData = JSON.parse(JSON.stringify(res));
-            this.starrySkyUtil.initialize();
+            this.renderTextUtil.initialize();
             this.initCards();
             this.animate();
             this.registerEvent();
@@ -608,7 +608,7 @@ export default class LotteryUtil {
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
         this.render();
-        this.starrySkyUtil.updateCanvasSize();
+        this.renderTextUtil.updateCanvasSize();
     }
 
     registerEvent(){

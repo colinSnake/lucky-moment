@@ -30,7 +30,7 @@ export interface PrizeInterface {
     isActive?: boolean; // 是否选中（是否处于当前抽奖阶段）
 }
 
-export interface StarInterface {
+export interface WordInterface {
     x: number;
     y: number;
     z: number;
@@ -38,6 +38,26 @@ export interface StarInterface {
     color: string;
     angle: number;
     speed: number;
+}
+
+export interface TextRenderConstantInterface {
+    wordNumber: number; // word 数量
+    focalLength: number; // word 焦距
+    centerX: number; // word 渲染中心 x 坐标
+    centerY: number; // word 渲染中心 y 坐标
+    offscreenWidth: number; // word 渲染画布宽度
+    offscreenHeight: number; // word 渲染画布高度
+    font: string; // word 字体
+}
+
+export interface StarrySkyConstantInterface {
+    starNumber: number;
+    focalLength: number; // 焦距
+    centerX: number;
+    centerY: number;
+    offscreenWidth: number;
+    offscreenHeight: number;
+    font: string;
 }
 
 export interface UserInterface {

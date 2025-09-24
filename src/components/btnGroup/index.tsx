@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { EventType, StepType } from "@/module/enum";
 import { create_LotteryUtil } from "@/module/util/lotteryUtil";
 import EventsUtil from "@/module/util/eventsUtil";
@@ -26,7 +26,7 @@ const BtnGroup = () => {
         { type: StepType.reset, text: Locale.Page.Reset },
     ];
 
-    useEffect(() => {
+    const handleAction = useCallback(() => {
         EventsUtil.subscribe(EventType.updateBtnGroup, (params: any) => {
             const { isShowTable, isShowPause, type } = params;
             const newBtnsOptions = btnOptions.map((it: any) => {
@@ -39,7 +39,11 @@ const BtnGroup = () => {
             }).filter((it: any) => (isShowTable ? it.type === StepType.welcome : it.type !== StepType.welcome))
             setBtns(newBtnsOptions);
         }, create_LotteryUtil());
-    }, []);
+    }, [btnOptions]); 
+
+    useEffect(() => {
+        handleAction();
+    }, [handleAction]);
 
 
     return (

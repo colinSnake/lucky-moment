@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { IconSvg } from "../";
 import EventsUtil from "@/module/util/eventsUtil";
 import { create_LotteryUtil } from "@/module/util/lotteryUtil";
@@ -18,12 +18,16 @@ const Alert = () => {
         duration: 3000,
     });
 
-    useEffect(() => {
+    const handleAction = useCallback(() => {
         EventsUtil.subscribe(EventType.showAlert, (data: AlertInfoInterface) => {
             setAlertInfo({...alertInfo, ...data});
             handleAutoClose(data);
         }, create_LotteryUtil());
-    }, []);
+    }, [alertInfo]);
+
+    useEffect(() => {
+        handleAction();
+    }, [handleAction]);
 
 
     const handleAutoClose = (data: AlertInfoInterface) => {

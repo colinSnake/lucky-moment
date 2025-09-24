@@ -2,16 +2,16 @@ let drawOffscreenWorker: any = null;
 
 class DrawOffscreenWorker {
     constant: any = null;
-    stars: any[] = [];
+    words: any[] = [];
     canvas: OffscreenCanvas|null = null;
     ctx: OffscreenCanvasRenderingContext2D|null = null; 
     offscreenCanvas: OffscreenCanvas|null = null;
     offscreenCtx: OffscreenCanvasRenderingContext2D|null = null;
     constructor(canvas: OffscreenCanvas, ext: any) {
-        const { constant, stars } = ext,
+        const { constant, words } = ext,
             { offscreenWidth, offscreenHeight } = constant;
         this.constant = constant;
-        this.stars = stars;
+        this.words = words;
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d')!;
         this.offscreenCanvas = new OffscreenCanvas(offscreenWidth, offscreenHeight);
@@ -27,8 +27,8 @@ class DrawOffscreenWorker {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // 2. 遍历并绘制每一个单字
-        for (let i = 0; i < this.stars.length; i++) {
-            const char = this.stars[i],
+        for (let i = 0; i < this.words.length; i++) {
+            const char = this.words[i],
                 { x, y, z, word, color, angle, speed } = char;
 
             // 设置颜色并绘制文本（离屏渲染）

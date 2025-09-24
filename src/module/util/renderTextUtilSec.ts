@@ -1,24 +1,17 @@
-import { StarInterface } from "@/module/interface/index";
+import { WordInterface, TextRenderConstantInterface } from "@/module/interface";
+import { textRenderConstant } from "@/module/mockData";
 
-export default class StarrySkyUtil {
+export default class RenderTextUtil {
     canvas: HTMLCanvasElement|null = null;
     drawOffscreenWorker: Worker|null = null;
     img: HTMLImageElement = new Image();
-    instanceObj: StarrySkyUtil|null = null;
-    constant = {
-        starNumber: 120,
-        focalLength: 0, // 焦距
-        centerX: 0,
-        centerY: 0,
-        offscreenWidth: 120,
-        offscreenHeight: 30,
-        font: '20px baotuxiaobaiti',
-    }
-    stars: StarInterface[] = [];
+    instanceObj: RenderTextUtil|null = null;
+    constant: TextRenderConstantInterface = textRenderConstant;
+    words: WordInterface[] = [];
     timer: any = null;
-    instance(): StarrySkyUtil{
+    instance(): RenderTextUtil{
         if(!this.instanceObj){
-            this.instanceObj = new StarrySkyUtil();
+            this.instanceObj = new RenderTextUtil();
         }
         return this.instanceObj;
     }
@@ -33,7 +26,7 @@ export default class StarrySkyUtil {
             canvas: offscreen,
             ext: JSON.stringify({
                 constant: this.constant,
-                stars: this.stars
+                words: this.words
             })
         }, [offscreen]);
         this.render();
@@ -69,7 +62,7 @@ export default class StarrySkyUtil {
 
     produceStars(){
         const canvas = this.canvas!,
-            { starNumber } = this.constant;
+            { wordNumber } = this.constant;
         const textArr = [
             "2025", "我们结婚啦", 
             "LM & MRX",
@@ -85,8 +78,8 @@ export default class StarrySkyUtil {
             "既许一人以偏爱", "愿尽余生之慷慨","年年岁岁不相负", "落日与晚风", "朝朝又暮暮",
             "愿我们始于初见", "止于终老", "以爱之名", "以余生为期", "喜悦有分享", "同量天地宽", "相随日月长",
         ];
-        this.stars = [];
-        for(let i = 0; i < starNumber; i++){
+        this.words = [];
+        for(let i = 0; i < wordNumber; i++){
             const star = {
                 x: this.getRandomNum(canvas.width),
                 y: this.getRandomNum(canvas.height),
@@ -97,7 +90,7 @@ export default class StarrySkyUtil {
                 angle: Math.random() * Math.PI * 2, // 随机初始角度
                 speed: (Math.random() - 0.5) * 0.1, // 随机旋转速度，可正可负
             }
-            this.stars.push(star);
+            this.words.push(star);
         }
     }
 
@@ -110,6 +103,6 @@ export default class StarrySkyUtil {
     }
 }
 
-export function create_StarrySkyUtil(){
-    return new StarrySkyUtil().instance();
+export function create_RenderTextUtil(){
+    return new RenderTextUtil().instance();
 }

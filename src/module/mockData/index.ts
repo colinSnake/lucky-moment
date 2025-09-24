@@ -1,6 +1,6 @@
 import { PrizeType } from "../enum";
 import { words } from "./words";
-import { LotteryDataInterface, PrizeInterface } from "../interface";
+import { LotteryDataInterface, PrizeInterface, TextRenderConstantInterface } from "../interface";
 export const lotteryId = "cb85ae949eda1fb233816fca52bbd974";
 export const imgs = {
     iconXi: "../../../images/double_happiness_font_white.png",
@@ -91,6 +91,16 @@ export const mockData: LotteryDataInterface = {
     isShowTable: true,
     isLottery: false,
 };
+
+export const textRenderConstant: TextRenderConstantInterface = {
+    wordNumber: 120,
+    focalLength: 0, // 焦距
+    centerX: 0,
+    centerY: 0,
+    offscreenWidth: 120,
+    offscreenHeight: 30,
+    font: '20px baotuxiaobaiti',
+}
 
 export {
     words
