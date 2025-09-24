@@ -21,24 +21,19 @@ const Alert = () => {
     const handleAction = useCallback(() => {
         EventsUtil.subscribe(EventType.showAlert, (data: AlertInfoInterface) => {
             setAlertInfo({...alertInfo, ...data});
-            handleAutoClose(data);
+            if (alertInfo.isAutoClose) {
+                let timer: any = setTimeout(() => {
+                    setAlertInfo({...alertInfo, ...data, isShow: false});
+                    clearTimeout(timer);
+                    timer = null;
+                }, alertInfo.duration);
+            }
         }, create_LotteryUtil());
     }, [alertInfo]);
 
     useEffect(() => {
         handleAction();
     }, [handleAction]);
-
-
-    const handleAutoClose = (data: AlertInfoInterface) => {
-        if (alertInfo.isAutoClose) {
-            let timer: any = setTimeout(() => {
-                setAlertInfo({...alertInfo, ...data, isShow: false});
-                clearTimeout(timer);
-                timer = null;
-            }, alertInfo.duration);
-        }
-    }
 
     return <div className={`main-alert-wrapper top ${alertInfo.isShow ? "active" : ""}`}>
         <div className={`main-alert-inner ${alertInfo.type}`}>
