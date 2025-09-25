@@ -101,14 +101,15 @@ export default class LotteryUtil {
 
     createCard(user: UserInterface){
         const cardEle = document.createElement('div'),
+            { isShowFont } = this.config,
             { iconXi, iconXiSmall } = imgs;
         cardEle.className = "prize-card-wrapper";
         cardEle.setAttribute("id", `card-${user.id}`)
         cardEle.innerHTML = `
             <div class="prize-card-inner">
                 <div class="prize-card-front-side">
-                    <!--<img src=${iconXi} alt="cover" />-->
-                    <span class="word">${words[user.id - 1]}</span>
+                    ${isShowFont ? `<span class="word">${words[(user.id - 1) % words.length]}</span>`
+                        : `<img src=${iconXi} alt="cover" />`}
                 </div>
                 <div class="prize-card-back-side active">
                     <div class="top">

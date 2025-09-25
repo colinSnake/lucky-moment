@@ -17,6 +17,7 @@ export const config =  {
     width: 210, // 卡片宽度
     height: 240, // 卡片高度
     step: 20, // 卡片间距
+    isShowFont: true, // 卡片是否显示字体
     isAuto: true, // 抽奖是否自动停止
     times: 0, // 旋转次数
 };
