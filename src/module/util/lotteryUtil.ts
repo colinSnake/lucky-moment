@@ -35,7 +35,7 @@ export default class LotteryUtil {
     lotteryDB: LotteryDB = create_LotteryDB();
     renderTextUtil: RenderTextUtil = create_RenderTextUtil();
     alertMsg: string = "";
-    _maxUserCount: number = 0;
+    maxUserCount: number = 0;
     static instanceObj: LotteryUtil|null = null;
     static instance() {
         if (!this.instanceObj) {
@@ -78,28 +78,16 @@ export default class LotteryUtil {
         }
     };
 
-    get totalCardsCount(){
-        const { row, col } = this.config;
-        return row * col;
-    }
-
     get unLuckyUsers() {
-        const unLuckyUsers = this.lotteryData.users.filter((user: UserInterface) => !user.isWin);
+        const unLuckyUsers = this.lotteryData.users.filter((user: UserInterface) => !user.isWin && user.id <= this.maxUserCount);
         return unLuckyUsers;
-    }
-
-    get maxUserCount() {
-        return this._maxUserCount > 0 ? this._maxUserCount : this.totalCardsCount;
-    }
-
-    set maxUserCount(value: number){
-        this._maxUserCount = value;
     }
 
     initialize() {
         this.lotteryDB.initialize().then(async() => {
             const res = await this.getLotteryData(lotteryId);
             this.lotteryData = JSON.parse(JSON.stringify(res));
+            this.maxUserCount = this.lotteryData.users.length;
             this.renderTextUtil.initialize();
             this.initCards();
             this.animate();
@@ -287,86 +275,92 @@ export default class LotteryUtil {
             { prizeIndex } = this.lotteryData;
 
         return new Promise(async(resolve, reject) => {
-            // 判断当前抽奖活动已完成
-            this.alertMsg = "";
-            if(type === StepType.lottery && prizeIndex === 0){
-                this.alert({type: AlertType.warning, message: Locale.Common.LotteryCompleted});
-                return;
-            }
-            // 判断上次抽奖未执行完毕，不发起新的抽奖
-            if(isAuto) {
-                if(this.isLottery){
-                    resolve(true);
-                    return;
-                }
-            }else{ 
-                if(text !== Locale.Page.Pause && this.isLottery){
-                    resolve(true);
-                    return;
-                }
-            }
-            switch(type){
-                case StepType.welcome:
-                    {
-                        this.isShowTable = false;
-                        this.handleUpdateBtnGroup();
-                        await this.setTransform();
+            try{
+                this.alertMsg = "";
+                if(type === StepType.lottery){ 
+                    if(this.unLuckyUsers.length === 0){ // 没有可抽奖用户了
+                        return this.alert({type: AlertType.warning, message: Locale.Common.NoLotteryUsers});   
                     }
-                    break;
-                case StepType.lottery:
-                    {
+                    if(prizeIndex === 0){ // 判断当前抽奖活动已完成
+                        return this.alert({type: AlertType.warning, message: Locale.Common.LotteryCompleted});   
+                    }
+                }
+                // 判断上次抽奖未执行完毕，不发起新的抽奖
+                if(isAuto) {
+                    if(this.isLottery){
+                        return resolve(true);
+                    }
+                }else{ 
+                    if(text !== Locale.Page.Pause && this.isLottery){
+                        return resolve(true);
+                    }
+                }
+                switch(type){
+                    case StepType.welcome:
+                        {
+                            this.isShowTable = false;
+                            this.handleUpdateBtnGroup();
+                            await this.setTransform();
+                        }
+                        break;
+                    case StepType.lottery:
+                        {
 
-                        if(text === Locale.Page.Pause){
-                            this.config.times = 0;
-                            this.handleUpdateBtnGroup(type);
-                        }else{
-                            const { prizeIndex } = this.lotteryData;
-                            this.config.times = Infinity;
-                            this.handleUpdateBtnGroup(type);
-                            if(prizeIndex > -1){
-                                this.updatePrizes();
-                                await this.resetCards();
-                                this.start();
+                            if(text === Locale.Page.Pause){
+                                this.config.times = 0;
+                                this.handleUpdateBtnGroup(type);
+                            }else{
+                                const { prizeIndex } = this.lotteryData;
+                                this.config.times = Infinity;
+                                this.handleUpdateBtnGroup(type);
+                                if(prizeIndex > -1){
+                                    this.updatePrizes();
+                                    await this.resetCards();
+                                    this.start();
+                                }
                             }
                         }
-                    }
-                    break;
-                case StepType.reLottery:
-                    {
-                        if(text === Locale.Page.Pause){
-                            this.config.times = 0;
-                            this.handleUpdateBtnGroup(type);
-                        }else{
-                            const { prizeIndex } = this.lotteryData;
-                            this.config.times = Infinity;
-                            this.handleUpdateBtnGroup(type);
-                            if(prizeIndex > -1){ // 重置上一次抽奖结果
-                                this.lotteryData.users.forEach((it: UserInterface) => {
-                                    if(this.select3dCardIds.includes(it.id)){
-                                        it.isWin = false;
-                                        it.gift = PrizeType.none;
-                                    }
-                                });
-                                await this.resetCards();
-                                this.start();
+                        break;
+                    case StepType.reLottery:
+                        {
+                            if(text === Locale.Page.Pause){
+                                this.config.times = 0;
+                                this.handleUpdateBtnGroup(type);
+                            }else{
+                                const { prizeIndex } = this.lotteryData;
+                                this.config.times = Infinity;
+                                this.handleUpdateBtnGroup(type);
+                                if(prizeIndex > -1){ // 重置上一次抽奖结果
+                                    this.lotteryData.users.forEach((it: UserInterface) => {
+                                        if(this.select3dCardIds.includes(it.id)){
+                                            it.isWin = false;
+                                            it.gift = PrizeType.none;
+                                        }
+                                    });
+                                    await this.resetCards();
+                                    this.start();
+                                }
                             }
                         }
-                    }
-                    break;
-                case StepType.export:
-                    {
-                        await this.exportExcel();
-                    }
-                    break;
-                case StepType.reset:
-                    {
-                        await this.reset();
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    case StepType.export:
+                        {
+                            await this.exportExcel();
+                        }
+                        break;
+                    case StepType.reset:
+                        {
+                            await this.reset();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                resolve(true);
+            }catch(err){
+                this.alert({type: AlertType.error, message: Locale.Common.LotteryError});
+                reject(err);
             }
-            resolve(true);
         });
     }
 
@@ -376,8 +370,8 @@ export default class LotteryUtil {
     start() {
         this.isLottery = true;
         this.setRotate().then(() => {
-            const { prizesCount, prizes, prizeIndex, users } = this.lotteryData,
-                count = prizesCount[prizeIndex];
+            const { prizes, prizeIndex, users } = this.lotteryData,
+                count = this.getRealCount();
 
             let total = prizes.reduce((pre, cur) => pre + cur.count, 0);
                 
@@ -388,8 +382,7 @@ export default class LotteryUtil {
                     user = this.unLuckyUsers[randomIndex];
                 if(user){
                     users.forEach((it: UserInterface) => {
-                        const available = it.id <= this.maxUserCount;
-                        if(user.id === it.id && available){
+                        if(user.id === it.id){
                             it.isWin = true;
                             it.isInPrize = true;
                             this.select3dCardIds.push(it.id);
@@ -449,8 +442,7 @@ export default class LotteryUtil {
                     // 这里可以处理转换后的 JSON 数据
                     resolve(true);
                 } catch (err) {
-                    this.alert({type: AlertType.warning, message: Locale.Common.UploadFailed});
-                    console.error('Error occurred while processing the Excel file:', err);
+                    this.alert({type: AlertType.error, message: Locale.Common.UploadFailed});
                     reject(err);
                 }
             };
@@ -643,16 +635,21 @@ export default class LotteryUtil {
         return this.getRandomValue(duration) + duration
     }
 
+    getRealCount(){
+        const { prizesCount, prizeIndex } = this.lotteryData;
+        return prizesCount[prizeIndex] > this.unLuckyUsers.length ? this.unLuckyUsers.length : prizesCount[prizeIndex];
+    }
+
     /**
      * @description: 更新 lottery data 
      **/ 
     updatePrizes(){
-        let { prizes, prizesCount, prizeIndex } = this.lotteryData;
+        let { prizes, prizeIndex } = this.lotteryData;
         if(prizes[prizeIndex].count === prizes[prizeIndex].total){
             prizeIndex -= 1;
             this.lotteryData.prizeIndex = prizeIndex;
         }
-        prizes[prizeIndex].count += prizesCount[prizeIndex];
+        prizes[prizeIndex].count += this.getRealCount();
         this.handleUpdateLotteryData();
     }
 

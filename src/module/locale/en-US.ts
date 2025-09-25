@@ -21,6 +21,8 @@ export const en = {
         },
         LotteryCompleted: "The current lottery activity has ended. Thank you for your participation",
         Lotterying: "The current lottery activity is in progress, and the user list cannot be updated",
+        LotteryError: "Lottery failed, please try again later",
+        NoLotteryUsers: "The current lottery activity has no users to be drawn",
         UploadSuccess: "User list upload successful",
         UploadFailed: "User list upload failed",
         Number: "Number",

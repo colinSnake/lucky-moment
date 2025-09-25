@@ -21,6 +21,8 @@ export const zh = {
         },
         LotteryCompleted: "当前抽奖活动已结束，感谢参与",
         Lotterying: "当前抽奖活动进行中，无法上用户名单",
+        LotteryError: "抽奖失败，请稍后重试",
+        NoLotteryUsers: "当前抽奖活动没有可抽奖用户",
         UploadSuccess: "用户名单上传成功",
         UploadFailed: "用户名单上传失败",
         Number: "编号",
