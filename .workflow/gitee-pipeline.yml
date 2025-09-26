@@ -1,0 +1,31 @@
+name: Next Lottery Simple Pipeline
+description: 简化的 Next.js 项目构建部署流水线
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+    - npm run lint
+  artifacts:
+    paths:
+      - .next/
+      - public/
+  cache:
+    paths:
+      - node_modules/
+    key: "$CI_COMMIT_REF_SLUG"
+
+deploy:
+  stage: deploy
+  script:
+    - echo "自动部署到 Gitee Pages"
+    - echo "确保已在仓库设置中启用 Pages 服务"
+  dependencies:
+    - build
+  only:
+    - master

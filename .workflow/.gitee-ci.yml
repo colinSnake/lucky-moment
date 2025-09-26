@@ -1,0 +1,133 @@
+name: Next Lottery CI/CD Pipeline
+description: 自动构建和部署 Next.js 抽奖应用到 Gitee Pages
+
+stages:
+  - install
+  - build
+  - test
+  - deploy
+
+variables:
+  NODE_VERSION: "20.18.0"
+  CACHE_KEY: "$CI_COMMIT_REF_SLUG"
+
+# 安装依赖阶段
+install_dependencies:
+  stage: install
+  name: "安装项目依赖"
+  image: node:$NODE_VERSION
+  script:
+    - echo "开始安装 Node.js 依赖..."
+    - npm ci --cache .npm --prefer-offline
+    - echo "依赖安装完成"
+  cache:
+    key: "$CACHE_KEY"
+    paths:
+      - node_modules/
+      - .npm/
+    policy: pull-push
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 week
+  only:
+    changes:
+      - package.json
+      - package-lock.json
+
+# 构建阶段
+build_project:
+  stage: build
+  name: "构建 Next.js 项目"
+  image: node:$NODE_VERSION
+  script:
+    - echo "开始构建项目..."
+    - npm run build
+    - echo "构建完成，检查构建产物..."
+    - ls -la .next/ || echo ".next 目录不存在，需要先构建"
+  cache:
+    key: "$CACHE_KEY"
+    paths:
+      - node_modules/
+      - .next/cache/
+    policy: pull
+  artifacts:
+    name: "next-lottery-build-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - .next/
+      - public/
+      - package.json
+      - next.config.ts
+      - tsconfig.json
+      - postcss.config.mjs
+    expire_in: 1 week
+  dependencies:
+    - install_dependencies
+
+# 代码检查阶段
+code_lint:
+  stage: test
+  name: "代码质量检查"
+  image: node:$NODE_VERSION
+  script:
+    - echo "开始代码检查..."
+    - npm run lint
+    - echo "代码检查完成"
+  cache:
+    key: "$CACHE_KEY"
+    paths:
+      - node_modules/
+    policy: pull
+  dependencies:
+    - install_dependencies
+  allow_failure: true  # 代码检查失败不阻塞部署
+
+# 部署到 Gitee Pages
+deploy_to_pages:
+  stage: deploy
+  name: "部署到 Gitee Pages"
+  image: node:$NODE_VERSION
+  script:
+    - echo "开始部署到 Gitee Pages..."
+    # 检查构建产物
+    - ls -la .next/ || (echo "构建产物不存在，部署失败" && exit 1)
+    
+    # 如果是静态导出部署（需要配置 output: 'export'）
+    # - npm run build && npm run export
+    
+    # 使用 Gitee Pages 自动部署（需要仓库开启 Pages 服务）
+    - echo "部署配置完成"
+    - echo "请在 Gitee 仓库设置中："
+    - echo "1. 启用 Pages 服务"
+    - echo "2. 选择部署分支：master"
+    - echo "3. 设置部署目录：.next"
+    - echo "4. 保存设置后，提交到 master 分支即可自动部署"
+  cache:
+    key: "$CACHE_KEY"
+    paths:
+      - node_modules/
+    policy: pull
+  dependencies:
+    - build_project
+  environment:
+    name: production
+    url: https://ming_2333.gitee.io/next-lottery
+  only:
+    - master
+  when: manual  # 手动触发部署，避免每次提交都自动部署
+
+# 开发环境部署（可选）
+deploy_dev:
+  stage: deploy
+  name: "部署到开发环境"
+  image: node:$NODE_VERSION
+  script:
+    - echo "开发环境部署..."
+    - npm run build
+    - echo "开发环境构建完成"
+  environment:
+    name: development
+    url: https://ming_2333.gitee.io/next-lottery-dev
+  only:
+    - develop
+  when: manual
