@@ -10,7 +10,7 @@ triggers:
         - ''
 
 variables:
-  NODE_VERSION: 20.18.0
+  PLUGIN_NPM_VERSION: 20.18.0
   GITEE_PIPELINE_NAME: pipeline-20250929
 
 stages:
@@ -19,14 +19,15 @@ stages:
 
 build:
   stage: build
-  image: node:$NODE_VERSION
+  image: node:$PLUGIN_NPM_VERSION
   script:
     - npm install
     - npm run build
   artifacts:
-    paths:
-      - .next/
-      - public/
+    - name: BUILD_ARTIFACT
+      paths:
+       - .next/
+       - public/
   cache:
     paths:
       - node_modules/
@@ -34,7 +35,7 @@ build:
 
 deploy:
   stage: deploy
-  image: node:$NODE_VERSION
+  image: node:$PLUGIN_NPM_VERSION
   script:
     - echo "自动部署到 Gitee Pages"
     - echo "确保已在仓库设置中启用 Pages 服务"
