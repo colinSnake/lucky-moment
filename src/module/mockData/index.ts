@@ -2,6 +2,7 @@ import { PrizeType } from "../enum";
 import { words } from "./words";
 import { LotteryDataInterface, PrizeInterface, TextRenderConstantInterface } from "../interface";
 export const lotteryId = "cb85ae949eda1fb233816fca52bbd974";
+export const colors = ["#13c2c2","#ff4466", "#ffe78a"];
 export const imgs = {
     iconImport: "../../../images/btn-import.png",
     iconExport: "../../../images/btn-export.png",
@@ -97,6 +98,18 @@ export const textRenderConstant: TextRenderConstantInterface = {
     offscreenWidth: 120,
     offscreenHeight: 30,
     font: '20px baotuxiaobaiti',
+}
+
+export const confettiConstant = {
+    left: [{ particleCount: 3, angle: 60, spread: 55, colors, origin: { x: 0 }}],
+    center: [
+        { particleCount: 50, spread: 26, startVelocity: 55, colors, origin: { y: 0.7 } },
+        { particleCount: 40, spread: 60, origin: { y: 0.7 } },
+        { particleCount: 70,  spread: 100, decay: 0.91, scalar: 0.8, colors, origin: { y: 0.7 } },
+        { particleCount: 20,  spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2, colors, origin: { y: 0.7 } },
+        { particleCount: 20,  spread: 120, startVelocity: 45, colors, origin: { y: 0.7 } },
+    ],
+    right: [{ particleCount: 3, angle: 120, spread: 55, colors, origin: { x: 1 }}],
 }
 
 export {

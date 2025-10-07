@@ -6,6 +6,7 @@ import * as XLSX from 'xlsx';
 import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
 import Util from "./";
 import EventsUtil from "./eventsUtil";
+import { RenderConfetti, create_renderConfetti } from "../render";
 import { AlertType, EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { AlertInfoInterface, LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
 import { config, lotteryId, mockData } from "../mockData"; 
@@ -32,6 +33,7 @@ export default class LotteryUtil {
         isShowTable: true,
     };
     lotteryDB: LotteryDB = create_LotteryDB();
+    renderConfetti: RenderConfetti = create_renderConfetti();
     alertMsg: string = "";
     maxUserCount: number = 0;
     static instanceObj: LotteryUtil|null = null;
@@ -215,6 +217,7 @@ export default class LotteryUtil {
                 this.flipCard(true, () => {
                     let timer: any = setTimeout(() => {
                         this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
+                        this.renderConfetti.draw();
                         this.alert({message: this.alertMsg});
                         this.setLotteryData();
                         this.isLottery = false;

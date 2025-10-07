@@ -7,6 +7,9 @@ export function create_renderText(){
     return new RenderText().instance();
 }
 
+export function create_renderConfetti(){
+    return new RenderConfetti().instance();
+}
 
 export {
     RenderConfetti,

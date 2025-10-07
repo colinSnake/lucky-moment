@@ -7,9 +7,9 @@ export default class RenderText {
     offscreenCanvas: OffscreenCanvas|null = null;
     offscreenCtx: OffscreenCanvasRenderingContext2D|null = null;
     img: HTMLImageElement = new Image();
-    instanceObj: RenderText|null = null;
     constant: TextRenderConstantInterface = textRenderConstant;
     words: WordInterface[] = [];
+    instanceObj: RenderText|null = null;
     instance(): RenderText{
         if(!this.instanceObj){
             this.instanceObj = new RenderText();
