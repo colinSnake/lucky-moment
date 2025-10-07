@@ -146,6 +146,11 @@ table {
   src: url('/fonts/WenxinXileFont.woff2') format('truetype');
   font-display: swap;
 }
+@font-face {
+  font-family: 'hxb';
+  src: url('/fonts/胡晓波男神体.otf') format('truetype');
+  font-display: swap;
+}
 .flex-horizontal-01 {
   display: flex;
   align-items: center;
@@ -170,6 +175,11 @@ table {
   display: flex;
   flex-direction: column;
 }
+.bg-cover {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 @keyframes animate01 {
   0%,
   100% {
@@ -190,28 +200,69 @@ table {
   height: 6vh;
   position: fixed;
   left: 0;
-  bottom: 4vh;
+  bottom: 2vh;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.main-btns .btn {
+.main-btns .btn-box {
+  position: relative;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+  background-image: url(../../../public/images/btn.png);
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main-btns .btn-box:hover,
+.main-btns .btn-box.active {
+  background-image: url(../../../public/images/btn-selected.png);
+}
+.main-btns .btn-box:hover .icon-flower,
+.main-btns .btn-box.active .icon-flower {
+  opacity: 1;
+}
+.main-btns .btn-box.visible {
+  width: 18vh;
+  height: 6vh;
+  opacity: 1;
+}
+.main-btns .btn-box.mlr {
+  margin: 0 8vh;
+}
+.main-btns .btn-box .btn {
+  width: 100%;
   color: #ffffff;
   background: transparent;
-  outline: 1px solid rgba(19, 194, 194, 0.75);
+  outline: none;
   border: none;
-  padding: 1.6vh 4vh;
-  font-size: 2.5vh;
-  font-weight: bold;
+  font-size: 1.8vh;
+  font-family: "hxb";
+  margin-top: -1.3vh;
+  text-align: center;
   cursor: pointer;
-  margin-right: 10vh;
-  border-radius: 12px;
-  font-family: "zcoolkangyuyang_w01";
 }
-.main-btns .btn:last-child {
-  margin-right: 0;
+.main-btns .btn-box .btn.btn-ls {
+  text-indent: 2vh;
+  letter-spacing: 2vh;
 }
-.main-btns .btn:hover {
-  background-color: rgba(19, 194, 194, 0.5);
+.main-btns .btn-box .icon-flower {
+  position: absolute;
+  left: 2vh;
+  top: -2vh;
+  z-index: 1;
+  width: 6vh;
+  height: 3vh;
+  background-image: url(../../../public/images/flower.png);
+  opacity: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

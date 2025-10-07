@@ -146,6 +146,11 @@ table {
   src: url('/fonts/WenxinXileFont.woff2') format('truetype');
   font-display: swap;
 }
+@font-face {
+  font-family: 'hxb';
+  src: url('/fonts/胡晓波男神体.otf') format('truetype');
+  font-display: swap;
+}
 .flex-horizontal-01 {
   display: flex;
   align-items: center;
@@ -170,6 +175,11 @@ table {
   display: flex;
   flex-direction: column;
 }
+.bg-cover {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 @keyframes animate01 {
   0%,
   100% {
@@ -187,33 +197,41 @@ table {
 }
 .main-expansion-wrapper {
   position: fixed;
-  right: 30px;
-  bottom: 30px;
+  right: 1vh;
+  bottom: 1vh;
   z-index: 10;
 }
 .main-expansion-wrapper .main-expansion-inner {
   display: flex;
   flex-direction: column;
 }
-.main-expansion-wrapper .main-expansion-inner .expansion-btn {
+.main-expansion-wrapper .main-expansion-inner .btn-expansion {
   width: 4vh;
   height: 4vh;
-  border-radius: 8px;
-  background-color: rgba(19, 194, 194, 0.1);
-  border: 1px solid rgba(19, 194, 194, 0.75);
-  margin-bottom: 0.5vh;
+  background-color: transparent;
+  margin-bottom: 1vh;
+  cursor: pointer;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.main-expansion-wrapper .main-expansion-inner .expansion-btn:hover {
-  background-color: rgba(19, 194, 194, 0.3);
+.main-expansion-wrapper .main-expansion-inner .btn-expansion.btn-import {
+  background-image: url(../../../public/images/btn-import.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
-.main-expansion-wrapper .main-expansion-inner .expansion-btn.nmb {
+.main-expansion-wrapper .main-expansion-inner .btn-expansion.btn-export {
+  background-image: url(../../../public/images/btn-export.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.main-expansion-wrapper .main-expansion-inner .btn-expansion.nmb {
   margin-bottom: 0;
 }
-.main-expansion-wrapper .main-expansion-inner .expansion-btn > input[type="file"] {
+.main-expansion-wrapper .main-expansion-inner .btn-expansion > input[type="file"] {
   width: 100%;
   height: 100%;
   position: absolute;

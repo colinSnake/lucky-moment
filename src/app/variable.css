@@ -146,6 +146,11 @@ table {
   src: url('/fonts/WenxinXileFont.woff2') format('truetype');
   font-display: swap;
 }
+@font-face {
+  font-family: 'hxb';
+  src: url('/fonts/胡晓波男神体.otf') format('truetype');
+  font-display: swap;
+}
 .flex-horizontal-01 {
   display: flex;
   align-items: center;
@@ -169,6 +174,11 @@ table {
 .flex-vertical-01 {
   display: flex;
   flex-direction: column;
+}
+.bg-cover {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 @keyframes animate01 {
   0%,

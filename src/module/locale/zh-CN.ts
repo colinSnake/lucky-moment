@@ -20,7 +20,8 @@ export const zh = {
             return `恭喜编号为${ids}的幸运儿, 获得了${prize}`;
         },
         LotteryCompleted: "当前抽奖活动已结束，感谢参与",
-        Lotterying: "当前抽奖活动进行中，无法上用户名单",
+        LotteryUnderway: "当前抽奖活动进行中，无法上用户名单",
+        LotteryCarryOut: "当前抽奖活动还未发起，无法重新抽奖",
         LotteryError: "抽奖失败，请稍后重试",
         NoLotteryUsers: "当前抽奖活动没有可抽奖用户",
         UploadSuccess: "用户名单上传成功",

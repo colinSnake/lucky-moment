@@ -24,7 +24,6 @@ export interface PrizeInterface {
     name: string; // 奖品名称
     amount: number; // 奖品金额
     count: number; // 奖品已中奖数量
-    cover: string; // 奖品封面
     total: number; // 奖品总数  
     type: PrizeType; // 奖品类型
     isActive?: boolean; // 是否选中（是否处于当前抽奖阶段）
@@ -67,4 +66,5 @@ export interface UserInterface {
     order: number; // 中奖顺序
     name: string; // 用户姓名
     gift: PrizeType; // 奖品 level
+    date: string; // 中奖日期
 }

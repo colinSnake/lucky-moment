@@ -1,0 +1,20 @@
+@import "../../app/variable.less";
+.main-winnerBg{
+    position: fixed;
+    top: calc(50% - 34vh);
+    left: calc(50% - 50vh);
+    width: 100vh;
+    height: 64vh;
+    z-index: @zx01;
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1200, 1);
+    display: none;
+    &.visible{
+        display: block;
+    }
+    .main-winnerBg-inner{
+        width: 100%;
+        height: 100%;
+        background-image: url(../../../public/images/winner-bg.png);
+        .bg-cover;
+    }
+}

@@ -20,7 +20,8 @@ export const en = {
             return `Congratulations to the lucky ones with the numbers ${ids}, You have won the ${prize}`;
         },
         LotteryCompleted: "The current lottery activity has ended. Thank you for your participation",
-        Lotterying: "The current lottery activity is in progress, and the user list cannot be updated",
+        LotteryUnderway: "The current lottery activity is in progress, and the user list cannot be updated",
+        LotteryCarryOut: "The current lottery activity has not been initiated, and cannot be redrawn",
         LotteryError: "Lottery failed, please try again later",
         NoLotteryUsers: "The current lottery activity has no users to be drawn",
         UploadSuccess: "User list upload successful",

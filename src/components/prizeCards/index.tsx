@@ -8,18 +8,19 @@ import { EventType } from "@/module/enum";
 import "./index.css";
 
 const Card = (props: PrizeInterface) => {
-    const { name, count, cover, total, type, isActive } = props;
+    const { name, count, total, type } = props;
+
+
 
     return (
-        <div className={`card ${isActive ? 'active' : ''}`}>
+        <div className={`card ${count > 0 && count < total ? 'active' : ''}`}>
             <div className="card-inner">
-                <div className="card-box card-cover">
-                    {cover && <img src={cover} alt="cover" />}
-                </div>
-                <div className="card-box">
-                    <div className="card-title">{`${Util.getPrizeName(type)} ${name}`}</div>
+                <div className="card-box card-cover"></div>
+                <div className="card-box card-body">
+                    <div className="card-title">{`${Util.getPrizeName(type)}`}</div>
                     <div className="card-content">
-                        <span>{total-count}/{total}</span>
+                        <b>{name}</b>
+                        <span>{`(${total-count}/${total})`}</span>
                     </div>
                 </div>
             </div>

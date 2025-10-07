@@ -1,5 +1,5 @@
 @import "./reset.less";
-
+@cr-white-a30: rgba(255, 255, 255, 0.30);
 @cr-white-a75: rgba(255, 255, 255, 0.75);
 @cr-white: rgba(255, 255, 255, 1);
 
@@ -12,10 +12,10 @@
 @cr-cyan-a75: rgba(19, 194, 194, 0.75);
 @cr-cyan: rgba(19, 194, 194, 1);
 
-@cr-red-a50: rgba(255, 68, 68, 0.50);
-@cr-red-a75: rgba(255, 68, 68, 0.75); 
-@cr-red-a85: rgba(255, 68, 68, 0.85); 
-@cr-red: rgba(255, 68, 68, 1);
+@cr-red-a50: rgba(255, 0, 0, 0.50);
+@cr-red-a75: rgba(255, 0, 0, 0.75); 
+@cr-red-a85: rgba(255, 0, 0, 0.85); 
+@cr-red: rgba(255, 0, 0, 1);
 
 @cr-info-a50: rgba(22, 119, 255, 0.50);
 @cr-info: rgba(22, 119, 255, 1);
@@ -25,6 +25,8 @@
 @cr-warning: rgba(250, 173, 20, 1);
 @cr-error-a50: rgba(255, 77, 79, 0.50);
 @cr-error: rgba(255, 77, 79, 1);
+
+@cr-pale-yellow: #ffe78a;
 
 @cr-dark-v1: #282828;
 @cr-dark-v2: #1B1B1B;
@@ -61,6 +63,12 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'hxb';
+    src: url('/fonts/胡晓波男神体.otf') format('truetype');
+    font-display: swap;
+}
+
 .flex-horizontal-01 {
     display: flex;
     align-items: center;
@@ -89,6 +97,14 @@
 .flex-vertical-01 {
     display: flex;
     flex-direction: column;
+}
+
+.bg-cover{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    // background-blend-mode: darken;
+    // background-color: rgba(1, 1, 1, 0.5);
 }
 
 @keyframes animate01 {

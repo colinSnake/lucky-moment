@@ -146,6 +146,11 @@ table {
   src: url('/fonts/WenxinXileFont.woff2') format('truetype');
   font-display: swap;
 }
+@font-face {
+  font-family: 'hxb';
+  src: url('/fonts/胡晓波男神体.otf') format('truetype');
+  font-display: swap;
+}
 .flex-horizontal-01 {
   display: flex;
   align-items: center;
@@ -170,6 +175,11 @@ table {
   display: flex;
   flex-direction: column;
 }
+.bg-cover {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 @keyframes animate01 {
   0%,
   100% {
@@ -185,78 +195,24 @@ table {
     clip: rect(0, 26vh, 8vh, 25.9vh);
   }
 }
-.main-prizes-cards {
-  margin: 1vh;
-  display: flex;
-  flex-direction: column;
-}
-.main-prizes-cards .card {
-  padding: 1vh;
-  width: 24vh;
-  height: 6vh;
-  background-color: rgba(19, 194, 194, 0.1);
-  border: none;
-  color: #13c2c2;
-  margin-bottom: 1vh;
-  border-radius: 8px;
-  transition: transform 1s ease-in;
-  transform: scale(1);
-}
-.main-prizes-cards .card.active {
-  box-shadow: 0 0 15px 0 rgba(19, 194, 194, 0.75);
-  transform: scale(1.15);
-  transform-origin: left center;
-  margin: 1vh 0 2vh 0;
-  position: relative;
-}
-.main-prizes-cards .card.active::before,
-.main-prizes-cards .card.active::after {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  box-sizing: border-box;
-  content: '';
+.main-winnerBg {
+  position: fixed;
+  top: calc(50% - 34vh);
+  left: calc(50% - 50vh);
+  width: 100vh;
+  height: 64vh;
   z-index: 1;
-  box-shadow: inset 0 0 0 1px;
-  border-radius: 4px;
-  animation: animate01 8s linear infinite;
-  fill: #13c2c2;
+  transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1200, 1);
+  display: none;
 }
-.main-prizes-cards .card.active::before {
-  animation-delay: -4s;
+.main-winnerBg.visible {
+  display: block;
 }
-.main-prizes-cards .card .card-inner {
+.main-winnerBg .main-winnerBg-inner {
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.main-prizes-cards .card .card-inner .card-box {
-  width: calc(100% - 10vh);
-}
-.main-prizes-cards .card .card-inner .card-box.card-cover {
-  width: 6vh;
-  height: 6vh;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.main-prizes-cards .card .card-inner .card-box.card-cover > img {
-  max-width: 100%;
-  width: 100%;
-  height: 100%;
-}
-.main-prizes-cards .card .card-inner .card-box .card-title {
-  font-size: 1.5vh;
-  font-weight: bold;
-  font-family: "zcoolkangyuyang_w01";
-  color: #ffffff;
-}
-.main-prizes-cards .card .card-inner .card-box .card-content {
-  font-size: 1.2vh;
-  font-family: "zcoolkangyuyang_w01";
-  margin-top: 1vh;
-  color: #ffffff;
+  background-image: url(../../../public/images/winner-bg.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

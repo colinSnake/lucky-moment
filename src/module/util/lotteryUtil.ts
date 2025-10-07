@@ -6,10 +6,9 @@ import * as XLSX from 'xlsx';
 import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
 import Util from "./";
 import EventsUtil from "./eventsUtil";
-import { RenderText, create_renderText } from "../render";
 import { AlertType, EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { AlertInfoInterface, LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
-import { imgs, config, lotteryId, mockData, words } from "../mockData"; 
+import { config, lotteryId, mockData } from "../mockData"; 
 import Locale from "../locale";
 
 export default class LotteryUtil {
@@ -33,7 +32,6 @@ export default class LotteryUtil {
         isShowTable: true,
     };
     lotteryDB: LotteryDB = create_LotteryDB();
-    renderText: RenderText = create_renderText();
     alertMsg: string = "";
     maxUserCount: number = 0;
     static instanceObj: LotteryUtil|null = null;
@@ -83,12 +81,15 @@ export default class LotteryUtil {
         return unLuckyUsers;
     }
 
+    get luckyCount(){
+        return this.lotteryData.prizes.reduce((pre: number, cur: PrizeInterface) => pre + cur.count, 0);
+    }
+
     initialize() {
         this.lotteryDB.initialize().then(async() => {
             const res = await this.getLotteryData(lotteryId);
             this.lotteryData = JSON.parse(JSON.stringify(res));
             this.maxUserCount = this.lotteryData.users.length;
-            this.renderText.initialize();
             this.initCards();
             this.animate();
             this.registerEvent();
@@ -100,26 +101,15 @@ export default class LotteryUtil {
     }
 
     createCard(user: UserInterface){
-        const cardEle = document.createElement('div'),
-            { isShowFont } = this.config,
-            { iconXi, iconXiSmall } = imgs;
-        cardEle.className = "prize-card-wrapper";
+        const cardEle = document.createElement('div');
+        cardEle.className = "prize-card-wrapper visible";
         cardEle.setAttribute("id", `card-${user.id}`)
         cardEle.innerHTML = `
             <div class="prize-card-inner">
-                <div class="prize-card-front-side">
-                    ${isShowFont ? `<span class="word">${words[(user.id - 1) % words.length]}</span>`
-                        : `<img src=${iconXi} alt="cover" />`}
-                </div>
+                <div class="prize-card-front-side"></div>
                 <div class="prize-card-back-side active">
-                    <div class="top">
-                        <img src=${iconXiSmall} alt="cover" />
-                    </div>
                     <div class="center">
                         <span class="number">${user.id}</span>
-                    </div>
-                    <div class="bottom">
-                        <img src=${iconXiSmall} alt="cover" />
                     </div>
                 </div>
             </div>
@@ -199,7 +189,7 @@ export default class LotteryUtil {
                 .to({
                     x: tag * width * resolution * 1,
                     y: 50 * resolution,
-                    z: 1800,
+                    z: 1200,
                 }, this.getRandomDuration(selectDuration))
                 .easing(TWEEN.Easing.Exponential.InOut)
                 .start();
@@ -222,15 +212,16 @@ export default class LotteryUtil {
             .onUpdate(this.render.bind(this))
             .start()
             .onComplete(() => {
-                let timer: any = setTimeout(() => {
-                    this.flipCard(true);
-                    this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
-                    this.alert({message: this.alertMsg});
-                    this.setLotteryData();
-                    this.isLottery = false;
-                    clearTimeout(timer);
-                    timer = null;
-                }, 1000);
+                this.flipCard(true, () => {
+                    let timer: any = setTimeout(() => {
+                        this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
+                        this.alert({message: this.alertMsg});
+                        this.setLotteryData();
+                        this.isLottery = false;
+                        clearTimeout(timer);
+                        timer = null;
+                    }, 1500);
+                });
             });
     }   
 
@@ -269,33 +260,49 @@ export default class LotteryUtil {
                 });
         });
     }
-
-    main(params: any){
+    
+    checkCanLottery(params: any){
         const { type, text } = params,
             { isAuto }= this.config,
             { prizeIndex } = this.lotteryData;
+        let status = true;
+        if(type === StepType.lottery){ 
+            if(this.unLuckyUsers.length === 0){ // 判断当前是否存在可抽奖用户
+                status = false;
+                this.alert({type: AlertType.warning, message: Locale.Common.NoLotteryUsers});   
+            }
+            if(prizeIndex === 0){ // 判断当前抽奖活动已完成
+                status = false;
+                this.alert({type: AlertType.warning, message: Locale.Common.LotteryCompleted});   
+            }
+        }
+        if(type === StepType.reLottery){
+            if(this.luckyCount === 0){ // 判断当前抽奖活动未开始
+                status = false;
+                this.alert({type: AlertType.warning, message: Locale.Common.LotteryCarryOut});   
+            }
+        }   
+        // 判断上次抽奖未执行完毕，不发起新的抽奖
+        if(isAuto) {
+            this.isLottery && (status = false);
+        }else{ 
+            if(text !== Locale.Page.Pause && this.isLottery){
+                this.isLottery && (status = false);
+            }
+        }
+        return status;
+    }
+
+    main(params: any){
+        const { type, text } = params;
 
         return new Promise(async(resolve, reject) => {
             try{
                 this.alertMsg = "";
-                if(type === StepType.lottery){ 
-                    if(this.unLuckyUsers.length === 0){ // 没有可抽奖用户了
-                        return this.alert({type: AlertType.warning, message: Locale.Common.NoLotteryUsers});   
-                    }
-                    if(prizeIndex === 0){ // 判断当前抽奖活动已完成
-                        return this.alert({type: AlertType.warning, message: Locale.Common.LotteryCompleted});   
-                    }
+                if(!this.checkCanLottery(params)){
+                    return resolve(true);
                 }
-                // 判断上次抽奖未执行完毕，不发起新的抽奖
-                if(isAuto) {
-                    if(this.isLottery){
-                        return resolve(true);
-                    }
-                }else{ 
-                    if(text !== Locale.Page.Pause && this.isLottery){
-                        return resolve(true);
-                    }
-                }
+
                 switch(type){
                     case StepType.welcome:
                         {
@@ -389,6 +396,7 @@ export default class LotteryUtil {
                             this.select3dCardIds.push(it.id);
                             it.gift = prizes[prizeIndex].type;
                             it.order = total + i;
+                            it.date = Util.formatDate();
                         }
                     });
                     this.alertMsg += i > 0 ? `、${user.id}` : user.id;
@@ -422,7 +430,7 @@ export default class LotteryUtil {
                     // 二维数组 const arrayData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
                     if(this.luckyUsers.length > 0){
-                        this.alert({type: AlertType.warning, message: Locale.Common.Lotterying});
+                        this.alert({type: AlertType.warning, message: Locale.Common.LotteryUnderway});
                     }else{
                         if(jsonData.length > 0){
                             const { users } = this.lotteryData;
@@ -461,7 +469,7 @@ export default class LotteryUtil {
                     [Locale.Common.Name]: it.name,
                     [Locale.Common.Prize]: Util.getPrizeName(it.gift as PrizeType),
                     [Locale.Common.Gift]: curPrize ? curPrize.name : "",
-                    [Locale.Common.Date]: Util.formatDate()
+                    [Locale.Common.Date]: it.date
                 };
             });
             // 1. 将 JSON 数据转换为工作表
@@ -684,7 +692,6 @@ export default class LotteryUtil {
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
         this.render();
-        this.renderText.updateCanvasSize();
     }
 
     registerEvent(){
@@ -693,7 +700,20 @@ export default class LotteryUtil {
         });
     }
 
-    flipCard(status: boolean){
+    flipCard(status: boolean, callback?: Function){
+        const winnerBg = document.querySelector(".main-winnerBg") as HTMLElement;
+        if(status){
+            winnerBg && !winnerBg.classList.contains("visible") && winnerBg.classList.add("visible");
+        }else{
+            winnerBg && winnerBg.classList.contains("visible") && winnerBg.classList.remove("visible");
+        }
+        this._3dCards.forEach(object => {
+            if(status){
+                object.element && object.element.classList.contains("visible") && object.element.classList.remove("visible");
+            }else{
+                object.element && !object.element.classList.contains("visible") && object.element.classList.add("visible");
+            }
+        });
         this.select3dCardIds.forEach(id => {
             const object = this._3dCards[id - 1];
             if(status){
@@ -703,6 +723,7 @@ export default class LotteryUtil {
                 object.element && object.element.classList.contains("prize") && object.element.classList.remove("prize");
             }
         });
+        callback && callback();
     }
 
     alert(data: AlertInfoInterface){

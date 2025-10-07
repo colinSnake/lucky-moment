@@ -4,26 +4,59 @@
     height: 6vh;
     position: fixed;
     left: 0;
-    bottom: 4vh;
+    bottom: 2vh;
     z-index: @zx01;
     .flex-horizontal-01;
-    .btn{
-        color: @cr-white;
-        background: transparent;
-        outline: 1px solid @cr-cyan-a75;
-        border: none;
-        padding: 1.6vh 4vh;
-        font-size: 2.5vh;
-        font-weight: bold;
+    .btn-box{
+        position: relative;
+        width: 0;
+        height: 0;
         cursor: pointer;
-        margin-right: 10vh;
-        border-radius: 12px;
-        font-family: "zcoolkangyuyang_w01";
-        &:last-child{
-            margin-right: 0;
+        background-image: url(../../../public/images/btn.png);
+        transition: all 0.3s ease-in-out;
+        opacity: 0;
+        .bg-cover;
+        .flex-horizontal-01;
+        &:hover, &.active{
+            background-image: url(../../../public/images/btn-selected.png);
+            .icon-flower{
+                opacity: 1;
+            }
         }
-        &:hover{
-            background-color: @cr-cyan-a50;
+        &.visible{
+            width: 18vh;
+            height: 6vh;
+            opacity: 1;
+        }
+        &.mlr{
+            margin: 0 8vh;
+        }
+        .btn{
+            width: 100%;
+            color: @cr-white;
+            background: transparent;
+            outline: none;
+            border: none;
+            font-size: 1.8vh;
+            font-family: "hxb";
+            margin-top: -1.3vh;
+            text-align: center;
+            cursor: pointer;
+            &.btn-ls{
+                text-indent: 2vh;
+                letter-spacing: 2vh;
+            }
+        }
+        .icon-flower{
+            position: absolute;
+            left: 2vh;
+            top: -2vh;
+            z-index: @zx01;
+            width: 6vh;
+            height: 3vh;
+            background-image: url(../../../public/images/flower.png);
+            opacity: 0;
+            .bg-cover;
         }
     }
 }

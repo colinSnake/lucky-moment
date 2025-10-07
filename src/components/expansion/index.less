@@ -1,22 +1,26 @@
 @import "../../app/variable.less";
 .main-expansion-wrapper{
     position: fixed;
-    right: 30px;
-    bottom: 30px;
+    right: 1vh;
+    bottom: 1vh;
     z-index: @zx10;
     .main-expansion-inner{
         .flex-vertical-01;
-        .expansion-btn{
+        .btn-expansion{
             width: 4vh;
             height: 4vh;
-            border-radius: 8px;
-            background-color: @cr-cyan-a10;
-            border: 1px solid @cr-cyan-a75;
-            margin-bottom: 0.5vh;
+            background-color: transparent;
+            margin-bottom: 1vh;
+            cursor: pointer;
             position: relative;
             .flex-horizontal-01;
-            &:hover{
-                background-color: @cr-cyan-a30;
+            &.btn-import{
+                background-image: url(../../../public/images/btn-import.png);
+                .bg-cover;
+            }
+            &.btn-export{
+                background-image: url(../../../public/images/btn-export.png);
+                .bg-cover;
             }
             &.nmb{
                 margin-bottom: 0;

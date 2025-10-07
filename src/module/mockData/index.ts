@@ -3,8 +3,8 @@ import { words } from "./words";
 import { LotteryDataInterface, PrizeInterface, TextRenderConstantInterface } from "../interface";
 export const lotteryId = "cb85ae949eda1fb233816fca52bbd974";
 export const imgs = {
-    iconXi: "../../../images/double_happiness_font_white.png",
-    iconXiSmall: "../../../images/double_happiness_small.png",
+    iconImport: "../../../images/btn-import.png",
+    iconExport: "../../../images/btn-export.png",
 }
 export const config =  {
     row: 6, // 卡片行数
@@ -14,7 +14,7 @@ export const config =  {
     selectDuration: 600, // 选择卡片动画时间
     transformDuration: 2000, // 卡片平面和3D切换状态动画时间
     rotateDuration: 3000, // 旋转 sphere 动画时间
-    width: 210, // 卡片宽度
+    width: 240, // 卡片宽度
     height: 240, // 卡片高度
     step: 20, // 卡片间距
     isShowFont: true, // 卡片是否显示字体
@@ -24,46 +24,41 @@ export const config =  {
 export const prizes: PrizeInterface[] = [
     {
         id: 0, 
-        name: "智能空气炸锅",
+        name: "鸿运巅峰包",
         amount: 500,
         count: 0,
-        cover: "/images/mbp.jpg",
         total: 1,  
         type: PrizeType.specialPrize
     },
     {
         id: 1, 
-        name: "蓝牙降噪耳机",
+        name: "锦鲤非凡包",
         amount: 200,
         count: 0,
-        cover: "/images/mbp.jpg",
         total: 3,  
         type: PrizeType.firstPrize
     },
     {
         id: 2, 
-        name: "高颜值餐具礼盒",
+        name: "好运连连包",
         amount: 80,
         count: 0,
-        cover: "/images/mbp.jpg",
         total: 6,  
         type: PrizeType.secondPrize
     },
     {
         id: 3, 
-        name: "星空夜灯",
+        name: "乐在其中包",
         amount: 50,
         count: 0,
-        cover: "/images/mbp.jpg",
         total: 10,   
         type: PrizeType.thirdPrize
     },
     {
         id: 4, 
-        name: "手机挂件",
+        name: "天天开心包",
         amount: 20,
         count: 0,
-        cover: "/images/mbp.jpg",
         total: 20,  
         type: PrizeType.normalPrize
     },
@@ -79,6 +74,7 @@ const getUsers = () => {
             order: i,
             name: `用户${i+1}`,
             gift: PrizeType.none,
+            date: ""
         });
     }
     return users;

@@ -1,5 +1,5 @@
 
-import { Alert, BtnGroup, Core, Expansion, PrizeCards } from "@/components";
+import { Alert, BtnGroup, Core, Expansion, PrizeCards, WinnerBg } from "@/components";
 
 const Home = () => {
     return (
@@ -16,6 +16,7 @@ const Home = () => {
                 <canvas id="starry-sky"></canvas>
             </div>
             <Expansion />
+            <WinnerBg />
         </div>
     )
 }

@@ -1,0 +1,263 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+html,
+body {
+  height: 100%;
+}
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+@font-face {
+  font-family: 'zcoolkangyuyang_w01';
+  src: url('/fonts/TsangerYuYangT-W01.woff2') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'stcaiyun';
+  src: url('/fonts/subset-STCaiyun.woff2') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'baotuxiaobaiti';
+  src: url('/fonts/baotuxiaobaiti.woff2') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'wenxin';
+  src: url('/fonts/WenxinXileFont.woff2') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'hxb';
+  src: url('/fonts/胡晓波男神体.otf') format('truetype');
+  font-display: swap;
+}
+.flex-horizontal-01 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-horizontal-02 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex-horizontal-03 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.flex-horizontal-04 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.flex-vertical-01 {
+  display: flex;
+  flex-direction: column;
+}
+.bg-cover {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+@keyframes animate01 {
+  0%,
+  100% {
+    clip: rect(0, 26vh, 1px, 0);
+  }
+  25% {
+    clip: rect(0, 1px, 8vh, 0);
+  }
+  50% {
+    clip: rect(7.9vh, 26vh, 8vh, 0);
+  }
+  75% {
+    clip: rect(0, 26vh, 8vh, 25.9vh);
+  }
+}
+.main-prizes-cards {
+  margin: 1vh;
+  display: flex;
+  flex-direction: column;
+}
+.main-prizes-cards .card {
+  width: 25vh;
+  height: 8vh;
+  margin-bottom: 1vh;
+  overflow: hidden;
+  background-color: transparent;
+}
+.main-prizes-cards .card.active {
+  position: relative;
+}
+.main-prizes-cards .card.active .card-inner {
+  background-image: url(../../../public/images/rectangle-selected.png);
+}
+.main-prizes-cards .card.active .card-inner .card-box.card-cover {
+  background-image: url(../../../public/images/gift-selected.png);
+}
+.main-prizes-cards .card .card-inner {
+  width: 100%;
+  height: 100%;
+  padding: 0 2vh;
+  box-sizing: border-box;
+  background-image: url(../../../public/images/rectangle.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.main-prizes-cards .card .card-inner .card-box {
+  width: calc(100% - 8vh);
+}
+.main-prizes-cards .card .card-inner .card-box.card-cover {
+  width: 6vh;
+  height: 6vh;
+  border-radius: 50%;
+  overflow: hidden;
+  background-image: url(../../../public/images/gift.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.main-prizes-cards .card .card-inner .card-box.card-body .card-title {
+  font-size: 1.6vh;
+  font-family: "hxb";
+  color: #ffffff;
+}
+.main-prizes-cards .card .card-inner .card-box.card-body .card-content {
+  font-family: "zcoolkangyuyang_w01";
+  margin-top: 0.8vh;
+}
+.main-prizes-cards .card .card-inner .card-box.card-body .card-content > b {
+  margin-right: 1vh;
+}
+.main-prizes-cards .card .card-inner .card-box.card-body .card-content > b,
+.main-prizes-cards .card .card-inner .card-box.card-body .card-content > span {
+  font-weight: 600;
+  font-size: 1.3vh;
+  text-shadow: 0px 2px 6px rgba(255, 0, 0, 0.5);
+  color: #ffffff;
+}
