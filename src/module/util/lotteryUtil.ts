@@ -6,7 +6,7 @@ import * as XLSX from 'xlsx';
 import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
 import Util from "./";
 import EventsUtil from "./eventsUtil";
-import RenderTextUtil, { create_RenderTextUtil } from "./renderTextUtil";
+import { RenderText, create_renderText } from "../render";
 import { AlertType, EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { AlertInfoInterface, LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
 import { imgs, config, lotteryId, mockData, words } from "../mockData"; 
@@ -33,7 +33,7 @@ export default class LotteryUtil {
         isShowTable: true,
     };
     lotteryDB: LotteryDB = create_LotteryDB();
-    renderTextUtil: RenderTextUtil = create_RenderTextUtil();
+    renderText: RenderText = create_renderText();
     alertMsg: string = "";
     maxUserCount: number = 0;
     static instanceObj: LotteryUtil|null = null;
@@ -88,7 +88,7 @@ export default class LotteryUtil {
             const res = await this.getLotteryData(lotteryId);
             this.lotteryData = JSON.parse(JSON.stringify(res));
             this.maxUserCount = this.lotteryData.users.length;
-            this.renderTextUtil.initialize();
+            this.renderText.initialize();
             this.initCards();
             this.animate();
             this.registerEvent();
@@ -684,7 +684,7 @@ export default class LotteryUtil {
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
         this.render();
-        this.renderTextUtil.updateCanvasSize();
+        this.renderText.updateCanvasSize();
     }
 
     registerEvent(){

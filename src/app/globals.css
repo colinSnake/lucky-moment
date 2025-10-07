@@ -208,12 +208,10 @@ table {
 .main-wrapper .main-inner #starry-sky {
   width: 100%;
   height: 100%;
-  background-image: url(../../public/images/bg_06_tiny.jpg);
+  background-image: url(../../public/images/bg-tiny.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-blend-mode: darken;
-  background-color: rgba(1, 1, 1, 0.5);
 }
 .prize-card-wrapper {
   width: 14vh;

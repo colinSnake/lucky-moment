@@ -1,17 +1,17 @@
 import { WordInterface, TextRenderConstantInterface } from "@/module/interface";
 import { textRenderConstant } from "@/module/mockData";
 
-export default class RenderTextUtil {
+export default class RenderText {
     canvas: HTMLCanvasElement|null = null;
     drawOffscreenWorker: Worker|null = null;
     img: HTMLImageElement = new Image();
-    instanceObj: RenderTextUtil|null = null;
+    instanceObj: RenderText|null = null;
     constant: TextRenderConstantInterface = textRenderConstant;
     words: WordInterface[] = [];
     timer: any = null;
-    instance(): RenderTextUtil{
+    instance(): RenderText{
         if(!this.instanceObj){
-            this.instanceObj = new RenderTextUtil();
+            this.instanceObj = new RenderText();
         }
         return this.instanceObj;
     }
@@ -101,8 +101,4 @@ export default class RenderTextUtil {
     getRandomNum(value: number){
         return Math.floor(Math.random() * value);
     }
-}
-
-export function create_RenderTextUtil(){
-    return new RenderTextUtil().instance();
 }
