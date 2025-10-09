@@ -51,8 +51,8 @@ const GiftCards = () => {
             return <div className="notice">
                 <span>{Locale.Page.LN_01}</span>
                 <h2>{level}</h2> 
-                <h2>{`${name}，`}</h2>
-                <span>{Locale.Page.LN_02}</span> 
+                <h2 className="plr">{name}</h2>
+                <span>{`，${Locale.Page.LN_02}`}</span> 
                 <h2 className="plr">{remainCount}</h2> 
                 <span>{Locale.Page.LN_03}</span>
             </div>;

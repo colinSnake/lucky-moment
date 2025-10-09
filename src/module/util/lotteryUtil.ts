@@ -310,7 +310,9 @@ export default class LotteryUtil {
                 if(!this.checkCanLottery(params)){
                     return resolve(true);
                 }
-                this.alert(AlertType.success, Locale.Common.LotteryNotice(prizes[prizeIndex].name));
+                if([StepType.lottery, StepType.reLottery].includes(type) && text !== Locale.Page.Pause){
+                    this.alert(AlertType.success, Locale.Common.LotteryNotice(prizes[prizeIndex].name));
+                }
                 switch(type){
                     case StepType.welcome:
                         {
@@ -321,7 +323,6 @@ export default class LotteryUtil {
                         break;
                     case StepType.lottery:
                         {
-
                             if(text === Locale.Page.Pause){
                                 this.config.times = 0;
                                 this.handleUpdateBtnGroup(type);
@@ -740,7 +741,7 @@ export default class LotteryUtil {
             type,
             message,
             isShow: true,
-            position: "top",
+            position: "right",
         });
     }
 

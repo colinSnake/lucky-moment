@@ -7,7 +7,7 @@
 @cr-black-a30: rgba(0, 0, 0, 0.3);
 
 @cr-red-a50: rgba(255, 0, 0, 0.50);
-// @cr-brightYellow: #fff78a;
+@cr-yellow: #fff78a;
 @cr-brightYellow: #ffb415;
 
 @cr-info-a50: rgba(22, 119, 255, 0.50);
@@ -24,8 +24,7 @@
 @cr-alert-03: rgba(224, 32, 32, 1); 
 @cr-alert-04: rgba(250, 100, 0, 1);
 @cr-alert-05: rgba(247, 181, 0, 1);
-@cr-alert-06: #8B1A1A; 
-
+@cr-alert-06: #8B1A1A;
 
 @img-bg-01: url(/public/images/love.png);
 
@@ -101,21 +100,14 @@
     // background-color: rgba(1, 1, 1, 0.5);
 }
 
-@keyframes animate01 {
-    0%,
-    100% {
-        clip: rect(0, 26vh, 1px, 0);
+@keyframes highlight {
+    0% {
+        color: @cr-yellow; 
     }
-
-    25% {
-        clip: rect(0, 1px, 8vh, 0);
-    }
-
     50% {
-        clip: rect(7.9vh, 26vh, 8vh, 0);
+        color: @cr-brightYellow;
     }
-
-    75% {
-        clip: rect(0, 26vh, 8vh, 25.9vh);
+    100% {
+        color: @cr-yellow; 
     }
 }

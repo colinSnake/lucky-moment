@@ -13,7 +13,7 @@ export default class RenderSparticle {
         const sparticleEle = document.querySelector('.wl-inner-sparticle') as HTMLElement;
         if(sparticleEle){
             const { offsetWidth, offsetHeight } = sparticleEle;
-            new Sparticles(sparticleEle, { color: colors, shape: ['star'], count: 200, speed: 15 }, offsetWidth, offsetHeight);
+            new Sparticles(sparticleEle, { color: colors, shape: ['star'], count: 120, speed: 15 }, offsetWidth, offsetHeight);
         }
     }
 }

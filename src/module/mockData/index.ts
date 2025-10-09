@@ -2,7 +2,7 @@ import { PrizeType } from "../enum";
 import { loveWords, words } from "./words";
 import { LotteryDataInterface, PrizeInterface, TextRenderConstantInterface } from "../interface";
 export const lotteryId = "cb85ae949eda1fb233816fca52bbd974";
-export const colors = ["#13c2c2","#ff4466", "#ffe78a"];
+export const colors = ["#13c2c2","#ff4466", "#ffb415"];
 export const imgs = {
     iconImport: "../../../images/btn-import.png",
     iconExport: "../../../images/btn-export.png",
@@ -19,7 +19,7 @@ export const config =  {
     height: 240, // 卡片高度
     step: 20, // 卡片间距
     isShowFont: true, // 卡片是否显示字体
-    isAuto: true, // 抽奖是否自动停止
+    isAuto: false, // 抽奖是否自动停止
     times: 0, // 旋转次数
 };
 export const prizes: PrizeInterface[] = [

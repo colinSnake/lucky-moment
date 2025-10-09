@@ -176,23 +176,19 @@ table {
   background-position: center;
   background-repeat: no-repeat;
 }
-@keyframes animate01 {
-  0%,
-  100% {
-    clip: rect(0, 26vh, 1px, 0);
-  }
-  25% {
-    clip: rect(0, 1px, 8vh, 0);
+@keyframes highlight {
+  0% {
+    color: #fff78a;
   }
   50% {
-    clip: rect(7.9vh, 26vh, 8vh, 0);
+    color: #ffb415;
   }
-  75% {
-    clip: rect(0, 26vh, 8vh, 25.9vh);
+  100% {
+    color: #fff78a;
   }
 }
 .wl-gift-cards {
-  margin: 1vh;
+  margin: 2vh;
   display: flex;
   flex-direction: column;
 }
@@ -206,12 +202,13 @@ table {
   font-size: 1.5vh;
   color: #ffffff;
   text-shadow: 0px 2px 6px rgba(255, 0, 0, 0.5);
+  padding-bottom: 0.2vh;
 }
 .wl-gift-cards .notice > h2 {
   font-size: 3.6vh;
   padding-left: 1vh;
-  color: #ffb415;
-  text-shadow: 0px 2px 6px rgba(255, 0, 0, 0.5);
+  animation: highlight 2s ease-in-out infinite;
+  text-shadow: 0px 2px 6px rgba(255, 255, 255, 0.75);
 }
 .wl-gift-cards .notice > h2.plr {
   padding: 0 1vh;

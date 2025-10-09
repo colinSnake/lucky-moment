@@ -1,6 +1,6 @@
 @import "../../app/variable.less";
 .wl-gift-cards{
-    margin: 1vh;
+    margin: 2vh;
     .flex-vertical-01;
     .notice{
         font-family: "HXBhandsome";
@@ -11,12 +11,14 @@
             font-size: 1.5vh;
             color: @cr-white;
             text-shadow: 0px 2px 6px @cr-red-a50;
+            padding-bottom: 0.2vh;
         }
         >h2{
             font-size: 3.6vh;
             padding-left: 1vh;
-            color: @cr-brightYellow;
-            text-shadow: 0px 2px 6px @cr-red-a50;
+            // color: @cr-brightYellow;
+            animation: highlight 2s ease-in-out infinite;
+            text-shadow: 0px 2px 6px @cr-white-a75;
             &.plr{
                 padding: 0 1vh;
             }
