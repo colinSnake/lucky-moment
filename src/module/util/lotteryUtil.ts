@@ -113,6 +113,7 @@ export default class LotteryUtil {
                     <div class="center">
                         <span class="number">${user.id}</span>
                     </div>
+                    <span class="crown"></span>
                 </div>
             </div>
         `;
@@ -218,7 +219,8 @@ export default class LotteryUtil {
                     let timer: any = setTimeout(() => {
                         this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
                         this.renderConfetti.draw();
-                        this.alert({message: this.alertMsg});
+                        this.alert(AlertType.success, this.alertMsg);
+                        this.setLotteryData();
                         this.setLotteryData();
                         this.isLottery = false;
                         clearTimeout(timer);
@@ -272,17 +274,17 @@ export default class LotteryUtil {
         if(type === StepType.lottery){ 
             if(this.unLuckyUsers.length === 0){ // 判断当前是否存在可抽奖用户
                 status = false;
-                this.alert({type: AlertType.warning, message: Locale.Common.NoLotteryUsers});   
+                this.alert(AlertType.warning, Locale.Common.NoLotteryUsers);   
             }
             if(prizeIndex === 0){ // 判断当前抽奖活动已完成
                 status = false;
-                this.alert({type: AlertType.warning, message: Locale.Common.LotteryCompleted});   
+                this.alert(AlertType.warning, Locale.Common.LotteryCompleted);   
             }
         }
         if(type === StepType.reLottery){
             if(this.luckyCount === 0){ // 判断当前抽奖活动未开始
                 status = false;
-                this.alert({type: AlertType.warning, message: Locale.Common.LotteryCarryOut});   
+                this.alert(AlertType.warning, Locale.Common.LotteryCarryOut);   
             }
         }   
         // 判断上次抽奖未执行完毕，不发起新的抽奖
@@ -297,7 +299,8 @@ export default class LotteryUtil {
     }
 
     main(params: any){
-        const { type, text } = params;
+        const { type, text } = params,
+            { prizes, prizeIndex } = this.lotteryData;
 
         return new Promise(async(resolve, reject) => {
             try{
@@ -305,7 +308,7 @@ export default class LotteryUtil {
                 if(!this.checkCanLottery(params)){
                     return resolve(true);
                 }
-
+                this.alert(AlertType.success, Locale.Common.LotteryNotice(prizes[prizeIndex].name));
                 switch(type){
                     case StepType.welcome:
                         {
@@ -369,7 +372,7 @@ export default class LotteryUtil {
                 }
                 resolve(true);
             }catch(err){
-                this.alert({type: AlertType.error, message: Locale.Common.LotteryError});
+                this.alert(AlertType.error, Locale.Common.LotteryError);
                 reject(err);
             }
         });
@@ -433,7 +436,7 @@ export default class LotteryUtil {
                     // 二维数组 const arrayData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
                     if(this.luckyUsers.length > 0){
-                        this.alert({type: AlertType.warning, message: Locale.Common.LotteryUnderway});
+                        this.alert(AlertType.warning, Locale.Common.LotteryUnderway);
                     }else{
                         if(jsonData.length > 0){
                             const { users } = this.lotteryData;
@@ -447,14 +450,14 @@ export default class LotteryUtil {
                             this.maxUserCount = jsonData.length;
                             this.setLotteryData();
                         }
-                        this.alert({message: Locale.Common.UploadSuccess});
+                        this.alert(AlertType.success, Locale.Common.UploadSuccess);
                     }
                     
                     console.log('Convert Excel data to JSON:', jsonData);
                     // 这里可以处理转换后的 JSON 数据
                     resolve(true);
                 } catch (err) {
-                    this.alert({type: AlertType.error, message: Locale.Common.UploadFailed});
+                    this.alert(AlertType.error, Locale.Common.UploadFailed);
                     reject(err);
                 }
             };
@@ -729,12 +732,13 @@ export default class LotteryUtil {
         callback && callback();
     }
 
-    alert(data: AlertInfoInterface){
-        const alertInfo = {
-            type: AlertType.info,
-            isShow: true
-        };
-        EventsUtil.emit(EventType.showAlert, {...alertInfo, ...data});
+    alert(type: AlertType, message: string){
+        EventsUtil.emit(EventType.showAlert, {
+            type,
+            message,
+            isShow: true,
+            position: "top",
+        });
     }
 
     handleUpdateLotteryData(){

@@ -1,5 +1,5 @@
 import { WordInterface, TextRenderConstantInterface } from "@/module/interface";
-import { textRenderConstant } from "@/module/mockData";
+import { textRenderConstant, loveWords } from "@/module/mockData";
 
 export default class RenderText {
     canvas: HTMLCanvasElement|null = null;
@@ -46,27 +46,13 @@ export default class RenderText {
     produceStars(){
         const canvas = this.canvas!,
             { wordNumber } = this.constant;
-        const textArr = [
-            "2025", "LM & MRX", "我们结婚啦", 
-            "囍结良缘", "♡", "♥", 
-            "佳偶天成", "百年好合", 
-            "白头偕老", "琴瑟和鸣",
-            "盟结良缘", "白首成约",
-            "缔结良缘", "心心相印",
-            "凤凰于飞", "同心同德",
-            "山水一程", "风雨一更",
-            "三生有幸", "共度余生",
-            "不偏不倚", "刚好是你",
-            "既许一人以偏爱", "愿尽余生之慷慨","年年岁岁不相负", "落日与晚风", "朝朝又暮暮",
-            "愿我们始于初见", "止于终老", "以爱之名", "以余生为期", "喜悦有分享", "同量天地宽", "相随日月长",
-        ];
         this.words = [];
         for(let i = 0; i < wordNumber; i++){
             const star = {
                 x: this.getRandomNum(canvas.width),
                 y: this.getRandomNum(canvas.height),
                 z: this.getRandomNum(canvas.width),
-                word: textArr[i%(textArr.length - 1)],
+                word: loveWords[i%(loveWords.length - 1)],
                 // color: "#fff",
                 color: `hsl(${Math.random() * 360}, 70%, 60%)`, // 随机颜色
                 angle: Math.random() * Math.PI * 2, // 随机初始角度

@@ -1,7 +1,27 @@
 @import "../../app/variable.less";
-.main-prizes-cards{
+.main-gift-cards{
     margin: 1vh;
     .flex-vertical-01;
+    .notice{
+        font-family: "HXBhandsome";
+        margin-bottom: 2vh;
+        display: flex;
+        align-items: flex-end;
+        >span{
+            font-size: 1.5vh;
+            color: @cr-white;
+            text-shadow: 0px 2px 6px @cr-red-a50;
+        }
+        >h2{
+            font-size: 4vh;
+            padding-left: 1vh;
+            color: @cr-brightYellow;
+            text-shadow: 0px 2px 6px @cr-red-a50;
+            &.plr{
+                padding: 0 1vh;
+            }
+        }
+    }
     .card{
         width: 25vh;
         height: 8vh;
@@ -40,7 +60,7 @@
                 &.card-body{
                     .card-title{
                         font-size: 1.6vh;
-                        font-family: "hxb";
+                        font-family: "HXBhandsome";
                         color: @cr-white;
                     }
                     .card-content{

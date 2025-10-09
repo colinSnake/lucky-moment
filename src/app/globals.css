@@ -132,23 +132,13 @@ table {
   font-display: swap;
 }
 @font-face {
-  font-family: 'stcaiyun';
-  src: url('/fonts/subset-STCaiyun.woff2') format('truetype');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'baotuxiaobaiti';
-  src: url('/fonts/baotuxiaobaiti.woff2') format('truetype');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'wenxin';
-  src: url('/fonts/WenxinXileFont.woff2') format('truetype');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'hxb';
+  font-family: 'HXBhandsome';
   src: url('/fonts/胡晓波男神体.otf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SJxingkai';
+  src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
   font-display: swap;
 }
 .flex-horizontal-01 {
@@ -278,11 +268,26 @@ table {
   color: #ffffff;
   font-family: "stcaiyun";
 }
+.prize-card-wrapper .prize-card-inner .prize-card-back-side .crown {
+  position: absolute;
+  left: calc(50% - 5vh);
+  top: -5vh;
+  z-index: 1;
+  width: 10vh;
+  height: 8vh;
+  background-image: url(../../public/images/crown.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .prize-card-wrapper.visible {
   opacity: 1;
 }
 .prize-card-wrapper.flip {
   opacity: 1;
+}
+.prize-card-wrapper.flip .prize-card-inner {
+  position: relative;
 }
 .prize-card-wrapper.flip .prize-card-inner .prize-card-front-side {
   height: 0;

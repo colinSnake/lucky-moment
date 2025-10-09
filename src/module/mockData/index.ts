@@ -1,5 +1,5 @@
 import { PrizeType } from "../enum";
-import { words } from "./words";
+import { loveWords, words } from "./words";
 import { LotteryDataInterface, PrizeInterface, TextRenderConstantInterface } from "../interface";
 export const lotteryId = "cb85ae949eda1fb233816fca52bbd974";
 export const colors = ["#13c2c2","#ff4466", "#ffe78a"];
@@ -113,5 +113,6 @@ export const confettiConstant = {
 }
 
 export {
+    loveWords,
     words
 }

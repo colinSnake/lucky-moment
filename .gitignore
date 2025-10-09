@@ -1,6 +1,4 @@
 node_modules
-public/static
-public/alternative
 yarn-error.log
 .next/*
 *.d.ts

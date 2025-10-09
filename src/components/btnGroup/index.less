@@ -13,19 +13,21 @@
         height: 0;
         cursor: pointer;
         background-image: url(../../../public/images/btn.png);
-        transition: all 0.3s ease-in-out;
         opacity: 0;
-        .bg-cover;
-        .flex-horizontal-01;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        transition: all 0.3s ease-in-out;
         &:hover, &.active{
+            transition: none;
             background-image: url(../../../public/images/btn-selected.png);
+            // background-position: 0 -1vh;
             .icon-flower{
                 opacity: 1;
             }
         }
         &.visible{
             width: 18vh;
-            height: 6vh;
+            height: 10vh;
             opacity: 1;
         }
         &.mlr{
@@ -33,12 +35,13 @@
         }
         .btn{
             width: 100%;
+            height: 7.5vh;
             color: @cr-white;
             background: transparent;
             outline: none;
             border: none;
             font-size: 1.8vh;
-            font-family: "hxb";
+            font-family: "HXBhandsome";
             margin-top: -1.3vh;
             text-align: center;
             cursor: pointer;

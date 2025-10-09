@@ -147,7 +147,7 @@ table {
   font-display: swap;
 }
 @font-face {
-  font-family: 'hxb';
+  font-family: 'HXBhandsome';
   src: url('/fonts/胡晓波男神体.otf') format('truetype');
   font-display: swap;
 }
@@ -197,8 +197,8 @@ table {
 }
 .main-expansion-wrapper {
   position: fixed;
-  right: 1vh;
-  bottom: 1vh;
+  right: 2vh;
+  bottom: 4vh;
   z-index: 10;
 }
 .main-expansion-wrapper .main-expansion-inner {

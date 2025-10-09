@@ -7,7 +7,10 @@ export const zh = {
         Reset: '重置',
         Pause: '暂停',
         AlertTitle: "提示",
-        AlertContent: "这是一段测试文本",
+        AlertContent: "这是一段默认文本",
+        LN_01: "正在抽取 ",
+        LN_02: "剩余",
+        LN_03: "个",
     },
     Common: {
         SpecialPrize: '特等奖',
@@ -18,6 +21,9 @@ export const zh = {
         None: '无',
         Congratulations: (ids: string, prize: string) => {
             return `恭喜编号为${ids}的幸运儿, 获得了${prize}`;
+        },
+        LotteryNotice: (name: string) => {
+            return `正在抽取 ${name}, 请调整好姿势`
         },
         LotteryCompleted: "当前抽奖活动已结束，感谢参与",
         LotteryUnderway: "当前抽奖活动进行中，无法上用户名单",

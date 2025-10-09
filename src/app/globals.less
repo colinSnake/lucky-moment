@@ -72,6 +72,16 @@
                     font-family: "stcaiyun";
                 }
             }
+            .crown{
+                position: absolute;
+                left: calc(50% - 5vh);
+                top: -5vh;
+                z-index: @zx01;
+                width: 10vh;
+                height: 8vh;
+                background-image: url(../../public/images/crown.png);
+                .bg-cover;
+            }
         }
     }
     &.visible{
@@ -80,6 +90,7 @@
     &.flip{
         opacity: 1;
         .prize-card-inner{
+            position: relative;
             .prize-card-front-side{
                 height: 0;
                 opacity: 0;

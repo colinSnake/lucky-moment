@@ -1,12 +1,13 @@
 import { AlertType, PrizeType } from "../enum";
 
 export interface AlertInfoInterface {
-    type?: AlertType,
-    title?: string,
-    message?: string,
-    isShow?: boolean,
-    isAutoClose?: boolean,
-    duration?: number,
+    type: AlertType, // 弹窗类型（info | success | warning | error）
+    title?: string, // 弹窗标题
+    message: string, // 弹窗内容
+    position: "top" | "right", // 弹窗位置（top | right）
+    isShow: boolean, // 是否显示弹窗
+    isAutoClose?: boolean, // 是否自动关闭弹窗
+    duration?: number, // 弹窗显示时间（单位：毫秒）
 }
 
 export interface LotteryDataInterface {

@@ -2,8 +2,9 @@ import Alert from "./alert";
 import BtnGroup from "./btnGroup";
 import Core from "./core";
 import Expansion from "./expansion";
+import FontBg from "./fontBg";
 import IconSvg from "./iconSvg";
-import PrizeCards from "./prizeCards";
+import GiftCards from "./giftCards";
 import WinnerBg from "./winnerBg";
 
 export {
@@ -11,7 +12,8 @@ export {
     BtnGroup,
     Core,
     Expansion,
+    FontBg,
     IconSvg,
-    PrizeCards,
+    GiftCards,
     WinnerBg,
 }

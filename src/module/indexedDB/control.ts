@@ -1,5 +1,5 @@
 import IndexedDB from "./";
-import { IndexedDBQueryType, IndexedDBStatusType, ObjectStoreIndexType } from "../enum";
+import { IndexedDBQueryType, ObjectStoreIndexType } from "../enum";
 export default class LotteryDB {
     _dbName: string = 'LOTTERY_PERSISTENCE';
     _storeName: string = 'lottery_store';

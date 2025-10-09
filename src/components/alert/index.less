@@ -6,44 +6,60 @@
     opacity: 0;
     &.right{
         right: 0;
-        top: 100px;
+        top: 4vh;
         transform: translateX(100%);
     }
     &.top{
         top: 0;
-        left: calc(50% - 15vh);
         transform: translateY(-100%);
     }
     &.active{
         opacity: 1;
         &.right{
-            transform: translateX(-20px);
+            transform: translateX(-4vh);
         }
         &.top{
-            transform: translateY(20px);
+            transform: translateY(4vh);
         }
     }
     .main-alert-inner{
         padding: 1vh 2vh;
-        width: 26vh;
+        max-width: 46vh;
         border-radius: 12px;
         position: relative;
         border: 1px solid transparent;
-        &.info{
-            background-color: @cr-info-a50;
-            border-color: @cr-info;
+        border-radius: 0.8vh;
+        // &.info{
+        //     background-color: @cr-info-a50;
+        //     border-color: @cr-info;
+        // }
+        // &.success{
+        //     background-color: @cr-success-a50;
+        //     border-color: @cr-success;
+        // }
+        // &.warning{
+        //     background-color: @cr-warning-a50;
+        //     border-color: @cr-warning;
+        // }
+        // &.error{
+        //     background-color: @cr-error-a50;
+        //     border-color: @cr-error;
+        // }
+        &.info, &.success{
+            background: @cr-alert-01;
+            box-shadow: 0px 2px 12px 0px @cr-alert-02;
+            border-radius: 8px;
+            border: 1px solid;
+            border-image: linear-gradient(227deg, @cr-alert-03, @cr-alert-04, @cr-alert-05) 1 1;
         }
-        &.success{
-            background-color: @cr-success-a50;
-            border-color: @cr-success;
-        }
-        &.warning{
-            background-color: @cr-warning-a50;
-            border-color: @cr-warning;
-        }
-        &.error{
-            background-color: @cr-error-a50;
-            border-color: @cr-error;
+        &.warning, &.error{
+            width: 304px;
+            height: 76px;
+            background: @cr-alert-06;
+            box-shadow: 0px 2px 12px 0px @cr-alert-02;
+            border-radius: 8px;
+            border: 1px solid;
+            border-image:linear-gradient(227deg, @cr-alert-03, @cr-alert-04, @cr-alert-05) 1 1;
         }
         .alert-title, .alert-info{
             color: @cr-white-a75;

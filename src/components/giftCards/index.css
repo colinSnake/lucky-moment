@@ -132,23 +132,13 @@ table {
   font-display: swap;
 }
 @font-face {
-  font-family: 'stcaiyun';
-  src: url('/fonts/subset-STCaiyun.woff2') format('truetype');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'baotuxiaobaiti';
-  src: url('/fonts/baotuxiaobaiti.woff2') format('truetype');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'wenxin';
-  src: url('/fonts/WenxinXileFont.woff2') format('truetype');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'hxb';
+  font-family: 'HXBhandsome';
   src: url('/fonts/胡晓波男神体.otf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SJxingkai';
+  src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
   font-display: swap;
 }
 .flex-horizontal-01 {
@@ -195,28 +185,48 @@ table {
     clip: rect(0, 26vh, 8vh, 25.9vh);
   }
 }
-.main-prizes-cards {
+.main-gift-cards {
   margin: 1vh;
   display: flex;
   flex-direction: column;
 }
-.main-prizes-cards .card {
+.main-gift-cards .notice {
+  font-family: "HXBhandsome";
+  margin-bottom: 2vh;
+  display: flex;
+  align-items: flex-end;
+}
+.main-gift-cards .notice > span {
+  font-size: 1.5vh;
+  color: #ffffff;
+  text-shadow: 0px 2px 6px rgba(255, 0, 0, 0.5);
+}
+.main-gift-cards .notice > h2 {
+  font-size: 4vh;
+  padding-left: 1vh;
+  color: #ffb415;
+  text-shadow: 0px 2px 6px rgba(255, 0, 0, 0.5);
+}
+.main-gift-cards .notice > h2.plr {
+  padding: 0 1vh;
+}
+.main-gift-cards .card {
   width: 25vh;
   height: 8vh;
   margin-bottom: 1vh;
   overflow: hidden;
   background-color: transparent;
 }
-.main-prizes-cards .card.active {
+.main-gift-cards .card.active {
   position: relative;
 }
-.main-prizes-cards .card.active .card-inner {
+.main-gift-cards .card.active .card-inner {
   background-image: url(../../../public/images/rectangle-selected.png);
 }
-.main-prizes-cards .card.active .card-inner .card-box.card-cover {
+.main-gift-cards .card.active .card-inner .card-box.card-cover {
   background-image: url(../../../public/images/gift-selected.png);
 }
-.main-prizes-cards .card .card-inner {
+.main-gift-cards .card .card-inner {
   width: 100%;
   height: 100%;
   padding: 0 2vh;
@@ -229,10 +239,10 @@ table {
   align-items: center;
   justify-content: space-between;
 }
-.main-prizes-cards .card .card-inner .card-box {
+.main-gift-cards .card .card-inner .card-box {
   width: calc(100% - 8vh);
 }
-.main-prizes-cards .card .card-inner .card-box.card-cover {
+.main-gift-cards .card .card-inner .card-box.card-cover {
   width: 6vh;
   height: 6vh;
   border-radius: 50%;
@@ -242,20 +252,20 @@ table {
   background-position: center;
   background-repeat: no-repeat;
 }
-.main-prizes-cards .card .card-inner .card-box.card-body .card-title {
+.main-gift-cards .card .card-inner .card-box.card-body .card-title {
   font-size: 1.6vh;
-  font-family: "hxb";
+  font-family: "HXBhandsome";
   color: #ffffff;
 }
-.main-prizes-cards .card .card-inner .card-box.card-body .card-content {
+.main-gift-cards .card .card-inner .card-box.card-body .card-content {
   font-family: "zcoolkangyuyang_w01";
   margin-top: 0.8vh;
 }
-.main-prizes-cards .card .card-inner .card-box.card-body .card-content > b {
+.main-gift-cards .card .card-inner .card-box.card-body .card-content > b {
   margin-right: 1vh;
 }
-.main-prizes-cards .card .card-inner .card-box.card-body .card-content > b,
-.main-prizes-cards .card .card-inner .card-box.card-body .card-content > span {
+.main-gift-cards .card .card-inner .card-box.card-body .card-content > b,
+.main-gift-cards .card .card-inner .card-box.card-body .card-content > span {
   font-weight: 600;
   font-size: 1.3vh;
   text-shadow: 0px 2px 6px rgba(255, 0, 0, 0.5);

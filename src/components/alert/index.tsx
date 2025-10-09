@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { IconSvg } from "../";
 import EventsUtil from "@/module/util/eventsUtil";
 import { create_lotteryUtil } from "@/module/util/lotteryUtil";
@@ -10,17 +10,27 @@ import "./index.css";
 
 const Alert = () => {
     const [alertInfo, setAlertInfo] = useState<AlertInfoInterface>({
-        type: AlertType.info,
+        type: AlertType.success,
         title: Locale.Page.AlertTitle,
         message: Locale.Page.AlertContent,
+        position: "top",
         isShow: false,
         isAutoClose: true,
-        duration: 3000,
+        duration: 5000,
     });
+    const alertRef = useRef<HTMLDivElement>(null);
+
+    const setStyleCssText = () => {
+        alertRef.current!.style.cssText = "";
+        if(alertInfo.position === "top"){
+            alertRef.current!.style.cssText = `left: calc(50% - ${alertRef.current!.offsetWidth / 2}px)`;
+        }
+    }
 
     const handleAction = useCallback(() => {
         EventsUtil.subscribe(EventType.showAlert, (data: AlertInfoInterface) => {
             setAlertInfo({...alertInfo, ...data});
+            setStyleCssText();
             if (alertInfo.isAutoClose) {
                 let timer: any = setTimeout(() => {
                     setAlertInfo({...alertInfo, ...data, isShow: false});
@@ -35,11 +45,11 @@ const Alert = () => {
         handleAction();
     }, [handleAction]);
 
-    return <div className={`main-alert-wrapper top ${alertInfo.isShow ? "active" : ""}`}>
+    return <div ref={alertRef} className={`main-alert-wrapper top ${alertInfo.isShow ? "active" : ""}`}>
         <div className={`main-alert-inner ${alertInfo.type}`}>
             <div className="alert-title">{alertInfo.title}</div>
             <div className="alert-info">{alertInfo.message}</div>
-            <IconSvg config={{name: "icon-close"}} />
+            <IconSvg config={{name: "icon-close", callback: () => setAlertInfo({...alertInfo, isShow: false})}} />
         </div>
     </div>  
 };

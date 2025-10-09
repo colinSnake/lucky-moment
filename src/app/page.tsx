@@ -1,5 +1,5 @@
 
-import { Alert, BtnGroup, Core, Expansion, PrizeCards, WinnerBg } from "@/components";
+import { Alert, BtnGroup, Core, Expansion, FontBg, GiftCards, WinnerBg } from "@/components";
 
 const Home = () => {
     return (
@@ -7,7 +7,7 @@ const Home = () => {
             <Alert />
             <div className="main-inner main-inner-absolute">
                 <div className="main-content">
-                    <PrizeCards />
+                    <GiftCards />
                     <Core />
                     <BtnGroup />
                 </div>
@@ -15,8 +15,9 @@ const Home = () => {
             <div className="main-inner">
                 <canvas id="starry-sky"></canvas>
             </div>
-            <Expansion />
+            <FontBg />  
             <WinnerBg />
+            <Expansion />
         </div>
     )
 }

@@ -5,12 +5,11 @@ import Util from "@/module/util";
 import { create_lotteryUtil } from "@/module/util/lotteryUtil";
 import { LotteryDataInterface, PrizeInterface } from "@/module/interface";
 import { EventType } from "@/module/enum";
+import Locale from "@/module/locale";
 import "./index.css";
 
 const Card = (props: PrizeInterface) => {
     const { name, count, total, type } = props;
-
-
 
     return (
         <div className={`card ${count > 0 && count < total ? 'active' : ''}`}>
@@ -28,24 +27,41 @@ const Card = (props: PrizeInterface) => {
     )
 }
 
-const PrizeCards = () => {
-    const [prizeIndex, setPrizeIndex] = useState(0);
-    const [prizes, setPrizes] = useState<PrizeInterface[]>([]);
+const GiftCards = () => {
+    const [notice, setNotice] = useState<any>(null);
+    const [cards, setCards] = useState<PrizeInterface[]>([]);
 
     const handleAction = useCallback(() => {
         EventsUtil.subscribe(EventType.updatePrizes, (lotteryData: LotteryDataInterface) => {
-            setPrizeIndex(lotteryData.prizeIndex);
-            setPrizes([...lotteryData.prizes]);
+            const { prizes, prizeIndex } = lotteryData;
+            const newPrizes = prizes.map((it) => ({...it, isActive: it.id === prizeIndex})),
+                curPrize = newPrizes.find((it) => it.isActive) as PrizeInterface;
+            const { type, name, count, total } = curPrize;
+            setNotice({ level: Util.getPrizeName(type), name, remainCount: total - count });
+            setCards([...newPrizes]);
         }, create_lotteryUtil());
-    }, [prizeIndex, prizes]);
+    }, [notice, cards]);
 
     useEffect(() => {
         handleAction();
     }, [handleAction]);
 
-    return <div className="main-prizes-cards">
-        {prizes.map((it, idx) => (<Card key={it.id} {...Object.assign(it, {isActive: prizeIndex === idx})} />))}
+    const renderNotice = () => {
+            const { name, level, remainCount } = notice;
+            return <div className="notice">
+                <span>{Locale.Page.LN_01}</span>
+                <h2>{level}</h2> 
+                <h2>{`${name}，`}</h2>
+                <span>{Locale.Page.LN_02}</span> 
+                <h2 className="plr">{remainCount}</h2> 
+                <span>{Locale.Page.LN_03}</span>
+            </div>;
+        }
+
+    return <div className="main-gift-cards">
+        {notice && renderNotice()}
+        {cards.map((it) => (<Card key={it.id} {...it} />))}
     </div>  
 }
 
-export default PrizeCards;
+export default GiftCards;

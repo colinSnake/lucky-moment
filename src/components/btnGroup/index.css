@@ -132,23 +132,13 @@ table {
   font-display: swap;
 }
 @font-face {
-  font-family: 'stcaiyun';
-  src: url('/fonts/subset-STCaiyun.woff2') format('truetype');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'baotuxiaobaiti';
-  src: url('/fonts/baotuxiaobaiti.woff2') format('truetype');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'wenxin';
-  src: url('/fonts/WenxinXileFont.woff2') format('truetype');
-  font-display: swap;
-}
-@font-face {
-  font-family: 'hxb';
+  font-family: 'HXBhandsome';
   src: url('/fonts/胡晓波男神体.otf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'SJxingkai';
+  src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
   font-display: swap;
 }
 .flex-horizontal-01 {
@@ -212,17 +202,14 @@ table {
   height: 0;
   cursor: pointer;
   background-image: url(../../../public/images/btn.png);
-  transition: all 0.3s ease-in-out;
   opacity: 0;
-  background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-size: 100%;
+  transition: all 0.3s ease-in-out;
 }
 .main-btns .btn-box:hover,
 .main-btns .btn-box.active {
+  transition: none;
   background-image: url(../../../public/images/btn-selected.png);
 }
 .main-btns .btn-box:hover .icon-flower,
@@ -231,7 +218,7 @@ table {
 }
 .main-btns .btn-box.visible {
   width: 18vh;
-  height: 6vh;
+  height: 10vh;
   opacity: 1;
 }
 .main-btns .btn-box.mlr {
@@ -239,12 +226,13 @@ table {
 }
 .main-btns .btn-box .btn {
   width: 100%;
+  height: 7.5vh;
   color: #ffffff;
   background: transparent;
   outline: none;
   border: none;
   font-size: 1.8vh;
-  font-family: "hxb";
+  font-family: "HXBhandsome";
   margin-top: -1.3vh;
   text-align: center;
   cursor: pointer;

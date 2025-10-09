@@ -7,7 +7,10 @@ export const en = {
         Reset: 'Reset',
         Pause: 'Pause',
         AlertTitle: "Tips",
-        AlertContent: "This is a test text",
+        AlertContent: "This is a default text",
+        LN_01: "Currently extracting ",
+        LN_02: "with",
+        LN_03: "items remaining",
     },
     Common: {
         SpecialPrize: 'Special Prize',
@@ -18,6 +21,9 @@ export const en = {
         None: 'No Prize',
         Congratulations: (ids: string, prize: string) => {
             return `Congratulations to the lucky ones with the numbers ${ids}, You have won the ${prize}`;
+        },
+        LotteryNotice: (name: string) => {
+            return `Currently extracting ${name}, please adjust your pose`
         },
         LotteryCompleted: "The current lottery activity has ended. Thank you for your participation",
         LotteryUnderway: "The current lottery activity is in progress, and the user list cannot be updated",
