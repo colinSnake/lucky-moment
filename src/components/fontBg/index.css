@@ -132,13 +132,13 @@ table {
   font-display: swap;
 }
 @font-face {
-  font-family: 'HXBhandsome';
-  src: url('/fonts/胡晓波男神体.otf') format('truetype');
+  font-family: 'SJxingkai';
+  src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
   font-display: swap;
 }
 @font-face {
-  font-family: 'SJxingkai';
-  src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
+  font-family: 'HXBhandsome';
+  src: url('/fonts/胡晓波男神体.otf') format('truetype');
   font-display: swap;
 }
 .flex-horizontal-01 {
@@ -191,23 +191,22 @@ table {
     clip: rect(0, 26vh, 8vh, 25.9vh);
   }
 }
-.main-fontBg {
+.wl-fontBg {
   position: fixed;
   top: calc(50% - 30vh);
   left: calc(50% - 30vh);
   width: 60vh;
   height: 60vh;
-  z-index: 1;
-  transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1200, 1);
+  z-index: 7;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.main-fontBg.visible {
+.wl-fontBg.visible {
   display: block;
 }
-.main-fontBg > span {
+.wl-fontBg > span {
   font-size: 24vh;
   font-weight: normal;
   font-family: "SJxingkai";

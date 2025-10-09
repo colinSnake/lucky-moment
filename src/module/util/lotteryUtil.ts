@@ -6,9 +6,9 @@ import * as XLSX from 'xlsx';
 import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
 import Util from "./";
 import EventsUtil from "./eventsUtil";
-import { RenderConfetti, create_renderConfetti } from "../render";
+import { RenderConfetti, RenderSparticle, create_renderConfetti, create_renderSparticle } from "../render";
 import { AlertType, EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
-import { AlertInfoInterface, LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
+import { LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
 import { config, lotteryId, mockData } from "../mockData"; 
 import Locale from "../locale";
 
@@ -34,6 +34,7 @@ export default class LotteryUtil {
     };
     lotteryDB: LotteryDB = create_LotteryDB();
     renderConfetti: RenderConfetti = create_renderConfetti();
+    renderSparticle: RenderSparticle = create_renderSparticle();
     alertMsg: string = "";
     maxUserCount: number = 0;
     static instanceObj: LotteryUtil|null = null;
@@ -92,6 +93,7 @@ export default class LotteryUtil {
             const res = await this.getLotteryData(lotteryId);
             this.lotteryData = JSON.parse(JSON.stringify(res));
             this.maxUserCount = this.lotteryData.users.length;
+            this.renderSparticle.draw();
             this.initCards();
             this.animate();
             this.registerEvent();
@@ -698,6 +700,7 @@ export default class LotteryUtil {
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
         this.render();
+        this.renderSparticle.draw();
     }
 
     registerEvent(){
@@ -707,7 +710,7 @@ export default class LotteryUtil {
     }
 
     flipCard(status: boolean, callback?: Function){
-        const winnerBg = document.querySelector(".main-winnerBg") as HTMLElement;
+        const winnerBg = document.querySelector(".wl-winnerBg") as HTMLElement;
         if(status){
             winnerBg && !winnerBg.classList.contains("visible") && winnerBg.classList.add("visible");
         }else{

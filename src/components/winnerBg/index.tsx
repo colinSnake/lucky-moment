@@ -3,8 +3,8 @@ import "./index.css";
 
 
 const WinnerBg = () => {
-    return <div className="main-winnerBg">
-        <div className="main-winnerBg-inner"></div>
+    return <div className="wl-winnerBg">
+        <div className="wl-winnerBg-inner"></div>
     </div>
 }
 

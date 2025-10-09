@@ -54,7 +54,7 @@ const BtnGroup = () => {
 
 
     return (
-        <div className="main-btns">
+        <div className="wl-btns">
             { btns.map((it: any) => <Btn key={it.type} {...it} />)}
         </div>
     )

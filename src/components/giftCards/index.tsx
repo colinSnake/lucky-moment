@@ -58,7 +58,7 @@ const GiftCards = () => {
             </div>;
         }
 
-    return <div className="main-gift-cards">
+    return <div className="wl-gift-cards">
         {notice && renderNotice()}
         {cards.map((it) => (<Card key={it.id} {...it} />))}
     </div>  

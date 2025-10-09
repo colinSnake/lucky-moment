@@ -1,28 +1,32 @@
 @import "./variable.less";
 
-.main-wrapper{
+.wl-wrapper{
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    .main-inner{
+    .wl-inner{
         width: 100%;
         height: 100%;
-        &.main-inner-absolute{
+        &.wl-inner-background{
+            background-image: url(../../public/images/lottery-bg.png);
+            .bg-cover;
+        }
+        &.wl-inner-sparticle{
+            position: absolute;
+            z-index: @zx01;
+            left: 0;
+            top: 0;
+        }
+        &.wl-inner-content{
             position: absolute;
             z-index: @zx09;
             left: 0;
             top: 0;
         }
-        .main-content{
+        .wl-content{
             width: 100%;
             height: 100%;
-        }
-        #starry-sky{
-            width: 100%;
-            height: 100%;
-            background-image: url(../../public/images/lottery-bg.png);
-            .bg-cover;
         }
     }
 }

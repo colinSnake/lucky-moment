@@ -36,8 +36,8 @@ const Expansion = () => {
         
     }, []);
 
-    return <div className="main-expansion-wrapper">
-        <div className="main-expansion-inner">
+    return <div className="wl-expansion-wrapper">
+        <div className="wl-expansion-inner">
             {expansionOption.map((it: any) => <Btn key={it.name} {...it} />)}
         </div>
     </div>  

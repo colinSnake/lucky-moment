@@ -1,5 +1,5 @@
 @import "../../app/variable.less";
-.main-alert-wrapper{
+.wl-alert-wrapper{
     position: fixed;
     z-index: @zx10;
     transition: all 0.5s ease-in;
@@ -22,13 +22,14 @@
             transform: translateY(4vh);
         }
     }
-    .main-alert-inner{
+    .wl-alert-inner{
         padding: 1vh 2vh;
         max-width: 46vh;
         border-radius: 12px;
         position: relative;
-        border: 1px solid transparent;
-        border-radius: 0.8vh;
+        border: 1px solid;
+        box-shadow: 0px 2px 12px 0px @cr-alert-02;
+        border-image:linear-gradient(227deg, @cr-alert-03, @cr-alert-04, @cr-alert-05) 1 1;
         // &.info{
         //     background-color: @cr-info-a50;
         //     border-color: @cr-info;
@@ -47,19 +48,9 @@
         // }
         &.info, &.success{
             background: @cr-alert-01;
-            box-shadow: 0px 2px 12px 0px @cr-alert-02;
-            border-radius: 8px;
-            border: 1px solid;
-            border-image: linear-gradient(227deg, @cr-alert-03, @cr-alert-04, @cr-alert-05) 1 1;
         }
         &.warning, &.error{
-            width: 304px;
-            height: 76px;
             background: @cr-alert-06;
-            box-shadow: 0px 2px 12px 0px @cr-alert-02;
-            border-radius: 8px;
-            border: 1px solid;
-            border-image:linear-gradient(227deg, @cr-alert-03, @cr-alert-04, @cr-alert-05) 1 1;
         }
         .alert-title, .alert-info{
             color: @cr-white-a75;

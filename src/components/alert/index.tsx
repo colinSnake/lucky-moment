@@ -30,7 +30,6 @@ const Alert = () => {
     const handleAction = useCallback(() => {
         EventsUtil.subscribe(EventType.showAlert, (data: AlertInfoInterface) => {
             setAlertInfo({...alertInfo, ...data});
-            setStyleCssText();
             if (alertInfo.isAutoClose) {
                 let timer: any = setTimeout(() => {
                     setAlertInfo({...alertInfo, ...data, isShow: false});
@@ -45,8 +44,12 @@ const Alert = () => {
         handleAction();
     }, [handleAction]);
 
-    return <div ref={alertRef} className={`main-alert-wrapper top ${alertInfo.isShow ? "active" : ""}`}>
-        <div className={`main-alert-inner ${alertInfo.type}`}>
+    useEffect(() => {
+        setStyleCssText();
+    }, [alertInfo]);
+
+    return <div ref={alertRef} className={`wl-alert-wrapper top ${alertInfo.isShow ? "active" : ""}`}>
+        <div className={`wl-alert-inner ${alertInfo.type}`}>
             <div className="alert-title">{alertInfo.title}</div>
             <div className="alert-info">{alertInfo.message}</div>
             <IconSvg config={{name: "icon-close", callback: () => setAlertInfo({...alertInfo, isShow: false})}} />

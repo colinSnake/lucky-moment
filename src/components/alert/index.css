@@ -132,13 +132,13 @@ table {
   font-display: swap;
 }
 @font-face {
-  font-family: 'HXBhandsome';
-  src: url('/fonts/胡晓波男神体.otf') format('truetype');
+  font-family: 'SJxingkai';
+  src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
   font-display: swap;
 }
 @font-face {
-  font-family: 'SJxingkai';
-  src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
+  font-family: 'HXBhandsome';
+  src: url('/fonts/胡晓波男神体.otf') format('truetype');
   font-display: swap;
 }
 .flex-horizontal-01 {
@@ -165,6 +165,12 @@ table {
   display: flex;
   flex-direction: column;
 }
+.flex-vertical-02 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .bg-cover {
   background-size: cover;
   background-position: center;
@@ -185,71 +191,62 @@ table {
     clip: rect(0, 26vh, 8vh, 25.9vh);
   }
 }
-.main-alert-wrapper {
+.wl-alert-wrapper {
   position: fixed;
   z-index: 10;
   transition: all 0.5s ease-in;
   opacity: 0;
 }
-.main-alert-wrapper.right {
+.wl-alert-wrapper.right {
   right: 0;
   top: 4vh;
   transform: translateX(100%);
 }
-.main-alert-wrapper.top {
+.wl-alert-wrapper.top {
   top: 0;
   transform: translateY(-100%);
 }
-.main-alert-wrapper.active {
+.wl-alert-wrapper.active {
   opacity: 1;
 }
-.main-alert-wrapper.active.right {
+.wl-alert-wrapper.active.right {
   transform: translateX(-4vh);
 }
-.main-alert-wrapper.active.top {
+.wl-alert-wrapper.active.top {
   transform: translateY(4vh);
 }
-.main-alert-wrapper .main-alert-inner {
+.wl-alert-wrapper .wl-alert-inner {
   padding: 1vh 2vh;
   max-width: 46vh;
   border-radius: 12px;
   position: relative;
-  border: 1px solid transparent;
-  border-radius: 0.8vh;
+  border: 1px solid;
+  box-shadow: 0px 2px 12px 0px rgba(198, 0, 0, 0.4);
+  border-image: linear-gradient(227deg, #e02020, #fa6400, #f7b500) 1 1;
 }
-.main-alert-wrapper .main-alert-inner.info,
-.main-alert-wrapper .main-alert-inner.success {
+.wl-alert-wrapper .wl-alert-inner.info,
+.wl-alert-wrapper .wl-alert-inner.success {
   background: #370000;
-  box-shadow: 0px 2px 12px 0px rgba(198, 0, 0, 0.4);
-  border-radius: 8px;
-  border: 1px solid;
-  border-image: linear-gradient(227deg, #e02020, #fa6400, #f7b500) 1 1;
 }
-.main-alert-wrapper .main-alert-inner.warning,
-.main-alert-wrapper .main-alert-inner.error {
-  width: 304px;
-  height: 76px;
+.wl-alert-wrapper .wl-alert-inner.warning,
+.wl-alert-wrapper .wl-alert-inner.error {
   background: #8B1A1A;
-  box-shadow: 0px 2px 12px 0px rgba(198, 0, 0, 0.4);
-  border-radius: 8px;
-  border: 1px solid;
-  border-image: linear-gradient(227deg, #e02020, #fa6400, #f7b500) 1 1;
 }
-.main-alert-wrapper .main-alert-inner .alert-title,
-.main-alert-wrapper .main-alert-inner .alert-info {
+.wl-alert-wrapper .wl-alert-inner .alert-title,
+.wl-alert-wrapper .wl-alert-inner .alert-info {
   color: rgba(255, 255, 255, 0.75);
   font-family: "zcoolkangyuyang_w01";
 }
-.main-alert-wrapper .main-alert-inner .alert-title {
+.wl-alert-wrapper .wl-alert-inner .alert-title {
   font-size: 2vh;
   font-weight: bold;
 }
-.main-alert-wrapper .main-alert-inner .alert-info {
+.wl-alert-wrapper .wl-alert-inner .alert-info {
   font-size: 1.5vh;
   margin-top: 0.5vh;
   white-space: wrap;
 }
-.main-alert-wrapper .main-alert-inner .iconBox {
+.wl-alert-wrapper .wl-alert-inner .iconBox {
   position: absolute;
   right: 1vh;
   top: 1vh;
