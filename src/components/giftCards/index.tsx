@@ -12,7 +12,7 @@ const Card = (props: PrizeInterface) => {
     const { name, count, total, type } = props;
 
     return (
-        <div className={`card ${count > 0 && count < total ? 'active' : ''}`}>
+        <div className={`card${count > 0 && count < total ? " active" : ""}`}>
             <div className="card-inner">
                 <div className="card-box card-cover"></div>
                 <div className="card-box card-body">

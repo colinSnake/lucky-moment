@@ -48,7 +48,14 @@ const Alert = () => {
         setStyleCssText();
     }, [alertInfo]);
 
-    return <div ref={alertRef} className={`wl-alert-wrapper ${alertInfo.position} ${alertInfo.isShow ? "active" : ""}`}>
+    const setClassName = () => {
+        const { position, isShow } = alertInfo;
+        let className = `wl-alert-wrapper ${position}`;
+        isShow && (className += " active");
+        return className;
+    }
+
+    return <div ref={alertRef} className={setClassName()}>
         <div className={`wl-alert-inner ${alertInfo.type}`}>
             <div className="alert-title">{alertInfo.title}</div>
             <div className="alert-info">{alertInfo.message}</div>

@@ -123,13 +123,14 @@ export default class LotteryUtil {
     }
 
     initCards(){
-        const { row, col, resolution, width, height } = this.config,
+        const { row, col, resolution, width, height, cameraConfig } = this.config,
+            { fov, near, far, aspect, posZ } = cameraConfig,
             { users } = this.lotteryData;
         let index = 0;
 
         // 构建 camera
-        this.camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
-        this.camera.position.z = 3000;
+        this.camera = new THREE.PerspectiveCamera(fov, window.innerWidth / window.innerHeight || aspect, near, far);
+        this.camera.position.z = posZ;
         // 构建 scene
         this.scene = new THREE.Scene();
 
@@ -223,7 +224,6 @@ export default class LotteryUtil {
                         this.renderConfetti.draw();
                         this.alert(AlertType.success, this.alertMsg);
                         this.setLotteryData();
-                        this.setLotteryData();
                         this.isLottery = false;
                         clearTimeout(timer);
                         timer = null;
@@ -273,7 +273,7 @@ export default class LotteryUtil {
             { isAuto }= this.config,
             { prizeIndex } = this.lotteryData;
         let status = true;
-        if(type === StepType.lottery){ 
+        if(type === StepType.lottery && text !== Locale.Page.Pause){ 
             if(this.unLuckyUsers.length === 0){ // 判断当前是否存在可抽奖用户
                 status = false;
                 this.alert(AlertType.warning, Locale.Common.NoLotteryUsers);   
@@ -301,17 +301,13 @@ export default class LotteryUtil {
     }
 
     main(params: any){
-        const { type, text } = params,
-            { prizes, prizeIndex } = this.lotteryData;
+        const { type, text } = params;
 
         return new Promise(async(resolve, reject) => {
             try{
                 this.alertMsg = "";
                 if(!this.checkCanLottery(params)){
                     return resolve(true);
-                }
-                if([StepType.lottery, StepType.reLottery].includes(type) && text !== Locale.Page.Pause){
-                    this.alert(AlertType.success, Locale.Common.LotteryNotice(prizes[prizeIndex].name));
                 }
                 switch(type){
                     case StepType.welcome:
@@ -332,6 +328,7 @@ export default class LotteryUtil {
                                 this.handleUpdateBtnGroup(type);
                                 if(prizeIndex > -1){
                                     this.updatePrizes();
+                                    this.handleAlert();
                                     await this.resetCards();
                                     this.start();
                                 }
@@ -355,6 +352,7 @@ export default class LotteryUtil {
                                         }
                                     });
                                     await this.resetCards();
+                                    this.handleAlert();
                                     this.start();
                                 }
                             }
@@ -694,11 +692,15 @@ export default class LotteryUtil {
         });
     }
 
-    updateRenderSize(){
-        const camera = this.camera!,
-            renderer = this.renderer!;
+    updateCamera(){
+        const camera = this.camera!;
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
+    }
+
+    updateRenderSize(){
+        const renderer = this.renderer!;
+        this.updateCamera();
         renderer.setSize(window.innerWidth, window.innerHeight);
         this.render();
         this.renderSparticle.draw();
@@ -743,6 +745,11 @@ export default class LotteryUtil {
             isShow: true,
             position: "right",
         });
+    }
+
+    handleAlert(){
+        const { prizes, prizeIndex } = this.lotteryData;
+        this.alert(AlertType.success, Locale.Common.LotteryNotice(prizes[prizeIndex].name));
     }
 
     handleUpdateLotteryData(){

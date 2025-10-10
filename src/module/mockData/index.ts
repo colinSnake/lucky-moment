@@ -21,6 +21,13 @@ export const config =  {
     isShowFont: true, // 卡片是否显示字体
     isAuto: false, // 抽奖是否自动停止
     times: 0, // 旋转次数
+    cameraConfig: {
+        fov: 50, // 相机视野角度，调整渲染物体的大小
+        near: 0.1, // 相机近裁剪面，距离小于near的物体不可见
+        far: 10000, // 相机远裁剪面，距离大于far的物体不可见
+        aspect: 1, // 相机宽高比
+        posZ: 3000, // 相机位置 z 轴
+    }
 };
 export const prizes: PrizeInterface[] = [
     {

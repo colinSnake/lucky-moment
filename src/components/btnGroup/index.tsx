@@ -13,8 +13,18 @@ const Btn = (props: any) => {
         await create_lotteryUtil().main({type, text});
     }
 
-    return <div className={`btn-box ${isVisible ? "visible" : ""} ${isActive ? "active" : ""} ${isMLR ? "mlr" : ""}`} onClick={handleBtnClick}>
-        <button className={`btn ${isLetterSpacing ? "btn-ls" : ""}`}>{text}</button>
+    const setClassName = () => {
+        let className = "btn-box";
+        if(isVisible){
+            className += " visible";
+            isMLR && (className += " mlr");
+        }
+        isActive && (className += " active");
+        return className;
+    }
+
+    return <div className={setClassName()} onClick={handleBtnClick}>
+        <button className={`btn${isLetterSpacing ? " btn-ls" : ""}`}>{text}</button>
         <div className="icon-flower"></div>
     </div>
 }
