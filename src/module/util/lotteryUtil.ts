@@ -407,8 +407,9 @@ export default class LotteryUtil {
                         }
                     });
                     this.alertMsg += i > 0 ? `、${user.id}` : user.id;
-                    if(i === count - 1){
-                        this.alertMsg = Locale.Common.Congratulations(this.alertMsg, Util.getPrizeName(prizes[prizeIndex].type));
+                    if(i === count - 1 && prizes[prizeIndex]){
+                        const { name, type } = prizes[prizeIndex];
+                        this.alertMsg = Locale.Common.Congratulations(this.alertMsg, Util.getPrizeName(type), name);
                     }
                 }
             }

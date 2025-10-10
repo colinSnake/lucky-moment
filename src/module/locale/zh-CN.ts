@@ -19,8 +19,8 @@ export const zh = {
         ThirdPrize: '三等奖',
         NormalPrize: '阳光普照奖',
         None: '无',
-        Congratulations: (ids: string, prize: string) => {
-            return `恭喜编号为${ids}的幸运儿, 获得了${prize}`;
+        Congratulations: (ids: string, level: string, name: string) => {
+            return `恭喜编号为${ids}的幸运儿, 获得了${level}${name}`;
         },
         LotteryNotice: (name: string) => {
             return `正在抽取 ${name}, 请调整好姿势`

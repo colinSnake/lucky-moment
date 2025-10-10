@@ -32,10 +32,10 @@ const GiftCards = () => {
     const [cards, setCards] = useState<PrizeInterface[]>([]);
 
     const handleAction = useCallback(() => {
-        EventsUtil.subscribe(EventType.updatePrizes, (lotteryData: LotteryDataInterface) => {
-            const { prizes, prizeIndex } = lotteryData;
-            const newPrizes = prizes.map((it) => ({...it, isActive: it.id === prizeIndex})),
-                curPrize = newPrizes.find((it) => it.isActive) as PrizeInterface;
+        EventsUtil.subscribe(EventType.updatePrizes, (data: LotteryDataInterface) => {
+            const { prizes, prizeIndex } = data;
+            const newPrizes = prizes.map((it: PrizeInterface) => ({...it, isActive: it.id === prizeIndex})),
+                curPrize = newPrizes.find((it: PrizeInterface) => it.isActive) as PrizeInterface;
             const { type, name, count, total } = curPrize;
             setNotice({ level: Util.getPrizeName(type), name, remainCount: total - count });
             setCards([...newPrizes]);

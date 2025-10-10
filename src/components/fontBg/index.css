@@ -176,19 +176,15 @@ table {
   background-position: center;
   background-repeat: no-repeat;
 }
-@keyframes animate01 {
-  0%,
-  100% {
-    clip: rect(0, 26vh, 1px, 0);
-  }
-  25% {
-    clip: rect(0, 1px, 8vh, 0);
+@keyframes highlight {
+  0% {
+    color: #fff78a;
   }
   50% {
-    clip: rect(7.9vh, 26vh, 8vh, 0);
+    color: #ffb415;
   }
-  75% {
-    clip: rect(0, 26vh, 8vh, 25.9vh);
+  100% {
+    color: #fff78a;
   }
 }
 .wl-fontBg {
@@ -207,6 +203,8 @@ table {
   display: block;
 }
 .wl-fontBg > span {
+  height: 30vh;
+  line-height: 30vh;
   font-size: 24vh;
   font-weight: normal;
   font-family: "SJxingkai";

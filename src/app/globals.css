@@ -176,19 +176,15 @@ table {
   background-position: center;
   background-repeat: no-repeat;
 }
-@keyframes animate01 {
-  0%,
-  100% {
-    clip: rect(0, 26vh, 1px, 0);
-  }
-  25% {
-    clip: rect(0, 1px, 8vh, 0);
+@keyframes highlight {
+  0% {
+    color: #fff78a;
   }
   50% {
-    clip: rect(7.9vh, 26vh, 8vh, 0);
+    color: #ffb415;
   }
-  75% {
-    clip: rect(0, 26vh, 8vh, 25.9vh);
+  100% {
+    color: #fff78a;
   }
 }
 .wl-wrapper {
@@ -253,6 +249,7 @@ table {
 .prize-card-wrapper .prize-card-inner .prize-card-front-side {
   height: 100%;
   opacity: 1;
+  background-color: #210000;
   background-image: url(../../public/images/gift-unknown.png);
   background-size: 100%;
   background-position: center;
@@ -292,6 +289,9 @@ table {
 }
 .prize-card-wrapper.visible {
   opacity: 1;
+}
+.prize-card-wrapper.prize .prize-card-inner .prize-card-front-side {
+  background-color: transparent;
 }
 .prize-card-wrapper.flip {
   opacity: 1;

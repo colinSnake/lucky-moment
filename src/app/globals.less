@@ -57,6 +57,7 @@
         .prize-card-front-side{
             height: 100%;
             opacity: 1;
+            background-color: @cr-black-v1;
             background-image: url(../../public/images/gift-unknown.png);
             background-size: 100%;
             background-position: center;
@@ -90,6 +91,13 @@
     }
     &.visible{
         opacity: 1;
+    }
+    &.prize{
+        .prize-card-inner{
+            .prize-card-front-side{
+                background-color: transparent;
+            }
+        }
     }
     &.flip{
         opacity: 1;

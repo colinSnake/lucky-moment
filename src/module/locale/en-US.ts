@@ -19,8 +19,8 @@ export const en = {
         ThirdPrize: 'Third Prize',
         NormalPrize: 'Normal Prize',
         None: 'No Prize',
-        Congratulations: (ids: string, prize: string) => {
-            return `Congratulations to the lucky ones with the numbers ${ids}, You have won the ${prize}`;
+        Congratulations: (ids: string, level: string, name: string) => {
+            return `Congratulations to the lucky ones with the numbers ${ids}, You have won the ${level} ${name}`;
         },
         LotteryNotice: (name: string) => {
             return `Currently extracting ${name}, please adjust your pose`

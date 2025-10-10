@@ -1,3 +1,5 @@
+export const beautifulWords = ["鸿运巅峰", "锦鲤非凡", "好运连连", "乐在其中", "天天开心"];
+
 export const loveWords = [
     "2025", "LM & MRX", "我们结婚啦", 
     "囍结良缘", "♡", "♥", 
@@ -13,7 +15,7 @@ export const loveWords = [
     "愿我们始于初见", "止于终老", "以爱之名", "以余生为期", "喜悦有分享", "同量天地宽", "相随日月长",
 ];
 
-export const words = [
+export const wishWords = [
     "缔结良缘",
     "笙磬同音",
     "百年琴瑟",

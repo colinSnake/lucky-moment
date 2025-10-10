@@ -1,5 +1,5 @@
 import { PrizeType } from "../enum";
-import { loveWords, words } from "./words";
+import { beautifulWords, loveWords, wishWords } from "./words";
 import { LotteryDataInterface, PrizeInterface, TextRenderConstantInterface } from "../interface";
 export const lotteryId = "cb85ae949eda1fb233816fca52bbd974";
 export const colors = ["#13c2c2","#ff4466", "#ffb415"];
@@ -8,7 +8,7 @@ export const imgs = {
     iconExport: "../../../images/btn-export.png",
 }
 export const config =  {
-    row: 6, // 卡片行数
+    row: 7, // 卡片行数
     col: 13, // 卡片列数
     resolution: 1, // 分辨率
     resetDuration: 500, // 重置卡片动画时间
@@ -120,6 +120,7 @@ export const confettiConstant = {
 }
 
 export {
+    beautifulWords,
     loveWords,
-    words
+    wishWords
 }
