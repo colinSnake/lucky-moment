@@ -3,7 +3,7 @@ import { Alert, BtnGroup, Core, Expansion, FontBg, GiftCards, WinnerBg } from "@
 
 const Home = () => {
     const renderContent = () => {
-        return <div className="wl-content">
+        return <div className="wl-box">
             <GiftCards />
             <Core />
             <BtnGroup />

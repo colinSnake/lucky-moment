@@ -215,7 +215,7 @@ table {
   left: 0;
   top: 0;
 }
-.wl-wrapper .wl-inner .wl-content {
+.wl-wrapper .wl-inner .wl-box {
   width: 100%;
   height: 100%;
 }
