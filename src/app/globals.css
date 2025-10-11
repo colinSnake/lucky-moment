@@ -132,6 +132,11 @@ table {
   font-display: swap;
 }
 @font-face {
+  font-family: 'stcaiyun';
+  src: url('/fonts/STCaiyun.woff2') format('truetype');
+  font-display: swap;
+}
+@font-face {
   font-family: 'SJxingkai';
   src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
   font-display: swap;
@@ -218,6 +223,7 @@ table {
 .wl-wrapper .wl-inner .wl-box {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 .prize-card-wrapper {
   width: 16vh;

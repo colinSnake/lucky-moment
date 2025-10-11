@@ -132,6 +132,11 @@ table {
   font-display: swap;
 }
 @font-face {
+  font-family: 'stcaiyun';
+  src: url('/fonts/STCaiyun.woff2') format('truetype');
+  font-display: swap;
+}
+@font-face {
   font-family: 'SJxingkai';
   src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
   font-display: swap;
@@ -188,7 +193,7 @@ table {
   }
 }
 .wl-winnerBg {
-  position: fixed;
+  position: absolute;
   top: calc(50% - 34vh);
   left: calc(50% - 50vh);
   width: 100vh;
