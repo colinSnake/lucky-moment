@@ -10,6 +10,7 @@ export const imgs = {
 export const config =  {
     row: 7, // 卡片行数
     col: 13, // 卡片列数
+    participantsCount: 40, // 参与者人数
     resolution: 1, // 分辨率
     resetDuration: 500, // 重置卡片动画时间
     selectDuration: 600, // 选择卡片动画时间

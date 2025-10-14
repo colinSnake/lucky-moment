@@ -188,7 +188,7 @@ table {
   }
 }
 .wl-gift-cards {
-  margin: 2vh;
+  padding: 2vh;
   display: flex;
   flex-direction: column;
 }

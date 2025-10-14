@@ -36,7 +36,7 @@ export default class LotteryUtil {
     renderConfetti: RenderConfetti = create_renderConfetti();
     renderSparticle: RenderSparticle = create_renderSparticle();
     alertMsg: string = "";
-    maxUserCount: number = 0;
+    participantsCount: number = 0;
     static instanceObj: LotteryUtil|null = null;
     static instance() {
         if (!this.instanceObj) {
@@ -80,7 +80,7 @@ export default class LotteryUtil {
     };
 
     get unLuckyUsers() {
-        const unLuckyUsers = this.lotteryData.users.filter((user: UserInterface) => !user.isWin && user.id <= this.maxUserCount);
+        const unLuckyUsers = this.lotteryData.users.filter((user: UserInterface) => !user.isWin && user.id <= this.participantsCount);
         return unLuckyUsers;
     }
 
@@ -90,9 +90,10 @@ export default class LotteryUtil {
 
     initialize() {
         this.lotteryDB.initialize().then(async() => {
-            const res = await this.getLotteryData(lotteryId);
+            const res = await this.getLotteryData(lotteryId),
+                { participantsCount } = this.config;
             this.lotteryData = JSON.parse(JSON.stringify(res));
-            this.maxUserCount = this.lotteryData.users.length;
+            this.participantsCount = participantsCount > 0 ? participantsCount : this.lotteryData.users.length;
             this.renderSparticle.draw();
             this.initCards();
             this.animate();
@@ -123,7 +124,7 @@ export default class LotteryUtil {
     }
 
     initCards(){
-        const { row, col, resolution, width, height, cameraConfig } = this.config,
+        const { row, col, step, resolution, width, height, cameraConfig } = this.config,
             { fov, near, far, aspect, posZ } = cameraConfig,
             { users } = this.lotteryData;
         let index = 0;
@@ -147,8 +148,8 @@ export default class LotteryUtil {
                 this._3dCards.push(object);
                 // 创建平面对象
                 const planeObject = new THREE.Object3D();
-                planeObject.position.x = j * width - this.position.x;
-                planeObject.position.y = -(i * height) + this.position.y;
+                planeObject.position.x = j * width - this.position.x + (width - step) / 2;
+                planeObject.position.y = -(i * height) + this.position.y - (height - step) / 2;
                 planeObject.position.z = 0;
                 this.table.push(planeObject);
                 index++;
@@ -449,7 +450,7 @@ export default class LotteryUtil {
                                     users[id-1].name = name;
                                 }
                             });
-                            this.maxUserCount = jsonData.length;
+                            this.participantsCount = jsonData.length;
                             this.setLotteryData();
                         }
                         this.alert(AlertType.success, Locale.Common.UploadSuccess);

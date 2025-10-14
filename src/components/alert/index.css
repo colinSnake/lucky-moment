@@ -132,6 +132,11 @@ table {
   font-display: swap;
 }
 @font-face {
+  font-family: 'stcaiyun';
+  src: url('/fonts/STCaiyun.woff2') format('truetype');
+  font-display: swap;
+}
+@font-face {
   font-family: 'SJxingkai';
   src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
   font-display: swap;
@@ -176,23 +181,19 @@ table {
   background-position: center;
   background-repeat: no-repeat;
 }
-@keyframes animate01 {
-  0%,
-  100% {
-    clip: rect(0, 26vh, 1px, 0);
-  }
-  25% {
-    clip: rect(0, 1px, 8vh, 0);
+@keyframes highlight {
+  0% {
+    color: #fff78a;
   }
   50% {
-    clip: rect(7.9vh, 26vh, 8vh, 0);
+    color: #ffb415;
   }
-  75% {
-    clip: rect(0, 26vh, 8vh, 25.9vh);
+  100% {
+    color: #fff78a;
   }
 }
 .wl-alert-wrapper {
-  position: fixed;
+  position: absolute;
   z-index: 10;
   transition: all 0.5s ease-in;
   opacity: 0;
