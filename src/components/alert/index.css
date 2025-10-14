@@ -221,9 +221,8 @@ table {
   max-width: 46vh;
   border-radius: 12px;
   position: relative;
-  border: 1px solid;
+  border: 1px solid #fa6400;
   box-shadow: 0px 2px 12px 0px rgba(198, 0, 0, 0.4);
-  border-image: linear-gradient(227deg, #e02020, #fa6400, #f7b500) 1 1;
 }
 .wl-alert-wrapper .wl-alert-inner.info,
 .wl-alert-wrapper .wl-alert-inner.success {

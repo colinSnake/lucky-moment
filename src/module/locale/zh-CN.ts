@@ -20,10 +20,10 @@ export const zh = {
         NormalPrize: '阳光普照奖',
         None: '无',
         Congratulations: (ids: string, level: string, name: string) => {
-            return `恭喜编号为${ids}的幸运儿, 获得了${level}${name}`;
+            return `恭喜编号为${ids}的幸运儿，获得了${level}${name}`;
         },
         LotteryNotice: (name: string) => {
-            return `正在抽取 ${name}, 请调整好姿势`
+            return `正在抽取${name}，请调整好姿势`
         },
         LotteryCompleted: "当前抽奖活动已结束，感谢参与",
         LotteryUnderway: "当前抽奖活动进行中，无法上用户名单",
