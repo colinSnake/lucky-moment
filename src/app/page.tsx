@@ -1,5 +1,6 @@
 
-import { Alert, BtnGroup, Core, Expansion, FontBg, GiftCards, WinnerBg } from "@/components";
+import { Alert, BtnGroup, Core, Expansion, 
+    FontBg, GiftCards, ParticlesContainer, WinnerBg } from "@/components";
 
 const Home = () => {
     const renderContent = () => {
@@ -17,7 +18,7 @@ const Home = () => {
     return (
         <div className="wl-wrapper">
             <div className="wl-inner wl-inner-background"></div>
-            <div className="wl-inner wl-inner-sparticle"></div>
+            <div className="wl-inner wl-inner-sparticle"><ParticlesContainer /></div>
             <div className="wl-inner wl-inner-content">{renderContent()}</div>
             {/* <div className="wl-inner wl-inner-starry">
                 <canvas id="starry-sky"></canvas>

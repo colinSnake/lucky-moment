@@ -6,6 +6,7 @@ import FontBg from "./fontBg";
 import IconSvg from "./iconSvg";
 import GiftCards from "./giftCards";
 import WinnerBg from "./winnerBg";
+import ParticlesContainer from "./particles";
 
 export {
     Alert,
@@ -15,5 +16,6 @@ export {
     FontBg,
     IconSvg,
     GiftCards,
+    ParticlesContainer,
     WinnerBg,
 }

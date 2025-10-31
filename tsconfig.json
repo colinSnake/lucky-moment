@@ -18,7 +18,6 @@
         "name": "next"
       }
     ],
-    "types": ["./src/types"],
     "paths": {
       "@/*": ["./src/*"]
     }

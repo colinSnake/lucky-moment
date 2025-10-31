@@ -1,20 +1,19 @@
 import { WordInterface, TextRenderConstantInterface } from "@/module/interface";
 import { textRenderConstant, loveWords } from "@/module/mockData";
 
-export default class RenderText {
+export default class MultiWords {
     canvas: HTMLCanvasElement|null = null;
     ctx: CanvasRenderingContext2D|null = null;
     offscreenCanvas: OffscreenCanvas|null = null;
     offscreenCtx: OffscreenCanvasRenderingContext2D|null = null;
-    img: HTMLImageElement = new Image();
     constant: TextRenderConstantInterface = textRenderConstant;
     words: WordInterface[] = [];
-    instanceObj: RenderText|null = null;
-    instance(): RenderText{
-        if(!this.instanceObj){
-            this.instanceObj = new RenderText();
+    static instanceObj: MultiWords|null = null;
+    static instance(): MultiWords{
+        if(!MultiWords.instanceObj){
+            MultiWords.instanceObj = new MultiWords();
         }
-        return this.instanceObj;
+        return MultiWords.instanceObj;
     }
 
     initialize(){

@@ -6,7 +6,7 @@ import * as XLSX from 'xlsx';
 import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
 import Util from "./";
 import EventsUtil from "./eventsUtil";
-import { RenderConfetti, RenderSparticle, create_renderConfetti, create_renderSparticle } from "../render";
+import RenderHelper from "../render";
 import { AlertType, EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
 import { config, lotteryId, mockData } from "../mockData"; 
@@ -33,8 +33,6 @@ export default class LotteryUtil {
         isShowTable: true,
     };
     lotteryDB: LotteryDB = create_LotteryDB();
-    renderConfetti: RenderConfetti = create_renderConfetti();
-    renderSparticle: RenderSparticle = create_renderSparticle();
     alertMsg: string = "";
     participantsCount: number = 0;
     static instanceObj: LotteryUtil|null = null;
@@ -94,7 +92,6 @@ export default class LotteryUtil {
                 { participantsCount } = this.config;
             this.lotteryData = JSON.parse(JSON.stringify(res));
             this.participantsCount = participantsCount > 0 ? participantsCount : this.lotteryData.users.length;
-            this.renderSparticle.draw();
             this.initCards();
             this.animate();
             this.registerEvent();
@@ -222,7 +219,7 @@ export default class LotteryUtil {
                 this.flipCard(true, () => {
                     let timer: any = setTimeout(() => {
                         this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
-                        this.renderConfetti.draw();
+                        RenderHelper.RH_confetti.draw();
                         this.alert(AlertType.success, this.alertMsg);
                         this.setLotteryData();
                         this.isLottery = false;
@@ -705,7 +702,6 @@ export default class LotteryUtil {
         this.updateCamera();
         renderer.setSize(window.innerWidth, window.innerHeight);
         this.render();
-        this.renderSparticle.draw();
     }
 
     registerEvent(){

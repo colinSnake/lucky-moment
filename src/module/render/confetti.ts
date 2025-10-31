@@ -1,14 +1,14 @@
 import confetti from "canvas-confetti";
 import { confettiConstant } from "@/module/mockData";
 
-export default class RenderConfetti {
+export default class Confetti {
     animationTime: number = 3000;
-    instanceObj: RenderConfetti|null = null;
-    instance(): RenderConfetti{
-        if(!this.instanceObj){
-            this.instanceObj = new RenderConfetti();
+    static instanceObj: Confetti|null = null;
+    static instance(): Confetti{
+        if(!Confetti.instanceObj){
+            Confetti.instanceObj = new Confetti();
         }
-        return this.instanceObj;
+        return Confetti.instanceObj;
     }
     draw(){
         const { left, center, right } = confettiConstant,
