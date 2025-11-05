@@ -17,7 +17,7 @@ const Btn = (props: any) => {
        e.target.value = "";
     }
     
-    return <div className={`btn-expansion ${className} ${isLast ? "nmb" : ""}`} onClick={handleExport}>
+    return <div className={`btn-expansion ${className}${isLast ? " nmb" : ""}`} onClick={handleExport}>
         {/* {href ? <Link href={href}><IconSvg config={{name, size}} /></Link> : <IconSvg config={{name, size}} />} */}
         {isImport && <input type="file" accept="xlsx/xls" onChange={handleImport} />}
     </div>

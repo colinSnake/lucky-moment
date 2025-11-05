@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浏览器文本转语音</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2575fc;
+            font-size: 2.2rem;
+        }
+        
+        .description {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        .text-input {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+        
+        .text-input:focus {
+            border-color: #2575fc;
+            outline: none;
+        }
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        select, input[type="range"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+        }
+        
+        .range-value {
+            display: inline-block;
+            width: 40px;
+            text-align: center;
+            font-weight: bold;
+            color: #2575fc;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .play-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .pause-btn {
+            background-color: #FF9800;
+            color: white;
+        }
+        
+        .stop-btn {
+            background-color: #F44336;
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        
+        .speaking {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .paused {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .info {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>浏览器文本转语音</h1>
+        <p class="description">输入您想要转换为语音的文本，选择语音和参数，然后点击播放按钮。</p>
+        
+        <textarea class="text-input" placeholder="在此输入您要转换为语音的文本...">欢迎使用浏览器文本转语音功能！这是一个简单的演示，展示了如何使用Web Speech API将文本转换为语音。</textarea>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="voice-select">选择语音:</label>
+                <select id="voice-select">
+                    <option value="">加载中...</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="rate">语速: <span id="rate-value" class="range-value">1</span></label>
+                <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1">
+            </div>
+            
+            <div class="control-group">
+                <label for="pitch">音调: <span id="pitch-value" class="range-value">1</span></label>
+                <input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1">
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button id="play-btn" class="play-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                </svg>
+                播放
+            </button>
+            <button id="pause-btn" class="pause-btn" disabled>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
+                </svg>
+                暂停
+            </button>
+            <button id="stop-btn" class="stop-btn" disabled>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M5 3.5h6A1.5 1.5 0 0 1 12.5 5v6a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 11V5A1.5 1.5 0 0 1 5 3.5z"/>
+                </svg>
+                停止
+            </button>
+        </div>
+        
+        <div id="status" class="status"></div>
+        
+        <div class="info">
+            <h3>使用说明：</h3>
+            <ul>
+                <li>在文本框中输入或粘贴您想要转换为语音的文本</li>
+                <li>从下拉菜单中选择您喜欢的语音（不同浏览器支持的语音不同）</li>
+                <li>调整语速和音调以获得最佳效果</li>
+                <li>点击播放按钮开始语音合成</li>
+                <li>在播放过程中，您可以暂停、继续或停止播放</li>
+            </ul>
+            <p><strong>注意：</strong> 某些浏览器可能需要用户交互（如点击页面）才能首次播放声音。</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取DOM元素
+            const textInput = document.querySelector('.text-input');
+            const voiceSelect = document.getElementById('voice-select');
+            const rateInput = document.getElementById('rate');
+            const pitchInput = document.getElementById('pitch');
+            const rateValue = document.getElementById('rate-value');
+            const pitchValue = document.getElementById('pitch-value');
+            const playBtn = document.getElementById('play-btn');
+            const pauseBtn = document.getElementById('pause-btn');
+            const stopBtn = document.getElementById('stop-btn');
+            const statusDiv = document.getElementById('status');
+            
+            // 检查浏览器是否支持SpeechSynthesis
+            if (!('speechSynthesis' in window)) {
+                statusDiv.textContent = '抱歉，您的浏览器不支持语音合成功能。请尝试使用Chrome、Edge或Safari等现代浏览器。';
+                statusDiv.className = 'status error';
+                playBtn.disabled = true;
+                return;
+            }
+            
+            // 语音合成对象
+            let speech = new SpeechSynthesisUtterance();
+            let voices = [];
+            
+            // 更新可用的语音列表
+            function loadVoices() {
+                voices = speechSynthesis.getVoices();
+                voiceSelect.innerHTML = '';
+                
+                // 过滤中文语音（如果存在）
+                const chineseVoices = voices.filter(voice => voice.lang.includes('zh') || voice.lang.includes('cn'));
+                const otherVoices = voices.filter(voice => !voice.lang.includes('zh') && !voice.lang.includes('cn'));
+                
+                if (chineseVoices.length > 0) {
+                    chineseVoices.forEach(voice => {
+                        const option = document.createElement('option');
+                        option.value = voice.name;
+                        option.textContent = `${voice.name} (${voice.lang})`;
+                        voiceSelect.appendChild(option);
+                    });
+                }
+                
+                if (otherVoices.length > 0) {
+                    if (chineseVoices.length > 0) {
+                        const separator = document.createElement('option');
+                        separator.disabled = true;
+                        separator.textContent = '──────────';
+                        voiceSelect.appendChild(separator);
+                    }
+                    
+                    otherVoices.forEach(voice => {
+                        const option = document.createElement('option');
+                        option.value = voice.name;
+                        option.textContent = `${voice.name} (${voice.lang})`;
+                        voiceSelect.appendChild(option);
+                    });
+                }
+                
+                // 默认选择第一个中文语音，如果没有则选择第一个语音
+                if (chineseVoices.length > 0) {
+                    voiceSelect.value = chineseVoices[0].name;
+                } else if (voices.length > 0) {
+                    voiceSelect.value = voices[0].name;
+                }
+            }
+            
+            // 初始化语音列表
+            loadVoices();
+            
+            // 某些浏览器需要事件来加载语音
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = loadVoices;
+            }
+            
+            // 更新语速和音调显示值
+            rateInput.addEventListener('input', function() {
+                rateValue.textContent = this.value;
+            });
+            
+            pitchInput.addEventListener('input', function() {
+                pitchValue.textContent = this.value;
+            });
+            
+            // 播放语音
+            playBtn.addEventListener('click', function() {
+                if (textInput.value.trim() === '') {
+                    statusDiv.textContent = '请输入要转换为语音的文本';
+                    statusDiv.className = 'status error';
+                    return;
+                }
+                
+                // 设置语音参数
+                speech.text = textInput.value;
+                speech.rate = parseFloat(rateInput.value);
+                speech.pitch = parseFloat(pitchInput.value);
+                
+                // 设置选定的语音
+                const selectedVoice = voices.find(voice => voice.name === voiceSelect.value);
+                if (selectedVoice) {
+                    speech.voice = selectedVoice;
+                }
+                
+                // 播放语音
+                speechSynthesis.speak(speech);
+                
+                // 更新按钮状态
+                playBtn.disabled = true;
+                pauseBtn.disabled = false;
+                stopBtn.disabled = false;
+                
+                statusDiv.textContent = '正在播放...';
+                statusDiv.className = 'status speaking';
+            });
+            
+            // 暂停语音
+            pauseBtn.addEventListener('click', function() {
+                if (speechSynthesis.speaking) {
+                    speechSynthesis.pause();
+                    pauseBtn.disabled = true;
+                    playBtn.disabled = false;
+                    statusDiv.textContent = '已暂停';
+                    statusDiv.className = 'status paused';
+                }
+            });
+            
+            // 停止语音
+            stopBtn.addEventListener('click', function() {
+                speechSynthesis.cancel();
+                playBtn.disabled = false;
+                pauseBtn.disabled = true;
+                stopBtn.disabled = true;
+                statusDiv.textContent = '已停止';
+                statusDiv.className = 'status';
+            });
+            
+            // 语音播放结束事件
+            speech.onend = function() {
+                playBtn.disabled = false;
+                pauseBtn.disabled = true;
+                stopBtn.disabled = true;
+                statusDiv.textContent = '播放完成';
+                statusDiv.className = 'status';
+            };
+            
+            // 语音播放错误事件
+            speech.onerror = function(event) {
+                console.error('语音合成错误:', event);
+                statusDiv.textContent = '播放出错: ' + event.error;
+                statusDiv.className = 'status error';
+                playBtn.disabled = false;
+                pauseBtn.disabled = true;
+                stopBtn.disabled = true;
+            };
+        });
+    </script>
+</body>
+</html>
