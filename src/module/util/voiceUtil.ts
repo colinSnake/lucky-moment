@@ -39,6 +39,7 @@ class VoiceUtil {
     }
 
     switchAudio(index: number){
+        document.body.click();
         this.audioRefs.forEach(audioRef => audioRef.pause());
         this.audioRefs[index].play();
     }
