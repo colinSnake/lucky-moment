@@ -39,17 +39,21 @@ class VoiceUtil {
     }
 
     switchAudio(index: number){
-        document.body.click();
-        this.audioRefs.forEach(audioRef => audioRef.pause());
+        this.audioRefs.forEach(audioRef => {
+            audioRef.pause();
+            audioRef.muted = false;
+        });
         this.audioRefs[index].play();
     }
 
     loadAudioGroup(){
         const audioARef = new Audio(audios.bg),
             audioBRef = new Audio(audios.play);
-        audioARef.loop = true;
-        audioBRef.loop = true;
         this.audioRefs = [audioARef, audioBRef];
+        this.audioRefs.forEach(audioRef => {
+            audioRef.loop = true;
+            audioRef.muted = true;
+        });
     }
 
     registerEvents(){

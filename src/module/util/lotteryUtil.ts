@@ -752,7 +752,7 @@ export default class LotteryUtil {
         let timer: any = setTimeout(() => {
             EventsUtil.emit(EventType.showAlert, {
                 type,
-                message: "",
+                message,
                 isShow: false,
                 position: "right",
             });
