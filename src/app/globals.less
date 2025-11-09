@@ -10,9 +10,9 @@
         height: 100%;
         &.wl-inner-background{
             background-image: url(../../public/images/lottery-bg.png);
-            .bg-cover;
+            .bg-cover();
         }
-        &.wl-inner-sparticle{
+        &.wl-inner-particle{
             position: absolute;
             z-index: @zx01;
             left: 0;
@@ -63,14 +63,14 @@
             background-size: 100%;
             background-position: center;
             background-repeat: no-repeat;
-            .flex-horizontal-01;
+            .fh1();
         }
         .prize-card-back-side{
-            .flex-vertical-01;
+            .fv1();
             .center{
                 width: 100%;
                 flex: 1;
-                .flex-horizontal-01;
+                .fh1();
                 .number{
                     font-size: 6vh;
                     font-weight: bold;
@@ -86,7 +86,7 @@
                 width: 10vh;
                 height: 8vh;
                 background-image: url(../../public/images/crown.png);
-                .bg-cover;
+                .bg-cover();
             }
         }
     }

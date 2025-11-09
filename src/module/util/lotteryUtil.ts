@@ -7,6 +7,7 @@ import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
 import Util from "./";
 import EventsUtil from "./eventsUtil";
 import RenderHelper from "../render";
+import VoiceUtilHelper from "./voiceUtil";
 import { AlertType, EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
 import { config, lotteryId, mockData } from "../mockData"; 
@@ -97,6 +98,7 @@ export default class LotteryUtil {
             this.registerEvent();
             this.handleUpdateBtnGroup();
             this.handleUpdateLotteryData();
+            VoiceUtilHelper().initialize();
             await this.setTransform();
             console.log(this);
         });
@@ -217,15 +219,11 @@ export default class LotteryUtil {
             .start()
             .onComplete(() => {
                 this.flipCard(true, () => {
-                    let timer: any = setTimeout(() => {
-                        this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
-                        RenderHelper.RH_confetti.draw();
-                        this.alert(AlertType.success, this.alertMsg);
-                        this.setLotteryData();
-                        this.isLottery = false;
-                        clearTimeout(timer);
-                        timer = null;
-                    }, 1500);
+                    VoiceUtilHelper().switchAudio(0);
+                    this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
+                    RenderHelper.RH_confetti.draw();
+                    this.setLotteryData();
+                    this.isLottery = false;
                 });
             });
     }   
@@ -271,28 +269,32 @@ export default class LotteryUtil {
             { isAuto }= this.config,
             { prizeIndex } = this.lotteryData;
         let status = true;
-        if(type === StepType.lottery && text !== Locale.Page.Pause){ 
-            if(this.unLuckyUsers.length === 0){ // 判断当前是否存在可抽奖用户
-                status = false;
-                this.alert(AlertType.warning, Locale.Common.NoLotteryUsers);   
+        if(VoiceUtilHelper().isSpeaking){
+            status = false;
+        }else{
+            if(type === StepType.lottery && text !== Locale.Page.Pause){ 
+                if(this.unLuckyUsers.length === 0){ // 判断当前是否存在可抽奖用户
+                    status = false;
+                    this.alert(AlertType.warning, Locale.Common.NoLotteryUsers);   
+                }
+                if(prizeIndex === 0){ // 判断当前抽奖活动已完成
+                    status = false;
+                    this.alert(AlertType.warning, Locale.Common.LotteryCompleted);   
+                }
             }
-            if(prizeIndex === 0){ // 判断当前抽奖活动已完成
-                status = false;
-                this.alert(AlertType.warning, Locale.Common.LotteryCompleted);   
-            }
-        }
-        if(type === StepType.reLottery){
-            if(this.luckyCount === 0){ // 判断当前抽奖活动未开始
-                status = false;
-                this.alert(AlertType.warning, Locale.Common.LotteryCarryOut);   
-            }
-        }   
-        // 判断上次抽奖未执行完毕，不发起新的抽奖
-        if(isAuto) {
-            this.isLottery && (status = false);
-        }else{ 
-            if(text !== Locale.Page.Pause && this.isLottery){
+            if(type === StepType.reLottery){
+                if(this.luckyCount === 0){ // 判断当前抽奖活动未开始
+                    status = false;
+                    this.alert(AlertType.warning, Locale.Common.LotteryCarryOut);   
+                }
+            }   
+            // 判断上次抽奖未执行完毕，不发起新的抽奖
+            if(isAuto) {
                 this.isLottery && (status = false);
+            }else{ 
+                if(text !== Locale.Page.Pause && this.isLottery){
+                    this.isLottery && (status = false);
+                }
             }
         }
         return status;
@@ -381,6 +383,7 @@ export default class LotteryUtil {
      * @description 开始抽奖 
      * */ 
     start() {
+        VoiceUtilHelper().switchAudio(1);
         this.isLottery = true;
         this.setRotate().then(() => {
             const { prizes, prizeIndex, users } = this.lotteryData,
@@ -411,6 +414,8 @@ export default class LotteryUtil {
                     }
                 }
             }
+            this.alert(AlertType.success, this.alertMsg, 8000);
+            VoiceUtilHelper().speak({ text: this.alertMsg});
             this.selectedCards();
         });
     }
@@ -736,13 +741,24 @@ export default class LotteryUtil {
         callback && callback();
     }
 
-    alert(type: AlertType, message: string){
+    alert(type: AlertType, message: string, duration: number = 3000){
         EventsUtil.emit(EventType.showAlert, {
             type,
             message,
             isShow: true,
             position: "right",
         });
+
+        let timer: any = setTimeout(() => {
+            EventsUtil.emit(EventType.showAlert, {
+                type,
+                message: "",
+                isShow: false,
+                position: "right",
+            });
+            clearTimeout(timer);
+            timer = null;
+        }, duration);
     }
 
     handleAlert(){

@@ -2,7 +2,7 @@ import confetti from "canvas-confetti";
 import { confettiConstant } from "@/module/mockData";
 
 export default class Confetti {
-    animationTime: number = 3000;
+    animationTime: number = 6000;
     static instanceObj: Confetti|null = null;
     static instance(): Confetti{
         if(!Confetti.instanceObj){
@@ -12,7 +12,7 @@ export default class Confetti {
     }
     draw(){
         const { left, center, right } = confettiConstant,
-            endTime = Date.now() + this.animationTime
+            endTime = Date.now() + this.animationTime;
         const frame = () => {
             confetti(left[0]);
             confetti(right[0]);

@@ -132,6 +132,11 @@ table {
   font-display: swap;
 }
 @font-face {
+  font-family: 'stcaiyun';
+  src: url('/fonts/STCaiyun.woff2') format('truetype');
+  font-display: swap;
+}
+@font-face {
   font-family: 'SJxingkai';
   src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
   font-display: swap;
@@ -141,31 +146,31 @@ table {
   src: url('/fonts/胡晓波男神体.otf') format('truetype');
   font-display: swap;
 }
-.flex-horizontal-01 {
+.fh1 {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.flex-horizontal-02 {
+.fh2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.flex-horizontal-03 {
+.fh3 {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
-.flex-horizontal-04 {
+.fh4 {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.flex-vertical-01 {
+.fv1 {
   display: flex;
   flex-direction: column;
 }
-.flex-vertical-02 {
+.fv2 {
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -15,8 +15,6 @@ const Alert = () => {
         message: Locale.Page.AlertContent,
         position: "top",
         isShow: false,
-        isAutoClose: true,
-        duration: 5000,
     });
     const alertRef = useRef<HTMLDivElement>(null);
 
@@ -30,13 +28,6 @@ const Alert = () => {
     const handleAction = useCallback(() => {
         EventsUtil.subscribe(EventType.showAlert, (data: AlertInfoInterface) => {
             setAlertInfo({...alertInfo, ...data});
-            if (alertInfo.isAutoClose) {
-                let timer: any = setTimeout(() => {
-                    setAlertInfo({...alertInfo, ...data, isShow: false});
-                    clearTimeout(timer);
-                    timer = null;
-                }, alertInfo.duration);
-            }
         }, create_lotteryUtil());
     }, [alertInfo]);
 

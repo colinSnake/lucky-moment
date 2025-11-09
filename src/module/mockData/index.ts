@@ -8,10 +8,14 @@ export const imgs = {
     iconImport: "../../../images/btn-import.png",
     iconExport: "../../../images/btn-export.png",
 }
+export const audios = {
+    bg: "../../music/lottery-bg.mp3",
+    play: "../../music/lottery-start.mp3",
+}
 export const config =  {
     row: 7, // 卡片行数
-    col: 13, // 卡片列数
-    participantsCount: 40, // 参与者人数
+    col: 15, // 卡片列数
+    participantsCount: 7 * 15, // 参与者人数
     resolution: 1, // 分辨率
     resetDuration: 500, // 重置卡片动画时间
     selectDuration: 600, // 选择卡片动画时间

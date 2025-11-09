@@ -7,19 +7,21 @@ import "./index.css";
 
 const Btn = (props: any) => {
     const { name, href, size = "2.4vh", className, isImport, isExport, isLast } = props;
+    const accept = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
 
     const handleExport = async() => {
         isExport && await create_lotteryUtil().exportExcel();
     }
 
     const handleImport = async(e: any) => {
+        console.log(e.target.files[0]);
        await create_lotteryUtil().importExcel(e.target.files[0]);
        e.target.value = "";
     }
     
     return <div className={`btn-expansion ${className}${isLast ? " nmb" : ""}`} onClick={handleExport}>
         {/* {href ? <Link href={href}><IconSvg config={{name, size}} /></Link> : <IconSvg config={{name, size}} />} */}
-        {isImport && <input type="file" accept="xlsx/xls" onChange={handleImport} />}
+        {isImport && <input type="file" accept={accept.join(",")} onChange={handleImport} />}
     </div>
 }
 
