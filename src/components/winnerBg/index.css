@@ -195,12 +195,12 @@ table {
 .wl-winnerBg {
   position: absolute;
   top: calc(50% - 34vh);
-  left: calc(50% - 50vh);
+  left: calc(50% - 49.6vh);
   width: 100vh;
   height: 64vh;
   z-index: 8;
   display: none;
-  scale: 0.8;
+  scale: 0.92;
 }
 .wl-winnerBg.visible {
   display: block;

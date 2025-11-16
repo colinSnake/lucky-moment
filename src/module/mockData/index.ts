@@ -12,10 +12,11 @@ export const audios = {
     bg: "../../music/lottery-bg.mp3",
     play: "../../music/lottery-start.mp3",
 }
+
 export const config =  {
-    row: 7, // 卡片行数
+    row: 8, // 卡片行数
     col: 15, // 卡片列数
-    participantsCount: 7 * 15, // 参与者人数
+    participantsCount: 8 * 15, // 参与者人数
     resolution: 1, // 分辨率
     resetDuration: 500, // 重置卡片动画时间
     selectDuration: 600, // 选择卡片动画时间
@@ -32,7 +33,7 @@ export const config =  {
         near: 0.1, // 相机近裁剪面，距离小于near的物体不可见
         far: 10000, // 相机远裁剪面，距离大于far的物体不可见
         aspect: 1, // 相机宽高比
-        posZ: 3000, // 相机位置 z 轴
+        posZ: 2600, // 相机位置 z 轴
     }
 };
 export const prizes: PrizeInterface[] = [
