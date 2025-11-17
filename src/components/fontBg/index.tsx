@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import EventsUtil from "@/module/util/eventsUtil";
-import { create_lotteryUtil } from "@/module/util/lotteryUtil";
+import { EventsUtilHelper, LotteryUtilHelper } from "@/module/util";
 import { LotteryDataInterface } from "@/module/interface";
 import { EventType } from "@/module/enum";
 import { beautifulWords } from "@/module/mockData";
@@ -12,11 +11,11 @@ const FontBg = () => {
     const [words, setWords] = useState<string[]>([]);
 
     const handleAction = useCallback(() => {
-        EventsUtil.subscribe(EventType.updatePrizes, (data: LotteryDataInterface) => {
+        EventsUtilHelper.subscribe(EventType.updatePrizes, (data: LotteryDataInterface) => {
             const { prizeIndex } = data;
             const curWord: string = beautifulWords[prizeIndex];
             curWord && setWords([curWord.slice(0, 2), curWord.slice(2)]);
-        }, create_lotteryUtil());
+        }, LotteryUtilHelper);
     }, [words]);
 
     useEffect(() => {

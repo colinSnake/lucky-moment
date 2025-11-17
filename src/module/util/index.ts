@@ -1,5 +1,8 @@
 import { PrizeType } from '@/module/enum';
 import Locale from '@/module/locale';
+import EventsUtil, { EventsUtilHelper } from './eventsUtil';
+import VoiceUtil, { VoiceUtilHelper } from './voiceUtil';
+import LotteryUtil, { LotteryUtilHelper } from './lotteryUtil';
 
 export default class Util {
     static deepCopy (obj: any, cache: any = []) {
@@ -51,3 +54,5 @@ export default class Util {
         return new Date().toLocaleString().replace(/\//g, "-");
     }
 }
+
+export { EventsUtilHelper, VoiceUtilHelper, LotteryUtilHelper };

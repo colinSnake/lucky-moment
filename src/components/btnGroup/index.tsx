@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import { EventType, StepType } from "@/module/enum";
-import { create_lotteryUtil } from "@/module/util/lotteryUtil";
-import EventsUtil from "@/module/util/eventsUtil";
+import { EventsUtilHelper, LotteryUtilHelper } from "@/module/util";
 import Locale from "@/module/locale";
 import "./index.css";
 
@@ -10,7 +9,7 @@ const Btn = (props: any) => {
     const { type, text, isVisible, isActive, isMLR, isLetterSpacing } = props;
 
     const handleBtnClick = async() => {
-        await create_lotteryUtil().main({type, text});
+        await LotteryUtilHelper.main({type, text});
     }
 
     const setClassName = () => {
@@ -39,7 +38,7 @@ const BtnGroup = () => {
     ];
 
     const handleAction = useCallback(() => {
-        EventsUtil.subscribe(EventType.updateBtnGroup, (params: any) => {
+        EventsUtilHelper.subscribe(EventType.updateBtnGroup, (params: any) => {
             const { isShowTable, isShowPause, type } = params;
             const newBtnsOptions = btnOptions.map((it: any) => {
                 if(it.type === StepType.welcome){
@@ -55,7 +54,7 @@ const BtnGroup = () => {
                 return it;
             });
             setBtns(newBtnsOptions);
-        }, create_lotteryUtil());
+        }, LotteryUtilHelper);
     }, [btnOptions]); 
 
     useEffect(() => {

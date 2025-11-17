@@ -4,10 +4,6 @@ import { LotteryDataInterface, PrizeInterface, TextRenderConstantInterface } fro
 export const lotteryId = "cb85ae949eda1fb233816fca52bbd974";
 export const colors = ["#13c2c2","#ff4466", "#ffb415"];
 export const colorsSec = ["#FF5E5E", "#FFBD5E", "#5EFF6B", "#5E8FFF", "#D45EFF", "#FF5EC2"];
-export const imgs = {
-    iconImport: "../../../images/btn-import.png",
-    iconExport: "../../../images/btn-export.png",
-}
 export const audios = {
     bg: "../../music/lottery-bg.mp3",
     play: "../../music/lottery-start.mp3",

@@ -1,8 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { IconSvg } from "../";
-import EventsUtil from "@/module/util/eventsUtil";
-import { create_lotteryUtil } from "@/module/util/lotteryUtil";
+import { EventsUtilHelper, LotteryUtilHelper } from "@/module/util";
 import { AlertType, EventType } from "@/module/enum";
 import { AlertInfoInterface } from "@/module/interface";
 import Locale from "@/module/locale";
@@ -26,9 +25,9 @@ const Alert = () => {
     }
 
     const handleAction = useCallback(() => {
-        EventsUtil.subscribe(EventType.showAlert, (data: AlertInfoInterface) => {
+        EventsUtilHelper.subscribe(EventType.showAlert, (data: AlertInfoInterface) => {
             setAlertInfo({...alertInfo, ...data});
-        }, create_lotteryUtil());
+        }, LotteryUtilHelper);
     }, [alertInfo]);
 
     useEffect(() => {

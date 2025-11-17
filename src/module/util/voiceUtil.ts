@@ -1,5 +1,5 @@
 import { audios } from "../mockData";
-class VoiceUtil {
+export default class VoiceUtil {
     audioRefs: Array<any> = [];
     speech: any = null;
     voices: any[] = [];
@@ -17,7 +17,6 @@ class VoiceUtil {
         this.speech = new SpeechSynthesisUtterance();
         this.loadVoices();
         this.loadAudioGroup();
-        this.switchAudio(0);
     }
 
     speak(params: any, callback: Function|null = null){
@@ -38,12 +37,12 @@ class VoiceUtil {
         this.registerEvents();
     }
 
-    switchAudio(index: number){
+    switchAudio(index: number, isPause?: boolean){
         this.audioRefs.forEach(audioRef => {
             audioRef.pause();
             audioRef.muted = false;
         });
-        this.audioRefs[index].play();
+        if(!isPause) this.audioRefs[index].play();
     }
 
     loadAudioGroup(){
@@ -70,6 +69,4 @@ class VoiceUtil {
     
 }
 
-const VoiceUtilHelper = () => VoiceUtil.instance();
-
-export default VoiceUtilHelper;
+export const VoiceUtilHelper = VoiceUtil.instance();

@@ -132,11 +132,6 @@ table {
   font-display: swap;
 }
 @font-face {
-  font-family: 'stcaiyun';
-  src: url('/fonts/STCaiyun.woff2') format('truetype');
-  font-display: swap;
-}
-@font-face {
   font-family: 'SJxingkai';
   src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
   font-display: swap;
@@ -144,6 +139,11 @@ table {
 @font-face {
   font-family: 'HXBhandsome';
   src: url('/fonts/胡晓波男神体.otf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DINPro';
+  src: url('/fonts/D-DIN-PRO-Bold.woff2') format('truetype');
   font-display: swap;
 }
 .fh1 {
@@ -175,6 +175,12 @@ table {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.fv3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 .bg-cover {
   background-size: cover;
@@ -276,10 +282,12 @@ table {
   justify-content: center;
 }
 .prize-card-wrapper .prize-card-inner .prize-card-back-side .center .number {
-  font-size: 6vh;
+  font-size: 10vh;
   font-weight: bold;
   color: #ffffff;
-  font-family: "stcaiyun";
+  text-align: center;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  font-family: "DINPro";
 }
 .prize-card-wrapper .prize-card-inner .prize-card-back-side .crown {
   position: absolute;

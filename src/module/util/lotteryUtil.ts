@@ -5,9 +5,8 @@ import { TrackballControls } from "three/addons/controls/TrackballControls.js";
 import * as XLSX from 'xlsx';
 import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
 import Util from "./";
-import EventsUtil from "./eventsUtil";
+import {EventsUtilHelper, VoiceUtilHelper} from "./";
 import RenderHelper from "../render";
-import VoiceUtilHelper from "./voiceUtil";
 import { AlertType, EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
 import { config, lotteryId, mockData } from "../mockData"; 
@@ -98,7 +97,7 @@ export default class LotteryUtil {
             this.registerEvent();
             this.handleUpdateBtnGroup();
             this.handleUpdateLotteryData();
-            VoiceUtilHelper().initialize();
+            VoiceUtilHelper.initialize();
             await this.setTransform();
             console.log(this);
         });
@@ -219,7 +218,7 @@ export default class LotteryUtil {
             .start()
             .onComplete(() => {
                 this.flipCard(true, () => {
-                    VoiceUtilHelper().switchAudio(0);
+                    VoiceUtilHelper.switchAudio(0);
                     this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
                     RenderHelper.RH_confetti.draw();
                     this.setLotteryData();
@@ -269,7 +268,7 @@ export default class LotteryUtil {
             { isAuto }= this.config,
             { prizeIndex } = this.lotteryData;
         let status = true;
-        if(VoiceUtilHelper().isSpeaking){
+        if(VoiceUtilHelper.isSpeaking){
             status = false;
         }else{
             if(type === StepType.lottery && text !== Locale.Page.Pause){ 
@@ -383,7 +382,7 @@ export default class LotteryUtil {
      * @description 开始抽奖 
      * */ 
     start() {
-        VoiceUtilHelper().switchAudio(1);
+        VoiceUtilHelper.switchAudio(1);
         this.isLottery = true;
         this.setRotate().then(() => {
             const { prizes, prizeIndex, users } = this.lotteryData,
@@ -415,7 +414,7 @@ export default class LotteryUtil {
                 }
             }
             this.alert(AlertType.success, this.alertMsg, 8000);
-            VoiceUtilHelper().speak({ text: this.alertMsg});
+            VoiceUtilHelper.speak({ text: this.alertMsg});
             this.selectedCards();
         });
     }
@@ -742,7 +741,7 @@ export default class LotteryUtil {
     }
 
     alert(type: AlertType, message: string, duration: number = 3000){
-        EventsUtil.emit(EventType.showAlert, {
+        EventsUtilHelper.emit(EventType.showAlert, {
             type,
             message,
             isShow: true,
@@ -750,7 +749,7 @@ export default class LotteryUtil {
         });
 
         let timer: any = setTimeout(() => {
-            EventsUtil.emit(EventType.showAlert, {
+            EventsUtilHelper.emit(EventType.showAlert, {
                 type,
                 message,
                 isShow: false,
@@ -767,12 +766,12 @@ export default class LotteryUtil {
     }
 
     handleUpdateLotteryData(){
-        EventsUtil.emit(EventType.updatePrizes, this.lotteryData);
+        EventsUtilHelper.emit(EventType.updatePrizes, this.lotteryData);
     }
 
     handleUpdateBtnGroup(type?: StepType){
         const { isAuto, times } = this.config;
-        EventsUtil.emit(EventType.updateBtnGroup, {
+        EventsUtilHelper.emit(EventType.updateBtnGroup, {
             isShowTable: this.isShowTable,
             isShowPause: isAuto ? false : times === Infinity,
             type
@@ -780,6 +779,4 @@ export default class LotteryUtil {
     }
 }
 
-export function create_lotteryUtil(): LotteryUtil {
-    return LotteryUtil.instance();
-}
+export const LotteryUtilHelper = LotteryUtil.instance();

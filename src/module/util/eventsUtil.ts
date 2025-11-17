@@ -1,26 +1,29 @@
 import EventEmitter from "eventemitter3";
 export default class EventsUtil {
-    static instanceObject: EventEmitter|null = null;
-    static instance(): EventEmitter {
+    emitter = new EventEmitter();
+    static instanceObject: EventsUtil|null = null;
+    static instance(): EventsUtil {
         if(!EventsUtil.instanceObject){
-            EventsUtil.instanceObject = new EventEmitter();
+            EventsUtil.instanceObject = new EventsUtil();
         }
         return EventsUtil.instanceObject;
     };
 
-    static emit(event: string, params?: any){
-        EventsUtil.instance().emit(event, params);
+    emit(event: string, params?: any){
+        this.emitter.emit(event, params);
     }
 
-    static subscribeOnce(event:string, fn:(params:any) => void, context: any) {
-        EventsUtil.instance().once(event, fn, context);
+    subscribeOnce(event:string, fn:(params:any) => void, context: any) {
+        this.emitter.once(event, fn, context);
     }
 
-    static subscribe(event:string, fn:(params:any) => void, context: any) {
-        EventsUtil.instance().on(event, fn, context);
+    subscribe(event:string, fn:(params:any) => void, context: any) {
+        this.emitter.on(event, fn, context);
     }
 
-    static unSubscribe(event:string) {
-        EventsUtil.instance().removeListener(event);
+    unSubscribe(event:string) {
+        this.emitter.removeListener(event);
     }
 }
+
+export const EventsUtilHelper = EventsUtil.instance();

@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
-import EventsUtil from "@/module/util/eventsUtil";
-import Util from "@/module/util";
-import { create_lotteryUtil } from "@/module/util/lotteryUtil";
+import Util, { EventsUtilHelper, LotteryUtilHelper } from "@/module/util";
 import { LotteryDataInterface, PrizeInterface } from "@/module/interface";
 import { EventType } from "@/module/enum";
 import Locale from "@/module/locale";
@@ -32,14 +30,14 @@ const GiftCards = () => {
     const [cards, setCards] = useState<PrizeInterface[]>([]);
 
     const handleAction = useCallback(() => {
-        EventsUtil.subscribe(EventType.updatePrizes, (data: LotteryDataInterface) => {
+        EventsUtilHelper.subscribe(EventType.updatePrizes, (data: LotteryDataInterface) => {
             const { prizes, prizeIndex } = data;
             const newPrizes = prizes.map((it: PrizeInterface) => ({...it, isActive: it.id === prizeIndex})),
                 curPrize = newPrizes.find((it: PrizeInterface) => it.isActive) as PrizeInterface;
             const { type, name, count, total } = curPrize;
             setNotice({ level: Util.getPrizeName(type), name, remainCount: total - count });
             setCards([...newPrizes]);
-        }, create_lotteryUtil());
+        }, LotteryUtilHelper);
     }, [notice, cards]);
 
     useEffect(() => {

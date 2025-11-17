@@ -1,46 +1,51 @@
 "use client";
-import { useEffect } from "react";
-import Link from 'next/link';
-import { create_lotteryUtil } from "@/module/util/lotteryUtil";
-import { imgs } from "@/module/mockData";
+import { useState } from "react";
+import { VoiceUtilHelper, LotteryUtilHelper } from "@/module/util";
 import "./index.css";
 
 const Btn = (props: any) => {
-    const { name, href, size = "2.4vh", className, isImport, isExport, isLast } = props;
+    const {className, callback } = props;
     const accept = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
 
-    const handleExport = async() => {
-        isExport && await create_lotteryUtil().exportExcel();
-    }
-
-    const handleImport = async(e: any) => {
-        console.log(e.target.files[0]);
-       await create_lotteryUtil().importExcel(e.target.files[0]);
-       e.target.value = "";
-    }
-    
-    return <div className={`btn-expansion ${className}${isLast ? " nmb" : ""}`} onClick={handleExport}>
+    return <div className={`btn-expansion ${className}`} onClick={callback}>
         {/* {href ? <Link href={href}><IconSvg config={{name, size}} /></Link> : <IconSvg config={{name, size}} />} */}
-        {isImport && <input type="file" accept={accept.join(",")} onChange={handleImport} />}
+        {className === "btn-import" && <input type="file" accept={accept.join(",")} onChange={callback} />}
     </div>
 }
 
 const Expansion = () => {
+    const [isPlay, setIsPlay] = useState<boolean>(false);
+    const musicOption = [{className: "btn-music", callback: () => handleOpenMusic()}];
     const expansionOption = [
-        {name: imgs.iconImport, className: "btn-import", isImport: true},
-        {name: imgs.iconExport, className: "btn-export", isExport: true},
+        {className: "btn-import", callback: (e: any) => handleImport(e)},
+        {className: "btn-export", callback: () => handleExport() },
         // {name: "icon-gift", href: '/gift'},
         // {name: "icon-prize", href: '/win-list'},
         // {name: "icon-setting", href: '/setting', isLast: true}
     ];
 
-    useEffect(() => {
-        
-    }, []);
+    const handleOpenMusic = () => {
+        VoiceUtilHelper.switchAudio(0);
+        setIsPlay(!isPlay);
+    }
+
+    const handleExport = async() => {
+        await LotteryUtilHelper.exportExcel();
+    }
+
+    const handleImport = async(e: any) => {
+        await LotteryUtilHelper.importExcel(e.target.files[0]);
+        e.target.value = "";
+    }
 
     return <div className="wl-expansion-wrapper">
         <div className="wl-expansion-inner">
-            {expansionOption.map((it: any) => <Btn key={it.name} {...it} />)}
+            <div className="inner-top">
+                {!isPlay && musicOption.map((it: any) => <Btn key={it.className} {...it} />)}
+            </div>
+            <div className="inner-bottom">
+                {expansionOption.map((it: any) => <Btn key={it.className} {...it} />)}
+            </div>
         </div>
     </div>  
 };

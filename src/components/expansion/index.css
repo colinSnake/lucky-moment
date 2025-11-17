@@ -132,11 +132,6 @@ table {
   font-display: swap;
 }
 @font-face {
-  font-family: 'stcaiyun';
-  src: url('/fonts/STCaiyun.woff2') format('truetype');
-  font-display: swap;
-}
-@font-face {
   font-family: 'SJxingkai';
   src: url('/fonts/SJxingkai-C-Regular.woff2') format('truetype');
   font-display: swap;
@@ -144,6 +139,11 @@ table {
 @font-face {
   font-family: 'HXBhandsome';
   src: url('/fonts/胡晓波男神体.otf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DINPro';
+  src: url('/fonts/D-DIN-PRO-Bold.woff2') format('truetype');
   font-display: swap;
 }
 .fh1 {
@@ -176,6 +176,12 @@ table {
   align-items: center;
   justify-content: center;
 }
+.fv3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
 .bg-cover {
   background-size: cover;
   background-position: center;
@@ -194,15 +200,45 @@ table {
 }
 .wl-expansion-wrapper {
   position: absolute;
+  height: 100%;
   right: 2vh;
-  bottom: 4vh;
+  padding: 2vh 0 4vh 0;
+  top: 0;
+  box-sizing: border-box;
   z-index: 10;
 }
 .wl-expansion-wrapper .wl-expansion-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.wl-expansion-wrapper .wl-expansion-inner .inner-top {
   display: flex;
   flex-direction: column;
 }
-.wl-expansion-wrapper .wl-expansion-inner .btn-expansion {
+.wl-expansion-wrapper .wl-expansion-inner .inner-top .btn-expansion {
+  width: 4vh;
+  height: 4vh;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wl-expansion-wrapper .wl-expansion-inner .inner-top .btn-expansion.btn-music {
+  background-image: url(../../../public/images/btn-music.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.wl-expansion-wrapper .wl-expansion-inner .inner-bottom {
+  display: flex;
+  flex-direction: column;
+}
+.wl-expansion-wrapper .wl-expansion-inner .inner-bottom .btn-expansion {
   width: 4vh;
   height: 4vh;
   background-color: transparent;
@@ -213,22 +249,22 @@ table {
   align-items: center;
   justify-content: center;
 }
-.wl-expansion-wrapper .wl-expansion-inner .btn-expansion.btn-import {
+.wl-expansion-wrapper .wl-expansion-inner .inner-bottom .btn-expansion.btn-import {
   background-image: url(../../../public/images/btn-import.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
-.wl-expansion-wrapper .wl-expansion-inner .btn-expansion.btn-export {
+.wl-expansion-wrapper .wl-expansion-inner .inner-bottom .btn-expansion.btn-export {
   background-image: url(../../../public/images/btn-export.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
-.wl-expansion-wrapper .wl-expansion-inner .btn-expansion.nmb {
+.wl-expansion-wrapper .wl-expansion-inner .inner-bottom .btn-expansion.nmb {
   margin-bottom: 0;
 }
-.wl-expansion-wrapper .wl-expansion-inner .btn-expansion > input[type="file"] {
+.wl-expansion-wrapper .wl-expansion-inner .inner-bottom .btn-expansion > input[type="file"] {
   width: 100%;
   height: 100%;
   position: absolute;
