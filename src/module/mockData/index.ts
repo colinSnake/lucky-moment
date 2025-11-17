@@ -5,8 +5,8 @@ export const lotteryId = "cb85ae949eda1fb233816fca52bbd974";
 export const colors = ["#13c2c2","#ff4466", "#ffb415"];
 export const colorsSec = ["#FF5E5E", "#FFBD5E", "#5EFF6B", "#5E8FFF", "#D45EFF", "#FF5EC2"];
 export const audios = {
-    bg: "../../music/lottery-bg.mp3",
-    play: "../../music/lottery-start.mp3",
+    bg: "../../music/music-bg.mp3",
+    play: "../../music/music-lottery.mp3",
 }
 
 export const config =  {
