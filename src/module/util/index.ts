@@ -55,8 +55,9 @@ export default class Util {
     }
 
     static getUrlParam(name: string) {
-        const url = window.location.href;
-        const params = url.split("?")[1].split("&");
+        const url = window.location.href,
+            paramsStr = url.split("?")?.[1] || "";
+        const params = paramsStr.split("&");
         for (let i = 0; i < params.length; i++) {
             const param = params[i].split("=");
             if (param[0] === name) {
