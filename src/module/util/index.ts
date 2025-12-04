@@ -53,6 +53,18 @@ export default class Util {
     static formatDate() {
         return new Date().toLocaleString().replace(/\//g, "-");
     }
+
+    static getUrlParam(name: string) {
+        const url = window.location.href;
+        const params = url.split("?")[1].split("&");
+        for (let i = 0; i < params.length; i++) {
+            const param = params[i].split("=");
+            if (param[0] === name) {
+                return param[1];
+            }
+        }
+        return "";
+    }
 }
 
 export { EventsUtilHelper, VoiceUtilHelper, LotteryUtilHelper };

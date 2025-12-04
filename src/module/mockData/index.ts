@@ -8,7 +8,6 @@ export const audios = {
     bg: "../../music/music-bg.mp3",
     play: "../../music/music-lottery.mp3",
 }
-
 export const config =  {
     row: 8, // 卡片行数
     col: 15, // 卡片列数

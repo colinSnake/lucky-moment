@@ -4,8 +4,7 @@ import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer
 import { TrackballControls } from "three/addons/controls/TrackballControls.js";
 import * as XLSX from 'xlsx';
 import LotteryDB, { create_LotteryDB } from "../indexedDB/control";
-import Util from "./";
-import {EventsUtilHelper, VoiceUtilHelper} from "./";
+import Util, {EventsUtilHelper, VoiceUtilHelper} from "./";
 import RenderHelper from "../render";
 import { AlertType, EventType, ObjectStoreIndexType, PrizeType, StepType } from "../enum";
 import { LotteryDataInterface, PrizeInterface, UserInterface } from "../interface";
@@ -16,7 +15,6 @@ export default class LotteryUtil {
     containerId: string = "lottery-core-container";
     table: any[] = [];
     sphere: any[] = [];
-    config: any = config;
     camera: THREE.PerspectiveCamera|null = null;
     scene: THREE.Scene|null = null;
     renderer: CSS3DRenderer|null = null;
@@ -41,6 +39,16 @@ export default class LotteryUtil {
             this.instanceObj = new LotteryUtil();
         }
         return this.instanceObj;
+    }
+
+    get config() {
+        const row = Util.getUrlParam("row") || config.row,
+            col = Util.getUrlParam("col") || config.col,
+            participantsCount = Util.getUrlParam("participantsCount") || config.participantsCount;
+        config.row = Number(row),
+        config.col = Number(col),
+        config.participantsCount = Number(participantsCount);
+        return config;
     }
 
     get currentLuckyUsers() {
