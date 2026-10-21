@@ -44,6 +44,7 @@ export default class LotteryUtil {
     pendingDrawCount = 0;
     private initialization: Promise<void> | null = null;
     private animationFrame: number | null = null;
+    private resizeFrame: number | null = null;
     private readonly tweenGroup = new TWEEN.Group();
     static instanceObj: LotteryUtil|null = null;
     static instance() {
@@ -677,7 +678,13 @@ export default class LotteryUtil {
     }
 
     registerEvent(){
-        window.addEventListener("resize", (e: any) => {
+        window.addEventListener("resize", this.handleResize, { passive: true });
+    }
+
+    private handleResize = () => {
+        if (this.resizeFrame !== null) return;
+        this.resizeFrame = requestAnimationFrame(() => {
+            this.resizeFrame = null;
             this.updateRenderSize();
         });
     }

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">Lucky Moment</title>
+  <desc id="desc">A gold gift box with a lucky star</desc>
+  <defs>
+    <linearGradient id="bg" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#741313" />
+      <stop offset="1" stop-color="#320606" />
+    </linearGradient>
+    <linearGradient id="gift" x1="16" y1="27" x2="49" y2="52" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffe8a3" />
+      <stop offset="0.48" stop-color="#f7b52b" />
+      <stop offset="1" stop-color="#c87908" />
+    </linearGradient>
+    <linearGradient id="ribbon" x1="28" y1="22" x2="37" y2="52" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff4c5" />
+      <stop offset="0.55" stop-color="#ffcf4a" />
+      <stop offset="1" stop-color="#e09212" />
+    </linearGradient>
+  </defs>
+
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bg)" />
+  <path d="M32 8l1.8 4.8L39 14.5l-5.2 1.7L32 21l-1.8-4.8L25 14.5l5.2-1.7L32 8z" fill="#ffe08a" />
+  <path d="M49 18l1 2.7 2.8 1-2.8 1-1 2.8-1-2.8-2.8-1 2.8-1 1-2.7z" fill="#f7b52b" opacity=".9" />
+
+  <path d="M15 28h34v22a4 4 0 0 1-4 4H19a4 4 0 0 1-4-4V28z" fill="url(#gift)" stroke="#fff2bd" stroke-width="1.5" />
+  <rect x="12" y="23" width="40" height="10" rx="3" fill="#f3ad25" stroke="#fff2bd" stroke-width="1.5" />
+  <path d="M31 23h6v31h-6z" fill="url(#ribbon)" />
+  <path d="M13.5 31h37" stroke="#fff2bd" stroke-width="1.5" />
+
+  <path d="M32 23c-2.7-8.2-11.5-9.3-12.8-4.6-1.2 4.3 4.5 6.2 12.8 4.6z" fill="#ffd85f" stroke="#fff2bd" stroke-width="1.2" />
+  <path d="M32 23c2.7-8.2 11.5-9.3 12.8-4.6 1.2 4.3-4.5 6.2-12.8 4.6z" fill="#ffc43e" stroke="#fff2bd" stroke-width="1.2" />
+  <circle cx="32" cy="23" r="2.2" fill="#fff4c5" />
+
+  <path d="M10 45l1.2 3.1 3.1 1.2-3.1 1.2L10 53.6l-1.2-3.1-3.1-1.2 3.1-1.2L10 45z" fill="#ffda68" opacity=".9" />
+  <path d="M53 40l1 2.5 2.5 1-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1 1-2.5z" fill="#fff0ae" opacity=".85" />
+</svg>
