@@ -1,0 +1,30 @@
+{
+  "name": "@lucky-moment/web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tweenjs/tween.js": "^25.0.0",
+    "canvas-confetti": "^1.9.3",
+    "eventemitter3": "^5.0.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-tsparticles": "^2.12.2",
+    "three": "^0.178.0",
+    "tsparticles-slim": "^2.12.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.7",
+    "@types/three": "^0.178.1",
+    "@vitejs/plugin-react": "^4.7.0",
+    "vite": "^6.3.5"
+  }
+}

@@ -1,0 +1,20 @@
+@import "../../app/variable.less";
+.wl-winnerBg{
+    position: absolute;
+    top: calc(50% - 34vh);
+    left: calc(50% - 49.6vh);
+    width: 100vh;
+    height: 64vh;
+    z-index: @zx08;
+    display: none;
+    scale: 0.92;
+    &.visible{
+        display: block;
+    }
+    .wl-winnerBg-inner{
+        width: 100%;
+        height: 100%;
+        background-image: url(/lucky-moment/images/winner-bg.png);
+        .bg-cover();
+    }
+}

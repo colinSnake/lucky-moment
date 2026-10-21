@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lucky Moment
 
-## Getting Started
+Lucky Moment is a wedding lottery application organized as a small pnpm monorepo with a Vite React frontend and a Fastify backend.
 
-First, run the development server:
+## Structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```text
+apps/
+  web/   Vite + React + Three.js lottery UI
+  backend/ Fastify API and production static hosting
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Frontend: `http://localhost:5173/lucky-moment/`
+- Backend: `http://localhost:3001`
+- Health check: `http://localhost:3001/api/health`
 
-## Learn More
+## Production
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm build
+pnpm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The Fastify process serves `apps/web/dist` and exposes the API on port `3001`. Set `PORT`, `HOST`, or `WEB_ORIGIN` to override the defaults. Production uses compiled backend JavaScript from `apps/backend/dist` rather than running TypeScript through `tsx`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Performance decisions
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- The particle layer is loaded after the initial React shell through `React.lazy`.
+- `xlsx` is loaded only when importing or exporting a spreadsheet.
+- Three.js and React are split into separate Vite chunks.
+- Tween animation frames are scheduled only while animations are active.
+- Event subscriptions are registered once and cleaned up on unmount.
+- Lottery selection rules are isolated in `apps/web/src/module/lottery/lotteryState.ts` for deterministic testing and single-pass updates.
+- IndexedDB persistence updates the existing record with `put` instead of clearing the entire store.
+- Winner selection uses Web Crypto (`crypto.getRandomValues`) with rejection sampling; `Math.random` remains only in non-winning animation placement/duration code.
+- `?participantsCount=N` continues to restrict eligibility to IDs `1..N`, even when a saved imported participant list exists.
+- Large backgrounds use WebP; the winner background is requested only when the winner panel is shown, and the particle layer waits for idle time.
+- Fastify sends no-cache headers for the HTML entry, one-year immutable headers for fingerprinted build assets, and one-day headers for public files.
