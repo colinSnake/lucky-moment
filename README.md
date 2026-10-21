@@ -17,9 +17,9 @@ pnpm install
 pnpm dev
 ```
 
-- Frontend: `http://localhost:5173/lucky-moment/`
-- Backend: `http://localhost:3001`
-- Health check: `http://localhost:3001/api/health`
+- Frontend: `http://localhost:9087/lucky-moment`
+- Backend: `http://localhost:9090`
+- Health check: `http://localhost:9090/api/health`
 
 ## Production
 
@@ -28,7 +28,7 @@ pnpm build
 pnpm start
 ```
 
-The Fastify process serves `apps/web/dist` and exposes the API on port `3001`. Set `PORT`, `HOST`, or `WEB_ORIGIN` to override the defaults. Production uses compiled backend JavaScript from `apps/backend/dist` rather than running TypeScript through `tsx`.
+The Fastify process serves `apps/web/dist` and exposes the API on port `9090`. Set `PORT`, `HOST`, or `WEB_ORIGIN` to override the defaults. Production uses compiled backend JavaScript from `apps/backend/dist` rather than running TypeScript through `tsx`.
 
 ## Performance decisions
 

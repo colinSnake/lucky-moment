@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const app = Fastify({ logger: true });
-const port = Number(process.env.PORT ?? 3001);
+const port = Number(process.env.PORT ?? 9090);
 const host = process.env.HOST ?? "0.0.0.0";
 const appBase = "/lucky-moment";
 
@@ -23,7 +23,7 @@ app.get("/", async (_request, reply) => {
 });
 
 app.get(appBase, async (_request, reply) => {
-  return reply.redirect(`${appBase}/`);
+  return reply.sendFile("index.html");
 });
 
 app.addHook("onSend", async (request, reply, payload) => {
