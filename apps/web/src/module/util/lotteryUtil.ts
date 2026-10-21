@@ -44,6 +44,7 @@ export default class LotteryUtil {
     pendingDrawCount = 0;
     private initialization: Promise<void> | null = null;
     private animationFrame: number | null = null;
+    private readonly tweenGroup = new TWEEN.Group();
     static instanceObj: LotteryUtil|null = null;
     static instance() {
         if (!this.instanceObj) {
@@ -223,7 +224,7 @@ export default class LotteryUtil {
 
         this.select3dCardIds.forEach((id: number) => {
             const object = this._3dCards[id - 1];
-            new TWEEN.Tween(object.position)
+            this.createTween(object.position)
                 .to({
                     x: tag * width * resolution * 1,
                     y: 50 * resolution,
@@ -232,7 +233,7 @@ export default class LotteryUtil {
                 .easing(TWEEN.Easing.Exponential.InOut)
                 .start();
 
-            new TWEEN.Tween(object.rotation)
+            this.createTween(object.rotation)
                 .to({
                     x: 0,
                     y: 0,
@@ -246,7 +247,7 @@ export default class LotteryUtil {
         });
 
         this.animate();
-        new TWEEN.Tween(this)
+        this.createTween(this)
             .to({}, 2 * selectDuration)
             .start()
             .onComplete(() => {
@@ -269,7 +270,7 @@ export default class LotteryUtil {
             this.select3dCardIds.forEach((id: number) => {
                 const object = this._3dCards[id - 1],
                     target = this.sphere[id - 1];
-                new TWEEN.Tween(object.position)
+                this.createTween(object.position)
                     .to({
                         x: target.position.x,
                         y: target.position.y,
@@ -277,7 +278,7 @@ export default class LotteryUtil {
                     }, this.getRandomDuration(resetDuration))
                     .easing(TWEEN.Easing.Exponential.InOut)
                     .start();
-                new TWEEN.Tween(object.rotation)
+                this.createTween(object.rotation)
                     .to({
                         x: target.rotation.x,
                         y: target.rotation.y,
@@ -289,7 +290,7 @@ export default class LotteryUtil {
         }
         this.animate();
         return new Promise((resolve, reject) => {
-            new TWEEN.Tween(this)
+            this.createTween(this)
                 .to({}, 2 * resetDuration)
                 .start()
                 .onComplete(() => {
@@ -494,10 +495,10 @@ export default class LotteryUtil {
         if (this.animationFrame !== null) return;
         const tick = () => {
             this.animationFrame = null;
-            TWEEN.update();
+            this.tweenGroup.update();
             if (this.controls?.enabled) this.controls.update();
             this.render();
-            if (TWEEN.getAll().length > 0) {
+            if (this.tweenGroup.getAll().length > 0) {
                 this.animationFrame = requestAnimationFrame(tick);
             }
         };
@@ -507,6 +508,10 @@ export default class LotteryUtil {
     render(){
         if (!this.renderer || !this.scene || !this.camera) return;
         this.renderer.render(this.scene, this.camera);
+    }
+
+    private createTween<T extends object>(target: T) {
+        return new TWEEN.Tween(target, this.tweenGroup);
     }
 
     setTransform(){
@@ -520,7 +525,7 @@ export default class LotteryUtil {
             for(let i = 0; i < this._3dCards.length; i++) {
                 const object = this._3dCards[i];
                 const target = targets[i];
-                new TWEEN.Tween(object.position)
+                this.createTween(object.position)
                     .to({
                         x: target.position.x,
                         y: target.position.y,
@@ -528,7 +533,7 @@ export default class LotteryUtil {
                     }, this.getRandomDuration(transformDuration))
                     .easing(TWEEN.Easing.Exponential.InOut)
                     .start();
-                new TWEEN.Tween(object.rotation)
+                this.createTween(object.rotation)
                     .to({
                         x: target.rotation.x,
                         y: target.rotation.y,
@@ -539,7 +544,7 @@ export default class LotteryUtil {
             }
             this.animate();
 
-            new TWEEN.Tween(this)
+            this.createTween(this)
                 .to({}, 2 * transformDuration)
                 .start()
                 .onComplete(() => {
@@ -558,7 +563,7 @@ export default class LotteryUtil {
 
             const sport = (params: any) => {
                 const { pos, duration, easeType = TWEEN.Easing.Exponential.InOut } = params;
-                new TWEEN.Tween(scene.rotation)
+                this.createTween(scene.rotation)
                     .to(pos, duration)
                     .easing(easeType)
                     .start()
@@ -575,12 +580,12 @@ export default class LotteryUtil {
             }else{
                 const initRotation = () => {
                     if (rotationTween) { // 清除旧动画
-                        TWEEN.remove(rotationTween);
+                        this.tweenGroup.remove(rotationTween);
                     }
                     const pos = { y: Math.PI * 2},
                         duration = rotateDuration / 3;
                     // 创建新的旋转动画
-                    rotationTween = new TWEEN.Tween(scene.rotation)
+                    rotationTween = this.createTween(scene.rotation)
                         .to(pos, duration)
                         .easing(TWEEN.Easing.Linear.None)
                         .repeat(times)
