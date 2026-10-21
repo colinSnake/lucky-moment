@@ -1,7 +1,8 @@
 node_modules
 pnpm-debug.log
 .next/*
-dist/*
+**/dist/
+**/.vite/
 *.tsbuildinfo
 *.d.ts
 .vscode/*

@@ -253,7 +253,7 @@ export default class LotteryUtil {
                 this.flipCard(true, () => {
                     VoiceUtilHelper.switchAudio(0);
                     this.lotteryData.users.forEach((it: UserInterface) => (it.isInPrize = false));
-                    import("../render/confetti").then(({ default: Confetti }) => {
+                    import("../effects/confetti").then(({ default: Confetti }) => {
                         Confetti.instance().draw();
                     });
                     this.setLotteryData();

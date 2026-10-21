@@ -1,9 +1,8 @@
 import { PrizeType } from "../enum";
-import { beautifulWords, loveWords, wishWords } from "./words";
-import { LotteryDataInterface, PrizeInterface, TextRenderConstantInterface } from "../interface";
+import { beautifulWords } from "./words";
+import { LotteryDataInterface, PrizeInterface } from "../interface";
 export const lotteryId = "cb85ae949eda1fb233816fca52bbd974";
 export const colors = ["#13c2c2","#ff4466", "#ffb415"];
-export const colorsSec = ["#FF5E5E", "#FFBD5E", "#5EFF6B", "#5E8FFF", "#D45EFF", "#FF5EC2"];
 export const audios = {
     bg: "/lucky-moment/music/music-bg.mp3",
     play: "/lucky-moment/music/music-lottery.mp3",
@@ -99,16 +98,6 @@ export const mockData: LotteryDataInterface = {
     isLottery: false,
 };
 
-export const textRenderConstant: TextRenderConstantInterface = {
-    wordNumber: 120,
-    focalLength: 0, // 焦距
-    centerX: 0,
-    centerY: 0,
-    offscreenWidth: 120,
-    offscreenHeight: 30,
-    font: '20px baotuxiaobaiti',
-}
-
 export const confettiConstant = {
     left: [{ particleCount: 3, angle: 60, spread: 55, colors, origin: { x: 0 }}],
     center: [
@@ -122,7 +111,5 @@ export const confettiConstant = {
 }
 
 export {
-    beautifulWords,
-    loveWords,
-    wishWords
+    beautifulWords
 }
