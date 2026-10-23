@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 180" role="img" aria-labelledby="title desc">
+  <title id="title">Lucky Moment</title>
+  <desc id="desc">A decorative Lucky Moment wordmark with stars and a golden underline.</desc>
+  <defs>
+    <linearGradient id="gold" x1="120" y1="30" x2="560" y2="150" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff1b0" />
+      <stop offset="0.35" stop-color="#ffd35a" />
+      <stop offset="0.72" stop-color="#e8a51d" />
+      <stop offset="1" stop-color="#a86508" />
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#fff8d8" />
+      <stop offset="1" stop-color="#f6c63e" />
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="5" stdDeviation="3" flood-color="#6d160f" flood-opacity="0.28" />
+    </filter>
+  </defs>
+  <g fill="url(#gold)" filter="url(#shadow)" font-family="Georgia, 'Times New Roman', serif" font-size="92" font-style="italic" font-weight="700" letter-spacing="-3">
+    <text x="340" y="108" text-anchor="middle">Lucky Moment</text>
+  </g>
+  <path d="M126 129c92 19 336 21 428-1" fill="none" stroke="url(#gold)" stroke-linecap="round" stroke-width="6" />
+  <path d="M169 139c79 8 263 10 342-1" fill="none" stroke="#fff0a3" stroke-linecap="round" stroke-width="2" opacity=".8" />
+  <g fill="url(#shine)">
+    <path d="m91 50 5 13 13 5-13 5-5 13-5-13-13-5 13-5 5-13Z" />
+    <path d="m589 43 3.5 9 9 3.5-9 3.5-3.5 9-3.5-9-9-3.5 9-3.5 3.5-9Z" />
+    <path d="m557 126 3 7.5 7.5 3-7.5 3-3 7.5-3-7.5-7.5-3 7.5-3 3-7.5Z" opacity=".85" />
+  </g>
+  <circle cx="114" cy="112" r="4" fill="#f3b52a" />
+  <circle cx="612" cy="103" r="4" fill="#f3b52a" />
+</svg>

@@ -1,146 +1,200 @@
-# Lucky Moment
+<p align="center">
+  <img src="apps/web/public/favicon.svg" width="104" alt="Lucky Moment icon" align="middle" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="docs/lucky-moment-wordmark.svg" width="420" alt="Lucky Moment" align="middle" />
+</p>
 
-Lucky Moment 是一个面向婚礼现场的互动抽奖应用。它使用 React + Vite 构建前端，通过 Three.js CSS3DRenderer 展示可旋转、可翻牌的抽奖卡片，并由 Fastify 提供生产静态资源服务和健康检查接口。
+<p align="center">
+  An interactive wedding lottery app for memorable moments.
+</p>
 
-项目采用 pnpm monorepo，前端和后端分别位于 `apps/web` 与 `apps/backend`。
+<p align="center">
+  <a href="README.zh.md">简体中文</a>
+</p>
 
-## 主要能力
+Lucky Moment is an interactive lottery application designed for wedding events. The frontend is built with React, Vite, TypeScript, and Three.js CSS3DRenderer to create rotating and flip-card lottery animations. Fastify provides production static-file serving and a health-check endpoint.
 
-- 卡片平面布局与球面布局切换
-- Three.js CSS3D 抽奖卡片动画和翻牌效果
-- 抽奖、暂停、重抽、重置和中奖结果展示
-- IndexedDB 保存本地抽奖进度
-- Excel 参与者名单导入和中奖结果导出
-- 中文语音播报与背景音乐控制
-- 粒子背景、中奖礼花和动态奖品面板
-- `?participantsCount=N` 限制可参与抽奖的人数
-- Web Crypto 随机数抽取，避免使用有偏的简单取模算法
+The project uses a pnpm monorepo with the frontend and backend in `apps/web` and `apps/backend`.
 
-## 技术栈
+<br />
 
-| 层级 | 技术 |
+## Features
+
+- Switch between flat-card and spherical-card layouts
+- Three.js CSS3D lottery animations and card-flip effects
+- Start, pause, redraw, reset, and winner-result display workflows
+- Local lottery progress persistence with IndexedDB
+- Excel participant-list import and winner-result export
+- Chinese voice announcements and background music controls
+- Particle background, winner confetti, and an animated prize panel
+- Limit the number of participants with `?participantsCount=N`
+- Web Crypto-based random selection without biased simple modulo sampling
+
+<br />
+
+## Tech Stack
+
+| Layer | Technology |
 | --- | --- |
-| 前端 | React 19、Vite、TypeScript |
-| 3D / 动画 | Three.js CSS3DRenderer、Tween.js |
-| 视觉效果 | tsParticles、canvas-confetti |
-| 数据存储 | IndexedDB |
+| Frontend | React 19, Vite, TypeScript |
+| 3D / Animation | Three.js CSS3DRenderer, Tween.js |
+| Visual Effects | tsParticles, canvas-confetti |
+| Local Data | IndexedDB |
 | Excel | SheetJS (`xlsx`) |
-| 后端 | Fastify、TypeScript |
-| 包管理 | pnpm 10.32.0 |
+| Backend | Fastify, TypeScript |
+| Package Manager | pnpm 10.32.0 |
 
-## 环境要求
+<br />
 
-- Node.js 20 或更高版本
+## Requirements
+
+- Node.js 20 or later
 - pnpm 10.32.0
 
-启用 Corepack 后，可以使用项目声明的 pnpm 版本：
+Enable Corepack and activate the pnpm version declared by the project:
 
 ```bash
 corepack enable
 corepack prepare pnpm@10.32.0 --activate
 ```
 
-## 快速开始
+<br />
 
-在项目根目录执行：
+## Getting Started
+
+Run the following commands from the repository root:
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-开发环境地址：
+Open the following development endpoints:
 
-- 前端：`http://localhost:9087/lucky-moment`
-- 前端带尾斜杠：`http://localhost:9087/lucky-moment/`
-- 后端：`http://localhost:9090`
-- 健康检查：`http://localhost:9090/api/health`
+- Frontend: `http://localhost:9087/lucky-moment`
+- Frontend with trailing slash: `http://localhost:9087/lucky-moment/`
+- Backend: `http://localhost:9090`
+- Health check: `http://localhost:9090/api/health`
 
-`/lucky-moment` 和 `/lucky-moment/` 都可以直接访问。前端开发服务器会将 `/api` 请求代理到后端 `9090` 端口。
+Both `/lucky-moment` and `/lucky-moment/` are supported. The Vite development server proxies `/api` requests to the backend on port `9090`.
 
-## 常用命令
+<br />
 
-| 命令 | 用途 |
+## Commands
+
+| Command | Description |
 | --- | --- |
-| `pnpm dev` | 同时启动前端和后端开发服务 |
-| `pnpm dev:web` | 只启动 Vite 前端 |
-| `pnpm dev:backend` | 只启动 Fastify 后端 |
-| `pnpm build` | 构建前端和后端生产产物 |
-| `pnpm start` | 启动生产 Fastify 服务 |
-| `pnpm typecheck` | 执行前端和后端 TypeScript 检查 |
-| `pnpm test` | 执行抽奖规则测试 |
+| `pnpm dev` | Start the frontend and backend development servers |
+| `pnpm dev:web` | Start only the Vite frontend server |
+| `pnpm dev:backend` | Start only the Fastify backend server |
+| `pnpm build` | Build the frontend and backend production output |
+| `pnpm start` | Start the production Fastify server |
+| `pnpm typecheck` | Run TypeScript checks for the frontend and backend |
+| `pnpm test` | Run the lottery-rule tests |
 
-生产模式需要先构建：
+For production mode:
 
 ```bash
 pnpm build
 pnpm start
 ```
 
-生产访问地址为：`http://localhost:9090/lucky-moment`。
+The production app is available at `http://localhost:9090/lucky-moment`.
 
-## 项目结构
+<br />
+
+## Project Structure
 
 ```text
 .
 ├── apps/
 │   ├── web/
-│   │   ├── public/                 # 字体、图片、音乐、markdown 和 favicon
+│   │   ├── public/                 # Fonts, images, music, markdown, and favicon
 │   │   ├── src/
-│   │   │   ├── app/                # 全局 CSS 和应用基础资源
-│   │   │   ├── assets/             # WebP 背景资源
-│   │   │   ├── components/         # 页面 UI 组件
+│   │   │   ├── app/                # Global CSS and app-level resources
+│   │   │   ├── assets/             # WebP background assets
+│   │   │   ├── components/         # Page UI components
 │   │   │   ├── module/
-│   │   │   │   ├── effects/        # 礼花等视觉效果
-│   │   │   │   ├── indexedDB/      # 本地持久化封装
-│   │   │   │   ├── lottery/        # 抽奖规则、Excel 和随机数逻辑
-│   │   │   │   ├── locale/         # 中英文文案
-│   │   │   │   ├── mockData/       # 奖品、粒子和展示配置
-│   │   │   │   └── util/           # 抽奖运行时、事件和音频工具
-│   │   │   ├── App.tsx             # 应用组合入口
-│   │   │   └── main.tsx            # React 挂载入口
+│   │   │   │   ├── effects/        # Confetti and other visual effects
+│   │   │   │   ├── indexedDB/      # Local persistence
+│   │   │   │   ├── lottery/        # Lottery rules, Excel, and random logic
+│   │   │   │   ├── locale/         # English and Chinese copy
+│   │   │   │   ├── mockData/       # Prize and visual configuration
+│   │   │   │   └── util/           # Runtime, events, and audio utilities
+│   │   │   ├── App.tsx             # Application composition entry
+│   │   │   └── main.tsx            # React mount entry
 │   │   ├── index.html
 │   │   └── vite.config.ts
 │   └── backend/
-│       └── src/server.ts           # Fastify 静态服务和 API
-├── package.json                    # workspace 脚本
+│       └── src/server.ts           # Fastify static server and API
+├── docs/
+│   └── lucky-moment-wordmark.svg   # README wordmark
+├── package.json                    # Workspace scripts
 ├── pnpm-workspace.yaml
 ├── pnpm-lock.yaml
 └── tsconfig.json
 ```
 
-构建目录 `apps/web/dist` 和 `apps/backend/dist` 由构建命令生成，不纳入 Git。
+`apps/web/dist` and `apps/backend/dist` are generated build directories and are not committed to Git.
 
-## 配置说明
+<br />
 
-后端支持通过环境变量覆盖默认配置：
+## Configuration
 
-| 变量 | 默认值 | 说明 |
+The backend supports the following environment variables:
+
+| Variable | Default | Description |
 | --- | --- | --- |
-| `PORT` | `9090` | Fastify 监听端口 |
-| `HOST` | `0.0.0.0` | Fastify 监听地址 |
-| `WEB_ORIGIN` | 允许所有来源 | CORS 来源，多个来源用逗号分隔 |
+| `PORT` | `9090` | Fastify listening port |
+| `HOST` | `0.0.0.0` | Fastify listening host |
+| `WEB_ORIGIN` | Allow all origins | CORS origins, separated by commas |
 
-前端开发端口和应用路径在 `apps/web/vite.config.ts` 中配置：
+Frontend development settings are configured in `apps/web/vite.config.ts`:
 
-- 开发端口：`9087`
-- 应用路径：`/lucky-moment`
-- API 代理：`/api` → `http://localhost:9090`
+- Development port: `9087`
+- Application base path: `/lucky-moment`
+- API proxy: `/api` → `http://localhost:9090`
 
-## 性能策略
+<br />
 
-- 粒子组件使用 `React.lazy` 延迟加载。
-- tsParticles 限制粒子数量和帧率，并在页面失焦时暂停。
-- Three.js 动画只在存在活动 Tween 时请求动画帧。
-- Tween.js 使用独立 `Group` 管理动画，避免全局动画状态互相影响。
-- `xlsx` 只在导入或导出 Excel 时动态加载。
-- Three.js、React 和大型依赖通过 Vite 分包。
-- 礼花效果只在首次中奖完成时动态加载。
-- 背景使用 WebP，构建产物和开发缓存目录不进入 Git。
+## Performance Notes
 
-## 验证
+- The particle layer is loaded lazily with `React.lazy`.
+- tsParticles limits particle count and frame rate, and pauses when the page loses focus.
+- Three.js requests animation frames only while active Tweens are running.
+- Tween.js uses an independent `Group` to isolate animation state.
+- `xlsx` is loaded dynamically only for Excel import or export.
+- Three.js, React, and other large dependencies are split by Vite.
+- The confetti effect is loaded dynamically when a winning animation completes.
+- WebP backgrounds are used, and generated build/cache directories stay out of Git.
 
-提交代码前建议执行：
+<br />
+
+## CI/CD
+
+`.github/workflows/ci.yml` runs on pushes and pull requests targeting the `master` branch. It:
+
+1. Installs pnpm dependencies
+2. Runs TypeScript checks
+3. Runs lottery-rule tests
+4. Builds the frontend and backend
+
+The repository also includes `vercel.json` for deploying the frontend as a static site on Vercel:
+
+- Install Command: `pnpm install --frozen-lockfile`
+- Build Command: `pnpm --filter @lucky-moment/web build`
+- Output Directory: `apps/web/dist`
+- Frontend base path: `/lucky-moment`
+
+The Vercel configuration only deploys the static frontend. `apps/backend` is a long-running Fastify service and must be deployed separately to a Node.js-capable runtime. Configure the allowed frontend origins with `WEB_ORIGIN` when needed. The frontend currently does not depend on a business API; the backend mainly provides static serving and `/api/health`.
+
+After connecting the GitHub repository `colinSnake/lucky-moment` to a Vercel project, pushes to GitHub can trigger preview or production deployments. Set the Vercel Production Branch to `master`.
+
+<br />
+
+## Verification
+
+Before submitting changes, run:
 
 ```bash
 pnpm typecheck
@@ -148,24 +202,4 @@ pnpm test
 pnpm build
 ```
 
-其中抽奖规则测试覆盖中奖人数计算、可用参与者筛选、无偏随机抽取、中奖应用和回滚等核心逻辑。
-
-## CI/CD
-
-仓库包含 `.github/workflows/ci.yml`，会在 `master` 分支的 push 和 Pull Request 上执行：
-
-1. 安装 pnpm 依赖
-2. 执行 TypeScript 检查
-3. 执行抽奖规则测试
-4. 构建前端和后端
-
-项目同时提供 `vercel.json`，用于将 `apps/web` 作为静态前端部署到 Vercel：
-
-- Install Command：`pnpm install --frozen-lockfile`
-- Build Command：`pnpm --filter @lucky-moment/web build`
-- Output Directory：`apps/web/dist`
-- 前端路径：`/lucky-moment`
-
-Vercel 配置只负责前端静态站。`apps/backend` 是 Fastify 长驻服务，生产环境需要单独部署到支持 Node.js 服务的运行环境，并通过 `WEB_ORIGIN` 配置允许的前端来源。当前前端未依赖业务 API，后端主要提供静态服务和 `/api/health` 健康检查。
-
-将 GitHub 仓库 `colinSnake/lucky-moment` 连接到 Vercel 项目后，GitHub push 会触发 Vercel 的预览或生产部署；Vercel 项目的 Production Branch 需要设置为 `master`。
+The lottery-rule tests cover winner-count calculation, available-participant filtering, unbiased random selection, winner application, and rollback behavior.
