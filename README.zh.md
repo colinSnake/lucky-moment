@@ -12,6 +12,10 @@
   <a href="README.md">English</a>
 </p>
 
+<p align="center">
+  <a href="https://colinsnake.github.io/lucky-moment/">在线体验</a>
+</p>
+
 Lucky Moment 是一个面向婚礼现场的互动抽奖应用。前端使用 React、Vite、TypeScript 和 Three.js CSS3DRenderer，实现可旋转、可翻牌的抽奖卡片；后端使用 Fastify，负责生产静态资源服务和健康检查接口。
 
 项目采用 pnpm monorepo，前端和后端分别位于 `apps/web` 与 `apps/backend`。
@@ -205,7 +209,7 @@ pnpm start
 3. 将 **Source** 设置为 **GitHub Actions**。
 4. 推送到 `master`，或在 Actions 页面手动运行 **Deploy frontend to GitHub Pages**。
 
-部署地址格式为：`https://<你的 GitHub 用户名>.github.io/lucky-moment/`。Vite 已配置应用路径 `/lucky-moment/`，与当前仓库地址格式一致。
+项目现已部署：[https://colinsnake.github.io/lucky-moment/](https://colinsnake.github.io/lucky-moment/)。Vite 已配置应用路径 `/lucky-moment/`，与仓库地址匹配。
 
 GitHub Pages 只托管静态文件，不能运行 Fastify 服务，也不会提供 `/api/health`。浏览器端的抽奖逻辑、IndexedDB 本地保存、Excel 导入导出和视觉效果仍然可以正常使用；只有在需要生产 Node.js 服务时，才需要单独部署 `apps/backend`。
 

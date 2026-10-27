@@ -12,6 +12,10 @@
   <a href="README.zh.md">简体中文</a>
 </p>
 
+<p align="center">
+  <a href="https://colinsnake.github.io/lucky-moment/">Live Demo</a>
+</p>
+
 Lucky Moment is an interactive lottery application designed for wedding events. The frontend is built with React, Vite, TypeScript, and Three.js CSS3DRenderer to create rotating and flip-card lottery animations. Fastify provides production static-file serving and a health-check endpoint.
 
 The project uses a pnpm monorepo with the frontend and backend in `apps/web` and `apps/backend`.
@@ -205,7 +209,7 @@ To enable it:
 3. Set **Source** to **GitHub Actions**.
 4. Push to `master` or run **Deploy frontend to GitHub Pages** manually from the Actions tab.
 
-The site URL will be `https://<your-github-username>.github.io/lucky-moment/`. The Vite base path is already configured as `/lucky-moment/`, which matches this repository URL format.
+The deployed site is available at [https://colinsnake.github.io/lucky-moment/](https://colinsnake.github.io/lucky-moment/). The Vite base path is configured as `/lucky-moment/` to match the repository URL.
 
 GitHub Pages only hosts static files. It does not run the Fastify service or provide `/api/health`; the browser-based lottery, IndexedDB persistence, Excel import/export, and visual effects remain available because they are implemented in the frontend. Deploy `apps/backend` separately only if a production Node.js service is needed.
 
