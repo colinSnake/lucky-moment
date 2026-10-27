@@ -18,6 +18,16 @@ The project uses a pnpm monorepo with the frontend and backend in `apps/web` and
 
 <br />
 
+## Screenshots
+
+| Sphere layout | Grid layout |
+| --- | --- |
+| ![Lucky Moment sphere lottery layout](docs/screenshots/01-sphere-lottery.jpg) | ![Lucky Moment grid lottery layout](docs/screenshots/02-grid-lottery.jpg) |
+
+![Lucky Moment winner result page](docs/screenshots/03-winner-result.png)
+
+<br />
+
 ## Features
 
 - Switch between flat-card and spherical-card layouts
@@ -128,7 +138,8 @@ The production app is available at `http://localhost:9090/lucky-moment`.
 │   └── backend/
 │       └── src/server.ts           # Fastify static server and API
 ├── docs/
-│   └── lucky-moment-wordmark.svg   # README wordmark
+│   ├── lucky-moment-wordmark.svg   # README wordmark
+│   └── screenshots/                # README project screenshots
 ├── package.json                    # Workspace scripts
 ├── pnpm-workspace.yaml
 ├── pnpm-lock.yaml
@@ -179,16 +190,24 @@ Frontend development settings are configured in `apps/web/vite.config.ts`:
 3. Runs lottery-rule tests
 4. Builds the frontend and backend
 
-The repository also includes `vercel.json` for deploying the frontend as a static site on Vercel:
+The frontend deployment is handled by `.github/workflows/deploy-pages.yml` and the backend remains available as a separate Fastify service when a Node.js runtime is needed.
 
-- Install Command: `pnpm install --frozen-lockfile`
-- Build Command: `pnpm --filter @lucky-moment/web build`
-- Output Directory: `apps/web/dist`
-- Frontend base path: `/lucky-moment`
+<br />
 
-The Vercel configuration only deploys the static frontend. `apps/backend` is a long-running Fastify service and must be deployed separately to a Node.js-capable runtime. Configure the allowed frontend origins with `WEB_ORIGIN` when needed. The frontend currently does not depend on a business API; the backend mainly provides static serving and `/api/health`.
+## GitHub Pages
 
-After connecting the GitHub repository `colinSnake/lucky-moment` to a Vercel project, pushes to GitHub can trigger preview or production deployments. Set the Vercel Production Branch to `master`.
+The frontend can also be deployed to GitHub Pages through `.github/workflows/deploy-pages.yml`. The workflow builds `apps/web` and publishes `apps/web/dist` whenever changes are pushed to `master`.
+
+To enable it:
+
+1. Push the repository to GitHub.
+2. Open **Settings → Pages** in the repository.
+3. Set **Source** to **GitHub Actions**.
+4. Push to `master` or run **Deploy frontend to GitHub Pages** manually from the Actions tab.
+
+The site URL will be `https://<your-github-username>.github.io/lucky-moment/`. The Vite base path is already configured as `/lucky-moment/`, which matches this repository URL format.
+
+GitHub Pages only hosts static files. It does not run the Fastify service or provide `/api/health`; the browser-based lottery, IndexedDB persistence, Excel import/export, and visual effects remain available because they are implemented in the frontend. Deploy `apps/backend` separately only if a production Node.js service is needed.
 
 <br />
 

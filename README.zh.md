@@ -18,6 +18,16 @@ Lucky Moment 是一个面向婚礼现场的互动抽奖应用。前端使用 Rea
 
 <br />
 
+## 项目截图
+
+| 球面抽奖 | 平面抽奖 |
+| --- | --- |
+| ![Lucky Moment 球面抽奖](docs/screenshots/01-sphere-lottery.jpg) | ![Lucky Moment 平面抽奖](docs/screenshots/02-grid-lottery.jpg) |
+
+![Lucky Moment 中奖结果页](docs/screenshots/03-winner-result.png)
+
+<br />
+
 ## 功能
 
 - 平面卡片与球面卡片布局切换
@@ -128,7 +138,8 @@ pnpm start
 │   └── backend/
 │       └── src/server.ts           # Fastify 静态服务和 API
 ├── docs/
-│   └── lucky-moment-wordmark.svg   # README 艺术字
+│   ├── lucky-moment-wordmark.svg   # README 艺术字
+│   └── screenshots/                # README 项目截图
 ├── package.json                    # workspace 脚本
 ├── pnpm-workspace.yaml
 ├── pnpm-lock.yaml
@@ -179,16 +190,24 @@ pnpm start
 3. 执行抽奖规则测试
 4. 构建前端和后端
 
-项目提供 `vercel.json` 用于部署前端静态站：
+前端部署由 `.github/workflows/deploy-pages.yml` 负责；如果需要 Node.js 运行环境，后端仍可以作为独立的 Fastify 服务部署。
 
-- Install Command：`pnpm install --frozen-lockfile`
-- Build Command：`pnpm --filter @lucky-moment/web build`
-- Output Directory：`apps/web/dist`
-- 前端路径：`/lucky-moment`
+<br />
 
-Vercel 配置只负责前端静态站。`apps/backend` 是 Fastify 长驻服务，需要单独部署到支持 Node.js 服务的运行环境，并通过 `WEB_ORIGIN` 配置允许的前端来源。当前前端未依赖业务 API，后端主要提供静态服务和 `/api/health` 健康检查。
+## GitHub Pages
 
-将 GitHub 仓库 `colinSnake/lucky-moment` 连接到 Vercel 项目后，GitHub push 会触发 Vercel 的预览或生产部署；Vercel 项目的 Production Branch 需要设置为 `master`。
+项目的前端也可以通过 `.github/workflows/deploy-pages.yml` 部署到 GitHub Pages。该工作流会构建 `apps/web`，并在 `master` 分支有新的 push 时发布 `apps/web/dist`。
+
+启用步骤：
+
+1. 将仓库推送到 GitHub。
+2. 打开仓库的 **Settings → Pages**。
+3. 将 **Source** 设置为 **GitHub Actions**。
+4. 推送到 `master`，或在 Actions 页面手动运行 **Deploy frontend to GitHub Pages**。
+
+部署地址格式为：`https://<你的 GitHub 用户名>.github.io/lucky-moment/`。Vite 已配置应用路径 `/lucky-moment/`，与当前仓库地址格式一致。
+
+GitHub Pages 只托管静态文件，不能运行 Fastify 服务，也不会提供 `/api/health`。浏览器端的抽奖逻辑、IndexedDB 本地保存、Excel 导入导出和视觉效果仍然可以正常使用；只有在需要生产 Node.js 服务时，才需要单独部署 `apps/backend`。
 
 <br />
 
